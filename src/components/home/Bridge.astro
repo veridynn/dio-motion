@@ -1,0 +1,20 @@
+<section class="section section--light bridge">
+  <div class="bridge__period" aria-hidden="true"></div>
+  <div class="bridge__inner center">
+    <h2 class="h-section reveal">Dein Körper ist zu mehr fähig, als du heute abrufst.</h2>
+    <p class="lead reveal">Der Unterschied ist nicht Motivation – sondern Fokus und Struktur.</p>
+  </div>
+</section>
+<style>
+.bridge{ position:relative; overflow:hidden; }
+
+.bridge__period{
+  position:absolute; top:50%; left:50%;
+  transform:translate(-50%,-50%);
+  width:40rem; height:40rem;
+  pointer-events:none;
+}
+.bridge__inner{ position:relative; max-width:44rem; margin:0 auto; }
+.bridge .lead{ margin-top:1.5rem; }
+.bridge__period { background: radial-gradient(circle closest-side, rgba(25,23,20,.06) 45%, transparent); }
+</style>

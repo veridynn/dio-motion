@@ -1,43 +1,32 @@
-# Astro Starter Kit: Minimal
+# dio motion.
 
-```sh
-pnpm create astro@latest -- --template minimal
-```
+German personal trainer website built with Astro. The supplied prototypes are implemented at `/` and `/kontakt/`.
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+## Development
 
-## 🚀 Project Structure
+- `pnpm install`
+- `pnpm exec astro dev --background` — start the local server
+- `pnpm exec astro dev status` / `logs` / `stop` — manage the server
+- `pnpm build` — generate the static site in `dist/`
+- `pnpm test` — check contact email encoding
 
-Inside of your Astro project, you'll see the following folders and files:
+## Structure
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
-```
+`src/layouts/SiteLayout.astro` shares metadata, navigation, and the footer. Homepage sections live in `src/components/home/`; the contact form lives in `src/components/ContactForm.astro`. Shared design tokens and utilities live in `src/styles/global.css`, with component-specific styles scoped in Astro components.
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Content still needed
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+- Replace the portrait placeholder in `About.astro` with the final image.
+- Supply the hero contour artwork if desired; a CSS glow currently preserves the prototype's background treatment.
+- Supply the imprint and privacy copy. Their footer labels are intentionally plain text until real pages exist.
+- The contact form prepares a draft in the visitor's email app, with native required-field and email validation. It does not send email automatically or claim delivery. To support direct web submissions, configure a delivery endpoint and update the form, including server-side validation, abuse protection, and explicit success/error states.
 
-Any static assets, like images, can be placed in the `public/` directory.
+## Human Todo
 
-## 🧞 Commands
-
-All commands are run from the root of the project, from a terminal:
-
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `pnpm install`             | Installs dependencies                            |
-| `pnpm dev`             | Starts local dev server at `localhost:4321`      |
-| `pnpm build`           | Build your production site to `./dist/`          |
-| `pnpm preview`         | Preview your build locally, before deploying     |
-| `pnpm astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `pnpm astro -- --help` | Get help using the Astro CLI                     |
-
-## 👀 Want to learn more?
-
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+- [ ] add [arktype](https://arktype.io/) or similar for form validation
+- [ ] use bitsui from svelte-shadcn-ui
+- [ ] use runed from svelte
+- [ ] Supply the final portrait image to replace the placeholder in `About.astro`.
+- [ ] Decide whether to add hero contour artwork and supply the final asset if desired.
+- [ ] Supply final Impressum and Datenschutzerklärung copy so the legal pages and footer links can be added.
+- [ ] Choose and configure an email delivery service for direct contact-form submissions, then replace the email-draft fallback with server-side validation, abuse protection, and success/error feedback.

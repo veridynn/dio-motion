@@ -1,0 +1,27 @@
+<header class="hero" id="top">
+  <div class="hero__glow" aria-hidden="true"></div>
+  <div class="hero__inner">
+    <h1 class="h-display reveal">Mittelmäßig war nie eine Option.</h1>
+    <p class="lead reveal">Persönliches Training in Berlin.</p>
+    <a class="btn btn--light reveal" href="/kontakt/">Erstes Gespräch anfragen</a>
+  </div>
+
+</header>
+<style>
+.hero{
+  position:relative; overflow:hidden;
+  min-height:100svh;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  background:var(--smoke);
+  color:var(--ivory);
+  padding:var(--section-y) var(--gutter);
+  text-align:center;
+}
+
+.hero__glow{ position:absolute; inset:0; pointer-events:none; }
+.hero__inner{ position:relative; max-width:64rem; }
+.hero .lead{ color:var(--ivory); opacity:.72; margin-top:1.75rem; }
+.hero .btn{ margin-top:3.5rem; }
+
+.hero__glow { background: radial-gradient(ellipse closest-side at 50% 46%, rgba(245,240,235,.055), transparent); }
+</style>

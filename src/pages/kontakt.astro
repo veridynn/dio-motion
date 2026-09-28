@@ -1,0 +1,48 @@
+---
+import SiteLayout from '../layouts/SiteLayout.astro';
+import ContactForm from '../components/ContactForm.astro';
+---
+<SiteLayout title="Kontakt — dio motion." description="Frage dein erstes Gespräch mit Silvo Miguel an. Persönliches Training in Berlin." contact>
+  <div class="contact-page">
+
+  <div class="wrap">
+    <h1>Erstes Gespräch anfragen.</h1>
+    <p class="lead">Schreib mir, worum es geht. Ich melde mich innerhalb eines Werktags.</p>
+
+    <ContactForm />
+
+    <p class="alt">
+      Lieber direkt aus deinem eigenen Programm?<br>
+      <a href="mailto:silvo@diomotion.com?subject=Erstes%20Gespr%C3%A4ch">silvo@diomotion.com</a>
+    </p>
+
+    
+  </div>
+
+  </div>
+</SiteLayout>
+<style>
+.contact-page{
+  flex:1;
+  padding:clamp(4rem,12vh,8rem) var(--gutter);
+}
+.wrap{ max-width:34rem; margin:0 auto; }
+
+h1{
+  font-weight:200; font-size:clamp(1.875rem,4.4vw,3rem);
+  line-height:1.15; letter-spacing:-.015em;
+}
+.lead{
+  margin-top:1.5rem; font-size:1rem; line-height:1.65; color:var(--asche);
+}
+
+.alt{
+  margin-top:clamp(3.5rem,8vh,5rem);
+  padding-top:2rem; border-top:1px solid var(--leinen);
+  font-size:.875rem; line-height:1.7; color:var(--asche);
+}
+.alt a{ color:var(--asche); text-decoration:none; border-bottom:1px solid var(--leinen); }
+.alt a:hover{ color:var(--sandstein); }
+
+
+</style>

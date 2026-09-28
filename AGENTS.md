@@ -1,3 +1,7 @@
+# AGENTS.md
+
+Personal trainer website for [Dio Motion](https://diomotion.com), built with Astro.
+
 ## Development
 
 When starting the dev server, use background mode:

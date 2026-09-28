@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';
+import { createContactEmail } from '../src/lib/contact-email.mjs';
+const data = new FormData();
+data.set('name', 'Zoë & Max');
+data.set('email', 'zoe+training@example.com');
+data.set('nachricht', 'Kraft? Ja!\n&subject=Andere Nachricht');
+const url = new URL(createContactEmail(data));
+assert.equal(url.pathname, 'silvo@diomotion.com');
+assert.equal(url.searchParams.get('subject'), 'Erstes Gespräch');
+assert.equal(url.searchParams.get('body'), 'Name: Zoë & Max\nE-Mail: zoe+training@example.com\n\nKraft? Ja!\n&subject=Andere Nachricht');
+assert.equal([...url.searchParams].length, 2);
+console.log('Contact email encoding passed');

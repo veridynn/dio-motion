@@ -1,0 +1,32 @@
+<section class="section section--light" id="ueber-mich">
+  <div class="wrap about">
+    <div class="portrait reveal">
+      <span>Silvo Miguel<br>Personal Trainer · Berlin</span>
+    </div>
+    <div class="about__text">
+      <h2 class="h-sub reveal">Bewegung ist mein Weg.<br>Als Instinkt. Als Studium. Als Beruf.</h2>
+      <p class="body reveal">Was sich vertieft, ist der Anspruch.<br>Präziser. Ruhiger. Konsequenter.</p>
+      <p class="body reveal">Personal Training auf diesem Niveau ist keine Arbeit. Es ist Handwerk.</p>
+      <p class="meta reveal about__sig">Silvo Miguel · Personal Trainer · dio motion · Berlin</p>
+    </div>
+  </div>
+</section>
+<style>
+.about{
+  display:grid; grid-template-columns:minmax(0,.86fr) minmax(0,1fr);
+  gap:clamp(2.5rem,7vw,6rem);
+  align-items:center;
+}
+.portrait{
+  aspect-ratio:4/5; background:var(--bone);
+  display:flex; align-items:center; justify-content:center;
+  padding:2rem; text-align:center;
+}
+.portrait span{
+  font-size:.75rem; line-height:1.7; letter-spacing:.03em;
+  color:var(--asche);
+}
+.about__text > * + *{ margin-top:2rem; }
+.about__sig{ margin-top:2.75rem !important; }
+@media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+</style>

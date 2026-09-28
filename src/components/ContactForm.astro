@@ -1,0 +1,51 @@
+<form action="mailto:silvo@diomotion.com" method="post" enctype="text/plain" aria-describedby="form-help">
+      <div class="field">
+        <label for="name">Name</label>
+        <input id="name" name="name" type="text" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="email">E-Mail</label>
+        <input id="email" name="email" type="email" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="nachricht">Nachricht</label>
+        <textarea id="nachricht" name="nachricht" rows="6" required></textarea>
+      </div>
+      <button class="btn" type="submit">E-Mail vorbereiten</button>
+    </form>
+<p id="form-help" class="form-help">Öffnet einen Entwurf in deinem E-Mail-Programm. Bitte sende die Nachricht dort ab.</p>
+<script>
+  import { createContactEmail } from '../lib/contact-email.mjs';
+  const form = document.querySelector('form');
+  form?.addEventListener('submit', (event) => {
+    event.preventDefault();
+    const data = new FormData(form);
+    window.location.href = createContactEmail(data);
+  });
+</script>
+<style>
+form{ margin-top:clamp(3rem,7vh,4.5rem); }
+.field + .field{ margin-top:2rem; }
+label{
+  display:block;
+  font-weight:600; text-transform:uppercase; letter-spacing:.2em;
+  font-size:.6875rem; color:var(--asche);
+  margin-bottom:.75rem;
+}
+input, textarea{
+  width:100%;
+  font-family:var(--font); font-size:1rem; font-weight:400; line-height:1.6;
+  color:var(--ink); background:transparent;
+  border:0; border-bottom:1px solid var(--leinen);
+  padding:.625rem 0;
+  transition:border-color .3s ease;
+}
+input:focus, textarea:focus{
+  border-bottom-color:var(--sandstein);
+}
+textarea{ resize:vertical; min-height:8rem; }
+
+
+.btn { margin-top: 3rem; }
+.form-help { margin-top: 1rem; font-size: .8125rem; line-height: 1.6; color: var(--asche); }
+</style>

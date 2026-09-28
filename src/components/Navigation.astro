@@ -1,0 +1,63 @@
+---
+interface Props { contact?: boolean; }
+const { contact = false } = Astro.props;
+---
+<nav class:list={['nav', { 'nav--contact': contact }]} aria-label="Hauptnavigation">
+  <a class="wordmark" href="/">dio motion.</a>
+  {contact ? <a class="back" href="/">← Zurück</a> : <a class="btn btn--sm btn--light" href="/kontakt/">Erstes Gespräch anfragen</a>}
+</nav>
+{!contact && <a class="btn btn--sm nav__cta-floating" href="/kontakt/">Erstes Gespräch anfragen</a>}
+<script>
+  const nav = document.querySelector('.nav');
+  const hero = document.querySelector('.hero');
+  if (nav && hero) {
+    new IntersectionObserver(([entry]) => {
+      nav.classList.toggle('is-scrolled', !entry.isIntersecting);
+    }, { rootMargin: '-90% 0px 0px 0px' }).observe(hero);
+  }
+</script>
+<style>
+.nav{
+  position:fixed; inset:0 0 auto 0; z-index:50;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:1.75rem var(--gutter);
+  transition:background-color .5s ease, border-color .5s ease;
+  border-bottom:1px solid transparent;
+}
+.nav.is-scrolled{
+  background:rgba(245,240,235,.92);
+  backdrop-filter:blur(10px);
+  border-bottom-color:var(--leinen);
+}
+.wordmark{
+  font-size:1.0625rem; font-weight:500; letter-spacing:.01em;
+  color:var(--ivory); text-decoration:none;
+  transition:color .5s ease;
+}
+.nav.is-scrolled .wordmark{ color:var(--ink); }
+.nav.is-scrolled .btn--light{ border-color:var(--ink); color:var(--ink); }
+.nav.is-scrolled .btn--light:hover{ background:var(--ink); color:var(--ivory); }
+
+
+.nav__cta-floating{ display:none; }
+@media (max-width:720px){
+  .nav .btn{ display:none; }
+  .nav__cta-floating{
+    display:inline-block;
+    position:fixed; z-index:60;
+    left:50%; transform:translateX(-50%);
+    bottom:1.5rem;
+    background:var(--ivory);
+    border-color:var(--ink); color:var(--ink);
+    box-shadow:0 2px 24px rgba(25,23,20,.14);
+  }
+}
+.nav--contact { position: static; border-bottom-color: var(--leinen); }
+.nav--contact .wordmark { color: var(--ink); }
+.back { font-size: .8125rem; letter-spacing: .02em; color: var(--asche); text-decoration: none; }
+.back:hover { color: var(--sandstein); }
+@media (max-width: 720px) {
+  .nav__cta-floating { max-width: calc(100% - 2rem); width: max-content; text-align: center; line-height: 1.4; bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
+}
+
+</style>

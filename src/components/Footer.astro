@@ -1,0 +1,80 @@
+---
+interface Props { compact?: boolean; }
+const { compact = false } = Astro.props;
+---
+<footer class:list={["footer", { "footer--compact": compact }]}>
+  {!compact && <div class="footer__cols">
+    <div class="footer__brand">
+      <a class="wordmark" href="/">dio motion.</a>
+      <p class="footer__tagline">Persönliches Training in Berlin</p>
+    </div>
+    <div>
+      <p class="footer__label">Navigation</p>
+      <ul class="footer__list">
+        <li><a href="/#ansatz">Ansatz</a></li>
+        <li><a href="/#leistungen">Leistungen</a></li>
+        <li><a href="/#ueber-mich">Über mich</a></li>
+        <li><a href="/kontakt/">Kontakt</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer__label">Kontakt</p>
+      <ul class="footer__list">
+        <li><a href="mailto:silvo@diomotion.com">silvo@diomotion.com</a></li>
+        <li><span>Berlin</span></li>
+      </ul>
+    </div>
+  </div>
+  }
+  <div class="footer__bottom">
+    <span>© {new Date().getFullYear()} dio motion.</span>
+    <span class="footer__legal">
+      <span>Impressum</span>
+      <span>Datenschutzerklärung</span>
+    </span>
+  </div>
+</footer>
+<style>
+.footer{
+  background:var(--smoke); color:var(--ivory);
+  padding:clamp(4rem,9vh,6.5rem) var(--gutter) 2rem;
+}
+.footer__cols{
+  max-width:var(--measure); margin:0 auto;
+  display:grid; grid-template-columns:1.4fr 1fr 1fr;
+  gap:clamp(2rem,5vw,4rem);
+}
+.footer__brand .wordmark{ color:var(--ivory); font-size:1.0625rem; font-weight:500; letter-spacing:.01em; text-decoration:none; }
+.footer__tagline{
+  margin-top:.875rem; font-weight:300; font-style:italic;
+  font-size:.875rem; color:var(--ivory); opacity:.65;
+}
+.footer__label{
+  font-weight:600; text-transform:uppercase; letter-spacing:.2em;
+  font-size:.6875rem; color:var(--ivory); opacity:.65;
+}
+.footer__list{ list-style:none; margin:1.5rem 0 0; padding:0; }
+.footer__list li + li{ margin-top:.75rem; }
+.footer__list a, .footer__list span{
+  font-size:.875rem; color:var(--ivory); opacity:.7;
+  text-decoration:none; transition:color .3s ease, opacity .3s ease;
+}
+.footer__list a:hover{ color:var(--sandstein); opacity:1; }
+.footer__bottom{
+  max-width:var(--measure); margin:clamp(3rem,6vh,4.5rem) auto 0;
+  padding-top:1.75rem; border-top:1px solid var(--graphit);
+  display:flex; justify-content:space-between; gap:1.5rem; flex-wrap:wrap;
+}
+.footer__bottom, .footer__bottom a{
+  font-size:.75rem; color:var(--ivory); opacity:.4; text-decoration:none;
+}
+.footer__bottom a:hover{ opacity:.8; }
+.footer__legal{ display:flex; gap:1.75rem; }
+.footer__bottom { opacity: 1; color: #aaa49b; }
+.footer__legal { flex-wrap: wrap; }
+.footer--compact { padding: 2rem var(--gutter); }
+.footer--compact .footer__bottom { max-width: none; border: 0; margin: 0; padding: 0; }
+@media (max-width: 860px) { .footer__cols { grid-template-columns: 1fr; gap: 2.75rem; } }
+@media (max-width: 720px) { .footer:not(.footer--compact) { padding-bottom: calc(7rem + env(safe-area-inset-bottom)); } }
+
+</style>

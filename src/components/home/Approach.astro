@@ -1,0 +1,29 @@
+<section class="section section--light" id="ansatz">
+  <div class="wrap">
+    <h2 class="h-section center reveal">Das <em>Was</em> ist austauschbar. Das <em>Wie</em> ist Handwerk.</h2>
+    <div class="pillars">
+      <div class="pillar reveal">
+        <h3>Training</h3>
+        <p class="body">Jede Einheit setzt dort an, wo die letzte aufgehört hat. Fortschritt ist keine Zufallsvariable.</p>
+      </div>
+      <div class="pillar reveal">
+        <h3>Ernährung</h3>
+        <p class="body">Keine Dogmen. Keine Verbote. Ernährung, die zu dir passt. Nicht umgekehrt.</p>
+      </div>
+      <div class="pillar reveal">
+        <h3>Regeneration</h3>
+        <p class="body">Erholung ist kein Luxus. Sie ist der Teil des Systems, in dem Veränderung entsteht.</p>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+.pillars{
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:clamp(2rem,5vw,4.5rem);
+  margin-top:clamp(4rem,9vh,7rem);
+}
+.pillar h3{ font-weight:400; font-size:1.25rem; letter-spacing:-.005em; }
+.pillar p{ margin-top:1.125rem; }
+@media (max-width: 860px) { .pillars { grid-template-columns: 1fr; gap: 3rem; } }
+</style>
