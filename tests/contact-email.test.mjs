@@ -10,3 +10,6 @@ assert.equal(url.searchParams.get('subject'), 'Erstes Gespräch');
 assert.equal(url.searchParams.get('body'), 'Name: Zoë & Max\nE-Mail: zoe+training@example.com\n\nKraft? Ja!\n&subject=Andere Nachricht');
 assert.equal([...url.searchParams].length, 2);
 console.log('Contact email encoding passed');
+const english = new URL(createContactEmail(data, 'First conversation', 'Email'));
+assert.equal(english.searchParams.get('subject'), 'First conversation');
+assert.equal(english.searchParams.get('body'), 'Name: Zoë & Max\nEmail: zoe+training@example.com\n\nKraft? Ja!\n&subject=Andere Nachricht');

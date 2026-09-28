@@ -1,7 +1,13 @@
+---
+import { copy, routes, type Locale } from '../../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
 <section class="section section--light contact center" id="kontakt">
   <div class="wrap">
-    <h2 class="h-section reveal">Bereit, wenn du es bist.</h2>
-    <a class="btn reveal" href="/kontakt/">Erstes Gespräch anfragen</a>
+    <h2 class="h-section reveal">{t.ready}</h2>
+    <a class="btn reveal" href={routes.contact[locale]}>{t.cta}</a>
     <a class="contact__mail reveal" href="mailto:silvo@diomotion.com">silvo@diomotion.com</a>
   </div>
 </section>

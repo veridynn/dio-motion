@@ -1,12 +1,14 @@
 ---
-interface Props { contact?: boolean; }
-const { contact = false } = Astro.props;
+import { copy, routes, type Locale } from '../lib/i18n';
+interface Props { contact?: boolean; locale: Locale; }
+const { contact = false, locale } = Astro.props;
+const t = copy[locale];
 ---
-<nav class:list={['nav', { 'nav--contact': contact }]} aria-label="Hauptnavigation">
-  <a class="wordmark" href="/">dio motion.</a>
-  {contact ? <a class="back" href="/">← Zurück</a> : <a class="btn btn--sm btn--light" href="/kontakt/">Erstes Gespräch anfragen</a>}
+<nav class:list={['nav', { 'nav--contact': contact }]} aria-label={t.navigation}>
+  <a class="wordmark" href={routes.home[locale]}>dio motion.</a>
+  {contact ? <a class="back" href={routes.home[locale]}>← {t.back}</a> : <a class="btn btn--sm btn--light" href={routes.contact[locale]}>{t.cta}</a>}
 </nav>
-{!contact && <a class="btn btn--sm nav__cta-floating" href="/kontakt/">Erstes Gespräch anfragen</a>}
+{!contact && <a class="btn btn--sm nav__cta-floating" href={routes.contact[locale]}>{t.cta}</a>}
 <script>
   const nav = document.querySelector('.nav');
   const hero = document.querySelector('.hero');

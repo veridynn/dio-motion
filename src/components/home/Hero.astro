@@ -1,9 +1,15 @@
+---
+import { copy, routes, type Locale } from '../../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
 <header class="hero" id="top">
   <div class="hero__glow" aria-hidden="true"></div>
   <div class="hero__inner">
-    <h1 class="h-display reveal">Mittelmäßig war nie eine Option.</h1>
-    <p class="lead reveal">Persönliches Training in Berlin.</p>
-    <a class="btn btn--light reveal" href="/kontakt/">Erstes Gespräch anfragen</a>
+    <h1 class="h-display reveal">{t.hero}</h1>
+    <p class="lead reveal">{t.tagline}.</p>
+    <a class="btn btn--light reveal" href={routes.contact[locale]}>{t.cta}</a>
   </div>
 
 </header>

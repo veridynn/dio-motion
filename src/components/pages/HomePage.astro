@@ -1,0 +1,39 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import Hero from "../home/Hero.astro";
+import Bridge from "../home/Bridge.astro";
+import Approach from "../home/Approach.astro";
+import Services from "../home/Services.astro";
+import About from "../home/About.astro";
+import ContactCallout from "../home/ContactCallout.astro";
+import { copy, type Locale } from '../../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
+<SiteLayout title={t.homeTitle} description={t.homeDescription} locale={locale} page="home">
+  <Hero locale={locale} />
+  <Bridge locale={locale} />
+  <Approach locale={locale} />
+  <Services locale={locale} />
+  <About locale={locale} />
+  <ContactCallout locale={locale} />
+</SiteLayout>
+<script>
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        entry.target.classList.remove('is-pending');
+        entry.target.classList.add('is-in');
+        observer.unobserve(entry.target);
+      }
+    }, { rootMargin: '0px 0px -100px 0px' });
+    document.querySelectorAll<HTMLElement>('.reveal').forEach((element) => {
+      const siblings = Array.from(element.parentElement?.children ?? []).filter((sibling) => sibling.classList.contains('reveal'));
+      element.style.transitionDelay = `${siblings.indexOf(element) * 120}ms`;
+      element.classList.add('is-pending');
+      observer.observe(element);
+    });
+  }
+</script>

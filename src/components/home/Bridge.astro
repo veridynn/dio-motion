@@ -1,8 +1,14 @@
+---
+import { copy, routes, type Locale } from '../../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
 <section class="section section--light bridge">
   <div class="bridge__period" aria-hidden="true"></div>
   <div class="bridge__inner center">
-    <h2 class="h-section reveal">Dein Körper ist zu mehr fähig, als du heute abrufst.</h2>
-    <p class="lead reveal">Der Unterschied ist nicht Motivation – sondern Fokus und Struktur.</p>
+    <h2 class="h-section reveal">{t.bridge}</h2>
+    <p class="lead reveal">{t.bridgeLead}</p>
   </div>
 </section>
 <style>

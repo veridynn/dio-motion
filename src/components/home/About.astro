@@ -1,12 +1,18 @@
+---
+import { copy, routes, type Locale } from '../../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
 <section class="section section--light" id="ueber-mich">
   <div class="wrap about">
     <div class="portrait reveal">
       <span>Silvo Miguel<br>Personal Trainer · Berlin</span>
     </div>
     <div class="about__text">
-      <h2 class="h-sub reveal">Bewegung ist mein Weg.<br>Als Instinkt. Als Studium. Als Beruf.</h2>
-      <p class="body reveal">Was sich vertieft, ist der Anspruch.<br>Präziser. Ruhiger. Konsequenter.</p>
-      <p class="body reveal">Personal Training auf diesem Niveau ist keine Arbeit. Es ist Handwerk.</p>
+      <h2 class="h-sub reveal">{t.aboutHeading[0]}<br>{t.aboutHeading[1]}</h2>
+      <p class="body reveal">{t.aboutLead[0]}<br>{t.aboutLead[1]}</p>
+      <p class="body reveal">{t.aboutBody}</p>
       <p class="meta reveal about__sig">Silvo Miguel · Personal Trainer · dio motion · Berlin</p>
     </div>
   </div>

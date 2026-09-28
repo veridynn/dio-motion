@@ -1,19 +1,16 @@
+---
+import { copy, routes, type Locale } from '../../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
 <section class="section section--light" id="ansatz">
   <div class="wrap">
-    <h2 class="h-section center reveal">Das <em>Was</em> ist austauschbar. Das <em>Wie</em> ist Handwerk.</h2>
+    <h2 class="h-section center reveal">{t.approachHeading[0]}<em>{t.approachHeading[1]}</em>{t.approachHeading[2]}<em>{t.approachHeading[3]}</em>{t.approachHeading[4]}</h2>
     <div class="pillars">
-      <div class="pillar reveal">
-        <h3>Training</h3>
-        <p class="body">Jede Einheit setzt dort an, wo die letzte aufgehört hat. Fortschritt ist keine Zufallsvariable.</p>
-      </div>
-      <div class="pillar reveal">
-        <h3>Ernährung</h3>
-        <p class="body">Keine Dogmen. Keine Verbote. Ernährung, die zu dir passt. Nicht umgekehrt.</p>
-      </div>
-      <div class="pillar reveal">
-        <h3>Regeneration</h3>
-        <p class="body">Erholung ist kein Luxus. Sie ist der Teil des Systems, in dem Veränderung entsteht.</p>
-      </div>
+      {t.pillars.map(([title, body]) => (
+        <div class="pillar reveal"><h3>{title}</h3><p class="body">{body}</p></div>
+      ))}
     </div>
   </div>
 </section>

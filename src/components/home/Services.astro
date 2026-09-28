@@ -1,21 +1,22 @@
+---
+import { copy, routes, type Locale } from '../../lib/i18n';
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
+const t = copy[locale];
+---
 <section class="section section--light" id="leistungen">
   <div class="wrap">
     <div class="assessment center">
-      <h2 class="h-section reveal">Standortbestimmung</h2>
-      <p class="lead reveal">Hautfaltenmessung. Muskelfunktionstests. Übungsausführung. Du gehst mit Klarheit – und einem Plan.</p>
+      <h2 class="h-section reveal">{t.assessment}</h2>
+      <p class="lead reveal">{t.assessmentLead}</p>
     </div>
 
     <hr class="rule reveal">
 
     <div class="tiers">
-      <div class="tier reveal">
-        <h3>Flexibles Kontingent</h3>
-        <p class="body">Training nach Bedarf – ohne feste Taktung.</p>
-      </div>
-      <div class="tier reveal">
-        <h3>Fokussierter Block</h3>
-        <p class="body">Für einen definierten Zeitraum mit klarem Rahmen. Du führst aus – den Rest übernehme ich.</p>
-      </div>
+      {t.tiers.map(([title, body]) => (
+        <div class="tier reveal"><h3>{title}</h3><p class="body">{body}</p></div>
+      ))}
     </div>
   </div>
 </section>

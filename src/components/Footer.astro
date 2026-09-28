@@ -1,24 +1,26 @@
 ---
-interface Props { compact?: boolean; }
-const { compact = false } = Astro.props;
+import { copy, routes, type Locale } from '../lib/i18n';
+interface Props { compact?: boolean; locale: Locale; }
+const { compact = false, locale } = Astro.props;
+const t = copy[locale];
 ---
 <footer class:list={["footer", { "footer--compact": compact }]}>
   {!compact && <div class="footer__cols">
     <div class="footer__brand">
-      <a class="wordmark" href="/">dio motion.</a>
-      <p class="footer__tagline">Persönliches Training in Berlin</p>
+      <a class="wordmark" href={routes.home[locale]}>dio motion.</a>
+      <p class="footer__tagline">{t.tagline}</p>
     </div>
     <div>
       <p class="footer__label">Navigation</p>
       <ul class="footer__list">
-        <li><a href="/#ansatz">Ansatz</a></li>
-        <li><a href="/#leistungen">Leistungen</a></li>
-        <li><a href="/#ueber-mich">Über mich</a></li>
-        <li><a href="/kontakt/">Kontakt</a></li>
+        <li><a href={`${routes.home[locale]}#ansatz`}>{t.approach}</a></li>
+        <li><a href={`${routes.home[locale]}#leistungen`}>{t.services}</a></li>
+        <li><a href={`${routes.home[locale]}#ueber-mich`}>{t.about}</a></li>
+        <li><a href={routes.contact[locale]}>{t.contact}</a></li>
       </ul>
     </div>
     <div>
-      <p class="footer__label">Kontakt</p>
+      <p class="footer__label">{t.contact}</p>
       <ul class="footer__list">
         <li><a href="mailto:silvo@diomotion.com">silvo@diomotion.com</a></li>
         <li><span>Berlin</span></li>
@@ -29,8 +31,8 @@ const { compact = false } = Astro.props;
   <div class="footer__bottom">
     <span>© {new Date().getFullYear()} dio motion.</span>
     <span class="footer__legal">
-      <span>Impressum</span>
-      <span>Datenschutzerklärung</span>
+      <span>{t.legal}</span>
+      <span>{t.privacy}</span>
     </span>
   </div>
 </footer>
