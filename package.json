@@ -10,12 +10,22 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "node tests/contact-email.test.mjs"
+    "test": "node tests/contact-email.test.mjs",
+    "check": "astro check && svelte-check --tsconfig ./tsconfig.json",
+    "test:pages": "astro build && node tests/localized-pages.test.mjs"
   },
   "dependencies": {
-    "astro": "^7.3.5"
+    "@astrojs/svelte": "^9.0.1",
+    "astro": "^7.3.5",
+    "bits-ui": "^2.19.3",
+    "svelte": "^5.57.1"
   },
   "allowScripts": {
     "esbuild": true
+  },
+  "devDependencies": {
+    "@astrojs/check": "^0.9.10",
+    "svelte-check": "^4.7.6",
+    "typescript": "^6.0.3"
   }
 }

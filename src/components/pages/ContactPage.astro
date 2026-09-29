@@ -1,6 +1,6 @@
 ---
 import SiteLayout from '../../layouts/SiteLayout.astro';
-import ContactForm from '../ContactForm.astro';
+import ContactForm from '../ContactForm.svelte';
 import { copy, type Locale } from '../../lib/i18n';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
@@ -13,7 +13,7 @@ const t = copy[locale];
     <h1>{t.cta}.</h1>
     <p class="lead">{t.contactLead}</p>
 
-    <ContactForm locale={locale} />
+    <ContactForm locale={locale} client:load transition:persist="contact-form" />
 
     <p class="alt">
       {t.contactAlternative}<br>

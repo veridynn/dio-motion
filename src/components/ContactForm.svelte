@@ -1,34 +1,35 @@
----
-import { copy, routes, type Locale } from '../lib/i18n';
-interface Props { locale: Locale; }
-const { locale } = Astro.props;
-const t = copy[locale];
----
-<form action="mailto:silvo@diomotion.com" method="post" enctype="text/plain" aria-describedby="form-help" data-subject={t.emailSubject} data-email-label={t.email}>
+<script lang="ts">
+  import { copy, type Locale } from '../lib/i18n';
+  import { createContactEmail } from '../lib/contact-email.mjs';
+
+  let { locale }: { locale: Locale } = $props();
+  const t = $derived(copy[locale]);
+  let name = $state('');
+  let email = $state('');
+  let message = $state('');
+
+  function submit(event: SubmitEvent & { currentTarget: HTMLFormElement }) {
+    event.preventDefault();
+    window.location.href = createContactEmail(new FormData(event.currentTarget), t.emailSubject, t.email);
+  }
+</script>
+
+<form action="mailto:silvo@diomotion.com" method="post" enctype="text/plain" aria-describedby="form-help" onsubmit={submit}>
       <div class="field">
         <label for="name">{t.name}</label>
-        <input id="name" name="name" type="text" autocomplete="name" required>
+        <input id="name" name="name" type="text" bind:value={name} autocomplete="name" required>
       </div>
       <div class="field">
         <label for="email">{t.email}</label>
-        <input id="email" name="email" type="email" autocomplete="email" required>
+        <input id="email" name="email" type="email" bind:value={email} autocomplete="email" required>
       </div>
       <div class="field">
         <label for="nachricht">{t.message}</label>
-        <textarea id="nachricht" name="nachricht" rows="6" required></textarea>
+        <textarea id="nachricht" name="nachricht" rows="6" bind:value={message} required></textarea>
       </div>
       <button class="btn" type="submit">{t.prepareEmail}</button>
     </form>
 <p id="form-help" class="form-help">{t.formHelp}</p>
-<script>
-  import { createContactEmail } from '../lib/contact-email.mjs';
-  const form = document.querySelector('form');
-  form?.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const data = new FormData(form);
-    window.location.href = createContactEmail(data, form.dataset.subject, form.dataset.emailLabel);
-  });
-</script>
 <style>
 form{ margin-top:clamp(3rem,7vh,4.5rem); }
 .field + .field{ margin-top:2rem; }
