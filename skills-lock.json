@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "skills": {
+    "conventional-git": {
+      "source": "samber/cc-skills",
+      "sourceType": "github",
+      "skillPath": "skills/conventional-git/SKILL.md",
+      "computedHash": "121bd4a8e2d616a9fbdd03a5761fa0ddbb6011fcb3517f34bb62cc75ad10026b"
+    }
+  }
+}
