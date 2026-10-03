@@ -5,7 +5,6 @@ const { locale } = Astro.props;
 const t = copy[locale];
 ---
 <header class="hero" id="top">
-  <div class="hero__glow" aria-hidden="true"></div>
   <div class="hero__inner">
     <h1 class="h-display reveal">{t.hero}</h1>
     <p class="lead reveal">{t.tagline}.</p>
@@ -24,10 +23,7 @@ const t = copy[locale];
   text-align:center;
 }
 
-.hero__glow{ position:absolute; inset:0; pointer-events:none; }
 .hero__inner{ position:relative; max-width:64rem; }
 .hero .lead{ color:var(--ivory); opacity:.72; margin-top:1.75rem; }
 .hero .btn{ margin-top:3.5rem; }
-
-.hero__glow { background: radial-gradient(ellipse closest-side at 50% 46%, rgba(245,240,235,.055), transparent); }
 </style>
