@@ -130,6 +130,13 @@ body { display: flex; flex-direction: column; min-height: 100svh; }
 main { flex: 1; }
 :focus-visible { outline: 2px solid var(--sandstein); outline-offset: 5px; }
 section[id] { scroll-margin-top: 6rem; }
+@media (prefers-reduced-motion: no-preference) {
+  html:has(main > .hero) { scroll-snap-type: y proximity; }
+  main:has(> .hero) > :is(.hero, .section) {
+    scroll-snap-align: start;
+    scroll-margin-top: 0;
+  }
+}
 .skip-link { position: fixed; top: 1rem; left: 1rem; z-index: 100; padding: 1rem; background: var(--ivory); color: var(--ink); transform: translateY(-200%); }
 .skip-link:focus { transform: none; }
 .reveal.is-pending { opacity: 0; transform: translateY(30px); }
