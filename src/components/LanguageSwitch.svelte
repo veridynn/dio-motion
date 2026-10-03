@@ -23,11 +23,11 @@
 </script>
 
 <DropdownMenu.Root>
-  <DropdownMenu.Trigger id="language-trigger" class="language-trigger" aria-label={copy[locale].language} disabled={!ready}>
-    <span lang={locale}>{locale === 'de' ? 'Deutsch' : 'English'}</span>
-    <span aria-hidden="true">⌄</span>
+  <DropdownMenu.Trigger id="language-trigger" class={`btn btn--sm language-trigger${page === 'home' ? ' btn--light' : ''}`} aria-label={copy[locale].language} disabled={!ready}>
+    <span class="language-label" lang="de" aria-hidden={locale !== 'de'}>Deutsch</span>
+    <span class="language-label" lang="en" aria-hidden={locale !== 'en'}>English</span>
   </DropdownMenu.Trigger>
-  <DropdownMenu.Content class="language-menu" sideOffset={8} align="end">
+  <DropdownMenu.Content class="language-menu" sideOffset={8} align="end" preventScroll={false}>
     <DropdownMenu.RadioGroup value={locale} aria-label={copy[locale].language}>
       {#each ['de', 'en'] as language}
         {@const next = language as Locale}
@@ -47,21 +47,21 @@
 
 <style>
   :global(.language-trigger) {
-    display: inline-flex; align-items: center; justify-content: space-between; gap: .625rem;
-    min-height: 44px; padding: .5rem .75rem;
-    border: 1px solid currentColor; background: transparent; color: inherit;
-    font: inherit; font-size: .8125rem; cursor: pointer;
+    display: inline-grid;
   }
-  :global(.language-trigger:hover) { background: rgba(122,112,104,.12); }
+  .language-label { grid-area: 1 / 1; }
+  .language-label[aria-hidden='true'] { visibility: hidden; }
   :global(.language-menu) {
     z-index: 100; min-width: 10rem; padding: .375rem;
     border: 1px solid var(--leinen); background: var(--ivory); color: var(--ink);
+    border-radius: var(--squircle-radius); corner-shape: squircle;
     box-shadow: 0 8px 24px rgba(25,23,20,.12);
-    font-family: var(--font); font-size: .875rem;
+    font-family: var(--font); font-size: var(--control-font-size); line-height: var(--control-line-height);
   }
   :global(.language-option) {
-    display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
-    min-height: 44px; padding: .625rem .875rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between; gap: var(--control-gap);
+    min-height: var(--control-height-sm); padding: .625rem var(--control-padding-x-sm); cursor: pointer;
+    border-radius: calc(var(--squircle-radius) - .375rem); corner-shape: squircle;
   }
   :global(.language-option[data-highlighted]) { background: var(--bone); outline: 2px solid var(--asche); outline-offset: -2px; }
   :global(.language-option[data-state='checked']) { font-weight: 600; }

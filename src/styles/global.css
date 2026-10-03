@@ -16,6 +16,14 @@
   --bone-kuehl: #EDEBE6;
 
   --font: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  --squircle-radius: 1.25rem;
+  --control-height: 3rem;
+  --control-height-sm: 2.75rem;
+  --control-font-size: .875rem;
+  --control-line-height: 1.5;
+  --control-gap: .5rem;
+  --control-padding-x: 1.5rem;
+  --control-padding-x-sm: 1rem;
 
   
   --section-y: clamp(7rem, 16vh, 13rem);
@@ -24,7 +32,7 @@
 }
 
 *,*::before,*::after{ box-sizing:border-box; }
-html{ scroll-behavior:smooth; }
+html{ scroll-behavior:smooth; overscroll-behavior-x:none; background:var(--smoke); }
 body{
   margin:0;
   font-family:var(--font);
@@ -38,26 +46,43 @@ h1,h2,h3,p{ margin:0; }
 
 
 .btn{
-  display:inline-block;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:var(--control-gap);
+  min-block-size:var(--control-height);
+  min-inline-size:var(--control-height-sm);
+  max-inline-size:100%;
   font-family:var(--font);
   font-weight:600;
-  text-transform:uppercase;
-  letter-spacing:.2em;
-  font-size:12px;
-  line-height:1;
-  padding:16px 32px;
-  border:1px solid var(--ink);
+  letter-spacing:.02em;
+  font-size:var(--control-font-size);
+  line-height:var(--control-line-height);
+  padding:.75rem var(--control-padding-x);
+  text-align:center;
+  border:1px solid transparent;
+  border-radius:var(--squircle-radius);
+  corner-shape:squircle;
   color:var(--ink);
-  background:transparent;
+  background:color-mix(in srgb, var(--ink) 8%, transparent);
   text-decoration:none;
   cursor:pointer;
   transition:background-color .5s ease, color .5s ease, border-color .5s ease;
 }
 .btn:hover{ background:var(--ink); color:var(--ivory); }
 
-.btn--sm{ padding:12px 24px; font-size:11px; }
+img,
+picture{
+  border-radius:var(--squircle-radius);
+  corner-shape:squircle;
+}
 
-.btn--light{ border-color:var(--ivory); color:var(--ivory); }
+.btn--sm{ min-block-size:var(--control-height-sm); padding:.625rem var(--control-padding-x-sm); }
+
+.btn--light{
+  color:var(--ivory);
+  background:color-mix(in srgb, var(--ivory) 12%, transparent);
+}
 .btn--light:hover{ background:var(--ivory); color:var(--ink); }
 
 
