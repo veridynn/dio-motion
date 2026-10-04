@@ -2,6 +2,32 @@
 
 Personal trainer website for [Dio Motion](https://diomotion.com), built with Astro.
 
+## Project map
+
+- Homepage: `src/components/pages/HomePage.astro` and `src/components/home/`.
+- Shared layout: `src/layouts/SiteLayout.astro`; design tokens: `src/styles/global.css`.
+- Translations and localized anchors: `src/lib/i18n.ts`; German `/`, English `/en/`.
+- Contact form: `src/components/ContactForm.svelte`; validation: `src/lib/contact.ts`.
+- Setup and delivery requirements: `README.md`.
+
+## Efficient work
+
+- Search with `rg` first, then read relevant files or sections. Exclude generated output and dependencies from searches.
+- Keep tool results focused: summarize successful checks; retain actionable errors. Extract relevant documentation sections rather than whole pages.
+- Use `agent-browser` for research and functional checks, with compact snapshots scoped to the affected area. Use a rendering browser for visual checks.
+- Load only skills relevant to the task and their needed references. Preserve installed skill files and required skill checks.
+- Reuse existing components and tokens. Keep changes within the requested scope.
+- At completion, briefly report changes, validation, and remaining blockers so independent tasks can start in a fresh chat.
+
+## Validation
+
+- Astro, Svelte, or TypeScript changes: `pnpm check`.
+- Contact validation or submission changes: also `pnpm test`.
+- Routes, translations, anchors, or rendered page content: also `pnpm test:pages` (includes a build).
+- Other changes affecting the built site: `pnpm build` if not already covered by `test:pages`.
+- Visual or interaction changes: check affected desktop/mobile views and interactions.
+- Documentation-only changes need no site build. Run applicable checks once after the final edit; repeat only for new changes or failures.
+
 ## Development
 
 When starting the dev server, use background mode:
