@@ -1,10 +1,10 @@
 ---
-import { copy, type Locale } from '../../lib/i18n';
+import { copy, sectionIds, type Locale } from '../../lib/i18n';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
-<section class="section section--light" id="ansatz">
+<section class="section section--light" id={sectionIds.approach[locale]}>
   <div class="wrap">
     <h2 class="h-section center reveal">{t.approachHeading[0]}<em>{t.approachHeading[1]}</em>{t.approachHeading[2]}<em>{t.approachHeading[3]}</em>{t.approachHeading[4]}</h2>
     <div class="pillars">

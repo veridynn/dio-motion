@@ -6,18 +6,18 @@ for (const [locale, heading, lead, submit] of [
   ['de', 'Mittelmäßig war nie eine Option.', 'Schreib mir, worum es geht.', 'Anfrage senden'],
   ['en', 'Mediocre was never an option.', 'Tell me what you have in mind.', 'Send enquiry'],
 ]) {
-  const home = `/${locale}/`;
-  const contactId = 'kontakt';
+  const home = locale === 'de' ? '/' : '/en/';
+  const contactId = locale === 'de' ? 'kontakt' : 'contact';
   const html = readFileSync(`dist${home}index.html`, 'utf8');
   assert.match(html, new RegExp(`<html[^>]*lang="${locale}"`));
   assert.ok(html.includes(heading), `${locale} has a translated heading`);
   assert.ok(html.includes(`rel="canonical" href="https://diomotion.com${home}"`));
   for (const language of ['de', 'en']) {
-    const localizedHome = `/${language}/`;
+    const localizedHome = language === 'de' ? '/' : '/en/';
     assert.ok(html.includes(`hreflang="${language}" href="https://diomotion.com${localizedHome}"`));
   }
-  assert.ok(html.includes('hreflang="x-default" href="https://diomotion.com/de/"'));
-  const fallback = locale === 'de' ? '/en/' : '/de/';
+  assert.ok(html.includes('hreflang="x-default" href="https://diomotion.com/"'));
+  const fallback = locale === 'de' ? '/en/' : '/';
   assert.ok(html.match(/<noscript[^>]*>.*?<\/noscript>/s)?.[0].includes(`href="${fallback}"`), 'Language switching has a no-JS fallback');
   assert.ok(/<astro-island[^>]*component-url="[^"]*ContactForm[^"]*"[^>]*client="load"/.test(html), 'Contact form is a hydrated Svelte island');
   const contact = html.match(new RegExp(`<section\\b[^>]*id="${contactId}"[^>]*>(.*?)<\\/section>\\s*<\\/main>`, 's'))?.[1];
@@ -38,16 +38,20 @@ for (const [locale, heading, lead, submit] of [
     assert.ok(contact.includes(`name="${name}"`), `Contact form includes ${name}`);
   }
   assert.equal((html.match(new RegExp(`href="${home}#${contactId}"`, 'g')) || []).length, 5, 'Header, mobile, hero and both footer links target the form');
+  for (const id of locale === 'de' ? ['ansatz', 'leistungen', 'ueber-mich'] : ['approach', 'services', 'about']) {
+    assert.ok(html.includes(`id="${id}"`), 'Section ID is localized');
+    assert.ok(html.includes(`href="${home}#${id}"`), 'Footer targets the localized section');
+  }
   assert.ok(!/href="\/(?:kontakt\/?|de\/kontakt\/?|en\/contact\/?)"/.test(html), 'No old internal contact links');
   for (const [, href] of html.replace(/<noscript[^>]*>.*?<\/noscript>/gs, '').matchAll(/href="(\/(?!\/)[^"#?]*)/g)) {
     const target = href.replace(/\/$/, '');
     if (/\.[a-z]+$/.test(target)) continue;
-    assert.ok(target.startsWith(`/${locale}`), `${locale}: ${href} stays in the same language`);
+    assert.ok(locale === 'en' ? target.startsWith('/en') : !target.startsWith('/en') && !target.startsWith('/de'), `${locale}: ${href} stays in the same language`);
     assert.ok(readFileSync(`dist${target}/index.html`, 'utf8').length);
   }
 }
-assert.match(readFileSync('dist/index.html', 'utf8'), /url=\/de\//);
-for (const [path, target] of [['kontakt', '/de/#kontakt'], ['de/kontakt', '/de/#kontakt'], ['en/contact', '/en/#kontakt']]) {
+assert.match(readFileSync('dist/de/index.html', 'utf8'), /url=\//);
+for (const [path, target] of [['kontakt', '/#kontakt'], ['de/kontakt', '/#kontakt'], ['en/contact', '/en/#contact']]) {
   assert.ok(readFileSync(`dist/${path}/index.html`, 'utf8').includes(`url=${target}`), `${path} redirects to the contact section`);
 }
 console.log('Localized homepages, contact forms, anchor links, metadata and redirects passed');

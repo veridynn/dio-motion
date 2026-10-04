@@ -1,10 +1,10 @@
 ---
-import { copy, type Locale } from '../../lib/i18n';
+import { copy, sectionIds, type Locale } from '../../lib/i18n';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
-<section class="section section--light" id="ueber-mich">
+<section class="section section--light" id={sectionIds.about[locale]}>
   <div class="wrap about">
     <div class="portrait reveal">
       <span>Silvo Miguel<br>Personal Trainer · Berlin</span>

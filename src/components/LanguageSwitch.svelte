@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import { DropdownMenu } from 'bits-ui';
   import { navigate } from 'astro:transitions/client';
-  import { copy, routes, type Locale, type Page } from '../lib/i18n';
+  import { copy, routes, localizeHash, type Locale, type Page } from '../lib/i18n';
 
   let { locale, page }: { locale: Locale; page: Page } = $props();
   let ready = $state(false);
@@ -14,7 +14,7 @@
     const restoreScroll = () => window.scrollTo({ left, top, behavior: 'instant' });
     document.addEventListener('astro:after-swap', restoreScroll, { once: true });
     try {
-      await navigate(routes[page][next] + location.search + location.hash);
+      await navigate(routes[page][next] + location.search + localizeHash(location.hash, next));
       document.getElementById('language-trigger')?.focus({ preventScroll: true });
     } finally {
       document.removeEventListener('astro:after-swap', restoreScroll);

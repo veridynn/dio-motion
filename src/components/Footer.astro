@@ -1,5 +1,5 @@
 ---
-import { copy, routes, type Locale } from '../lib/i18n';
+import { copy, routes, sectionIds, type Locale } from '../lib/i18n';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = copy[locale];
@@ -13,9 +13,9 @@ const t = copy[locale];
     <div>
       <p class="footer__label">Navigation</p>
       <ul class="footer__list">
-        <li><a href={`${routes.home[locale]}#ansatz`}>{t.approach}</a></li>
-        <li><a href={`${routes.home[locale]}#leistungen`}>{t.services}</a></li>
-        <li><a href={`${routes.home[locale]}#ueber-mich`}>{t.about}</a></li>
+        <li><a href={`${routes.home[locale]}#${sectionIds.approach[locale]}`}>{t.approach}</a></li>
+        <li><a href={`${routes.home[locale]}#${sectionIds.services[locale]}`}>{t.services}</a></li>
+        <li><a href={`${routes.home[locale]}#${sectionIds.about[locale]}`}>{t.about}</a></li>
         <li><a href={routes.contact[locale]}>{t.contact}</a></li>
       </ul>
     </div>

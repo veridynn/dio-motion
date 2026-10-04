@@ -1,9 +1,21 @@
 export type Locale = 'de' | 'en';
 export type Page = 'home';
 
+export const sectionIds = {
+  approach: { de: 'ansatz', en: 'approach' },
+  services: { de: 'leistungen', en: 'services' },
+  about: { de: 'ueber-mich', en: 'about' },
+  contact: { de: 'kontakt', en: 'contact' },
+} as const;
+
+export function localizeHash(hash: string, locale: Locale) {
+  const section = Object.values(sectionIds).find(ids => Object.values(ids).some(id => `#${id}` === hash));
+  return section ? `#${section[locale]}` : hash;
+}
+
 export const routes = {
-  home: { de: '/de/', en: '/en/' },
-  contact: { de: '/de/#kontakt', en: '/en/#kontakt' },
+  home: { de: '/', en: '/en/' },
+  contact: { de: '/#kontakt', en: '/en/#contact' },
 } as const;
 
 export const copy = {

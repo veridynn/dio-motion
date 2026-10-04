@@ -11,11 +11,12 @@ export default defineConfig({
   i18n: {
     locales: ['de', 'en'],
     defaultLocale: 'de',
-    routing: { prefixDefaultLocale: true },
+    routing: { prefixDefaultLocale: false },
   },
   redirects: {
-    '/kontakt': '/de/#kontakt',
-    '/de/kontakt': '/de/#kontakt',
-    '/en/contact': '/en/#kontakt',
+    '/de': '/',
+    '/kontakt': '/#kontakt',
+    '/de/kontakt': '/#kontakt',
+    '/en/contact': '/en/#contact',
   },
 });
