@@ -4,81 +4,61 @@
 
   let { locale }: { locale: Locale } = $props();
   const t = $derived(copy[locale]);
-  let expanded = $state(true);
-  let hovered = false;
-  let focused = false;
-  let timer: ReturnType<typeof setTimeout> | undefined;
+  let opacity = $state(1);
+  let focused = $state(false);
+  const visibleOpacity = $derived(focused ? 1 : opacity);
+  let contact: HTMLElement | null = null;
+  let frame = 0;
 
-  function reveal() {
-    clearTimeout(timer);
-    expanded = true;
+  function updateOpacity() {
+    frame = 0;
+    // Fade over the last 240px before contact enters the viewport.
+    opacity = contact ? Math.max(0, Math.min(1, (contact.getBoundingClientRect().top - window.innerHeight) / 240)) : 1;
   }
 
-  function retractLater() {
-    clearTimeout(timer);
-    if (hovered || focused) return;
-    timer = setTimeout(() => { expanded = false; }, 3000);
+  function queueUpdate() {
+    if (!frame) frame = requestAnimationFrame(updateOpacity);
   }
 
   onMount(() => {
-    retractLater();
-    return () => clearTimeout(timer);
+    contact = document.querySelector<HTMLElement>('.contact');
+    updateOpacity();
+    const observer = new ResizeObserver(queueUpdate);
+    observer.observe(document.body);
+    return () => {
+      observer.disconnect();
+      cancelAnimationFrame(frame);
+    };
   });
 </script>
 
-<div class="shortcut-track">
-  <div
-    class="shortcut-hit-area"
-    role="presentation"
-    onpointerenter={(event) => {
-      if (event.pointerType !== 'mouse') return;
-      hovered = true;
-      reveal();
-    }}
-    onpointerleave={() => { hovered = false; retractLater(); }}
-  >
-  <a
-    class="btn contact-shortcut"
-    class:is-peeking={!expanded}
-    href={routes.contact[locale]}
-    aria-label={t.cta}
-    title={t.cta}
-    data-astro-reload
-    onfocus={() => { focused = true; reveal(); }}
-    onblur={() => { focused = false; retractLater(); }}
-  >
-    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <circle cx="12" cy="12" r="4" />
-      <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" />
-    </svg>
-  </a>
-  </div>
-</div>
+<svelte:window onscroll={queueUpdate} onresize={queueUpdate} />
+
+<a
+  class="btn contact-shortcut"
+  class:is-hidden={visibleOpacity === 0}
+  style:--shortcut-opacity={visibleOpacity}
+  href={routes.contact[locale]}
+  aria-label={t.cta}
+  title={t.cta}
+  aria-hidden={visibleOpacity === 0 ? true : undefined}
+  tabindex={visibleOpacity === 0 ? -1 : 0}
+  data-astro-reload
+  onfocus={() => { focused = true; }}
+  onblur={() => { focused = false; }}
+>
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+    <circle cx="12" cy="12" r="4" />
+    <path d="M16 8v5a3 3 0 0 0 6 0v-1a10 10 0 1 0-4 8" />
+  </svg>
+</a>
 
 <style>
-  .shortcut-track{
-    grid-area:1 / 1;
-    align-self:start;
-    position:sticky;
-    top:var(--header-height);
-    height:var(--usable-height);
-    z-index:60;
-    overflow:clip;
-    pointer-events:none;
-  }
-  .shortcut-hit-area{
-    --inset-right:calc(1rem + env(safe-area-inset-right));
-    position:absolute;
-    right:0;
-    bottom:calc(1rem + env(safe-area-inset-bottom));
-    width:calc(3.75rem + var(--inset-right));
-    height:3.75rem;
-    pointer-events:auto;
-  }
   .contact-shortcut{
-    position:absolute;
-    right:var(--inset-right);
-    bottom:0;
+    position:fixed;
+    z-index:60;
+    right:calc(1rem + env(safe-area-inset-right));
+    bottom:calc(1rem + env(safe-area-inset-bottom));
     width:3.75rem; height:3.75rem; padding:0;
     border-radius:50% 50% 0 50%;
     corner-shape:round;
@@ -86,13 +66,11 @@
     background:var(--ink);
     color:var(--ivory);
     box-shadow:0 2px 16px rgba(25,23,20,.14);
-    pointer-events:auto;
-    transition:transform .35s ease, background-color .35s ease;
+    opacity:var(--shortcut-opacity, 1);
+    transition:background-color .2s ease;
   }
-  .contact-shortcut.is-peeking{ transform:translateX(calc(var(--inset-right) + 1rem)); }
-  .shortcut-hit-area:hover .contact-shortcut{ background:var(--graphit); color:var(--ivory); }
-  .contact-shortcut:focus-visible{ transform:none; }
+  .contact-shortcut.is-hidden{ pointer-events:none; }
   @media (min-width:861px){
-    .shortcut-track{ display:none; }
+    .contact-shortcut{ display:none; }
   }
 </style>

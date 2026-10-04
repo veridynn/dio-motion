@@ -15,19 +15,11 @@ const t = copy[locale];
 ---
 <SiteLayout title={t.homeTitle} description={t.homeDescription} locale={locale} page="home">
   <ScrollReveals client:load />
-  <div class="home-intro">
-    <div class="home-sections">
-      <Hero locale={locale} />
-      <Bridge locale={locale} />
-      <Approach locale={locale} />
-      <Services locale={locale} />
-      <About locale={locale} />
-    </div>
-    <ContactShortcut locale={locale} client:load />
-  </div>
+  <Hero locale={locale} />
+  <Bridge locale={locale} />
+  <Approach locale={locale} />
+  <Services locale={locale} />
+  <About locale={locale} />
+  <ContactShortcut locale={locale} client:load />
   <ContactCallout locale={locale} />
 </SiteLayout>
-<style>
-  .home-intro{ display:grid; }
-  .home-sections{ grid-area:1 / 1; min-width:0; }
-</style>
