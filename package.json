@@ -10,7 +10,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "test": "node tests/contact-email.test.mjs",
+    "test": "node --experimental-strip-types tests/contact-form.test.mjs",
     "check": "astro check && svelte-check --tsconfig ./tsconfig.json",
     "test:pages": "astro build && node tests/localized-pages.test.mjs"
   },

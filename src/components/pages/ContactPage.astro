@@ -13,7 +13,7 @@ const t = copy[locale];
     <h1>{t.cta}.</h1>
     <p class="lead">{t.contactLead}</p>
 
-    <ContactForm locale={locale} client:load transition:persist="contact-form" />
+    <ContactForm accessKey={import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY} locale={locale} client:load transition:persist="contact-form" />
 
     <p class="alt">
       {t.contactAlternative}<br>
