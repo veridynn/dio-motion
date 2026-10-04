@@ -119,22 +119,28 @@
   margin-bottom:var(--control-gap);
 }
 input, textarea{
+  --field-padding-block:.625em;
+  --field-border-width:1px;
   display:block;
   width:100%;
   min-height:var(--control-height);
   font-family:var(--font); font-size:var(--fs-base); font-weight:400; line-height:1.6;
   color:var(--ink); background:var(--bone);
-  border:1px solid transparent;
+  border:var(--field-border-width) solid transparent;
   border-radius:var(--squircle-radius);
   corner-shape:squircle;
-  padding:.625em .5em;
+  padding:var(--field-padding-block) .5em;
   transition:border-color .3s ease, background-color .3s ease;
 }
 input:focus, textarea:focus{
   border-color:var(--sandstein);
   background:var(--bone-kuehl);
 }
-textarea{ field-sizing:content; resize:none; min-height:9rem; }
+textarea{
+  field-sizing:content;
+  resize:none;
+  min-height:calc(4lh + 2 * var(--field-padding-block) + 2 * var(--field-border-width));
+}
 
 
 :global(.contact-submit) {
