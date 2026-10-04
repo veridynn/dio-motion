@@ -1,23 +1,29 @@
 ---
-import { copy, routes, type Locale } from '../../lib/i18n';
+import ContactForm from '../ContactForm.svelte';
+import { copy, type Locale } from '../../lib/i18n';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
-<section class="section section--light contact center" id="kontakt">
+<section class="section section--light contact" id="kontakt" aria-labelledby="contact-heading">
   <div class="wrap">
-    <h2 class="h-section reveal">{t.ready}</h2>
-    <a class="btn reveal" href={routes.contact[locale]}>{t.cta}</a>
-    <a class="contact__mail reveal" href="mailto:silvo@diomotion.com">silvo@diomotion.com</a>
+    <h2 class="h-section" id="contact-heading">{t.ready}</h2>
+    <p class="lead">{t.contactLead}</p>
+    <ContactForm accessKey={import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY} locale={locale} client:load transition:persist="contact-form" />
+    <p class="alt">
+      {t.contactAlternative}<br>
+      <a href="mailto:silvo@diomotion.com">silvo@diomotion.com</a>
+    </p>
   </div>
 </section>
 <style>
-.contact .btn{ margin-top:2.75rem; }
-.contact__mail{
-  display:block; margin-top:2.5rem;
-  font-size:.9375rem; letter-spacing:.02em;
-  color:var(--asche); text-decoration:none;
-  transition:color .3s ease;
+.contact .wrap{ max-width:34rem; }
+.contact .lead{ margin-top:1.5rem; }
+.alt{
+  margin-top:clamp(3.5rem,8vh,5rem);
+  padding-top:2rem; border-top:1px solid var(--leinen);
+  font-size:.875rem; line-height:1.7; color:var(--asche);
 }
-.contact__mail:hover{ color:var(--sandstein); }
+.alt a{ color:var(--asche); text-decoration:none; border-bottom:1px solid var(--leinen); }
+.alt a:hover{ color:var(--sandstein); }
 </style>

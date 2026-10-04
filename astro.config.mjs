@@ -13,5 +13,9 @@ export default defineConfig({
     defaultLocale: 'de',
     routing: { prefixDefaultLocale: true },
   },
-  redirects: { '/kontakt': '/de/kontakt' },
+  redirects: {
+    '/kontakt': '/de/#kontakt',
+    '/de/kontakt': '/de/#kontakt',
+    '/en/contact': '/en/#kontakt',
+  },
 });

@@ -1,11 +1,11 @@
 ---
 import { copy, routes, type Locale } from '../lib/i18n';
-interface Props { compact?: boolean; locale: Locale; }
-const { compact = false, locale } = Astro.props;
+interface Props { locale: Locale; }
+const { locale } = Astro.props;
 const t = copy[locale];
 ---
-<footer class:list={["footer", { "footer--compact": compact }]}>
-  {!compact && <div class="footer__cols">
+<footer class="footer">
+  <div class="footer__cols">
     <div class="footer__brand">
       <a class="wordmark" href={routes.home[locale]}>dio motion.</a>
       <p class="footer__tagline">{t.tagline}</p>
@@ -27,7 +27,6 @@ const t = copy[locale];
       </ul>
     </div>
   </div>
-  }
   <div class="footer__bottom">
     <span>© {new Date().getFullYear()} dio motion.</span>
     <span class="footer__legal">
@@ -74,9 +73,7 @@ const t = copy[locale];
 .footer__legal{ display:flex; gap:1.75rem; }
 .footer__bottom { opacity: 1; color: #aaa49b; }
 .footer__legal { flex-wrap: wrap; }
-.footer--compact { padding: 2rem var(--gutter); }
-.footer--compact .footer__bottom { max-width: none; border: 0; margin: 0; padding: 0; }
 @media (max-width: 860px) { .footer__cols { grid-template-columns: 1fr; gap: 2.75rem; } }
-@media (max-width: 720px) { .footer:not(.footer--compact) { padding-bottom: calc(7rem + env(safe-area-inset-bottom)); } }
+@media (max-width: 720px) { .footer { padding-bottom: calc(7rem + env(safe-area-inset-bottom)); } }
 
 </style>

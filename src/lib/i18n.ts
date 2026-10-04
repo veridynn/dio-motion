@@ -1,17 +1,15 @@
 export type Locale = 'de' | 'en';
-export type Page = 'home' | 'contact';
+export type Page = 'home';
 
 export const routes = {
   home: { de: '/de/', en: '/en/' },
-  contact: { de: '/de/kontakt', en: '/en/contact' },
+  contact: { de: '/de/#kontakt', en: '/en/#kontakt' },
 } as const;
 
 export const copy = {
   de: {
     homeTitle: 'dio motion. — Persönliches Training in Berlin',
     homeDescription: 'Persönliches Training in Berlin mit Silvo Miguel. Training, Ernährung und Regeneration mit Fokus und Struktur.',
-    contactTitle: 'Kontakt — dio motion.',
-    contactDescription: 'Frage dein erstes Gespräch mit Silvo Miguel an. Persönliches Training in Berlin.',
     cta: 'Erstes Gespräch anfragen', tagline: 'Persönliches Training in Berlin',
     skip: 'Zum Inhalt', navigation: 'Hauptnavigation', back: 'Zurück', language: 'Sprache wählen',
     approach: 'Ansatz', services: 'Leistungen', about: 'Über mich', contact: 'Kontakt',
@@ -55,8 +53,6 @@ export const copy = {
   en: {
     homeTitle: 'dio motion. — Personal training in Berlin',
     homeDescription: 'Personal training in Berlin with Silvo Miguel. Training, nutrition and recovery with focus and structure.',
-    contactTitle: 'Contact — dio motion.',
-    contactDescription: 'Arrange your first conversation with Silvo Miguel. Personal training in Berlin.',
     cta: 'Arrange a first conversation', tagline: 'Personal training in Berlin',
     skip: 'Skip to content', navigation: 'Main navigation', back: 'Back', language: 'Choose language',
     approach: 'Approach', services: 'Services', about: 'About me', contact: 'Contact',

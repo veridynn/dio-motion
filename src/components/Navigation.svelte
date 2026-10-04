@@ -3,7 +3,7 @@
   import { copy, routes, type Locale, type Page } from '../lib/i18n';
   import LanguageSwitch from './LanguageSwitch.svelte';
 
-  let { contact = false, locale, page }: { contact?: boolean; locale: Locale; page: Page } = $props();
+  let { locale, page }: { locale: Locale; page: Page } = $props();
   const t = $derived(copy[locale]);
   let scrolled = $state(false);
 
@@ -28,20 +28,14 @@
   });
 </script>
 
-<nav class="nav" class:nav--contact={contact} class:is-scrolled={scrolled} aria-label={t.navigation}>
+<nav class="nav" class:is-scrolled={scrolled} aria-label={t.navigation}>
   <a class="wordmark" href={routes.home[locale]}>dio motion.</a>
   <div class="nav__actions">
-    {#if contact}
-      <a class="back" href={routes.home[locale]}>← {t.back}</a>
-    {:else}
-      <a class="btn btn--sm btn--light" href={routes.contact[locale]}>{t.cta}</a>
-    {/if}
+    <a class="btn btn--sm btn--light" href={routes.contact[locale]}>{t.cta}</a>
     <LanguageSwitch {locale} {page} />
   </div>
 </nav>
-{#if !contact}
-  <a class="btn btn--sm nav__cta-floating" href={routes.contact[locale]}>{t.cta}</a>
-{/if}
+<a class="btn btn--sm nav__cta-floating" href={routes.contact[locale]}>{t.cta}</a>
 <style>
 .nav{
   color:var(--ivory);
@@ -84,10 +78,6 @@
     box-shadow:0 2px 24px rgba(25,23,20,.14);
   }
 }
-.nav--contact { color:var(--ink); background:var(--ivory); position: static; border-bottom-color: var(--leinen); }
-.nav--contact .wordmark { color: var(--ink); }
-.back { font-size: .8125rem; letter-spacing: .02em; color: var(--asche); text-decoration: none; }
-.back:hover { color: var(--sandstein); }
 @media (max-width: 720px) {
   .nav__cta-floating { max-width: calc(100% - 2rem); width: max-content; bottom: calc(1.5rem + env(safe-area-inset-bottom)); }
 }

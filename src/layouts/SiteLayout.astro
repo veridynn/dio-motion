@@ -4,8 +4,8 @@ import { ClientRouter } from 'astro:transitions';
 import Navigation from '../components/Navigation.svelte';
 import Footer from '../components/Footer.astro';
 import { copy, routes, type Locale, type Page } from '../lib/i18n';
-interface Props { title: string; description: string; contact?: boolean; locale: Locale; page: Page; }
-const { title, description, contact = false, locale, page } = Astro.props;
+interface Props { title: string; description: string; locale: Locale; page: Page; }
+const { title, description, locale, page } = Astro.props;
 ---
 <!doctype html>
 <html lang={locale} transition:animate="none">
@@ -26,8 +26,8 @@ const { title, description, contact = false, locale, page } = Astro.props;
   </head>
   <body>
     <a class="skip-link" href="#main">{copy[locale].skip}</a>
-    <Navigation contact={contact} locale={locale} page={page} client:load transition:persist="navigation" />
+    <Navigation locale={locale} page={page} client:load transition:persist="navigation" />
     <main id="main" tabindex="-1"><slot /></main>
-    <Footer compact={contact} locale={locale} />
+    <Footer locale={locale} />
   </body>
 </html>
