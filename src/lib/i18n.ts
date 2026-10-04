@@ -2,6 +2,7 @@ export type Locale = 'de' | 'en';
 export type Page = 'home';
 
 export const sectionIds = {
+  potential: { de: 'potenzial', en: 'potential' },
   approach: { de: 'ansatz', en: 'approach' },
   services: { de: 'leistungen', en: 'services' },
   about: { de: 'ueber-mich', en: 'about' },
@@ -24,7 +25,7 @@ export const copy = {
     homeDescription: 'Persönliches Training in Berlin mit Silvo Miguel. Training, Ernährung und Regeneration mit Fokus und Struktur.',
     cta: 'Erstes Gespräch anfragen', tagline: 'Persönliches Training in Berlin',
     skip: 'Zum Inhalt', navigation: 'Hauptnavigation', back: 'Zurück', language: 'Sprache wählen',
-    approach: 'Ansatz', services: 'Leistungen', about: 'Über mich', contact: 'Kontakt',
+    potential: 'Potenzial', approach: 'Ansatz', services: 'Leistungen', about: 'Über mich', contact: 'Kontakt',
     legal: 'Impressum', privacy: 'Datenschutzerklärung',
     hero: 'Mittelmäßig war nie eine Option.',
     bridge: 'Dein Körper ist zu mehr fähig, als du heute abrufst.',
@@ -66,7 +67,7 @@ export const copy = {
     homeDescription: 'Personal training in Berlin with Silvo Miguel. Training, nutrition and recovery with focus and structure.',
     cta: 'Arrange a first conversation', tagline: 'Personal training in Berlin',
     skip: 'Skip to content', navigation: 'Main navigation', back: 'Back', language: 'Choose language',
-    approach: 'Approach', services: 'Services', about: 'About me', contact: 'Contact',
+    potential: 'Potential', approach: 'Approach', services: 'Services', about: 'About me', contact: 'Contact',
     legal: 'Legal notice', privacy: 'Privacy policy',
     hero: 'Mediocre was never an option.',
     bridge: 'Your body is capable of more than you ask of it today.',

@@ -37,7 +37,12 @@ for (const [locale, heading, lead, submit] of [
   for (const name of ['name', 'email', 'message']) {
     assert.ok(contact.includes(`name="${name}"`), `Contact form includes ${name}`);
   }
-  assert.equal((html.match(new RegExp(`href="${home}#${contactId}"`, 'g')) || []).length, 5, 'Header, mobile, hero and both footer links target the form');
+  assert.equal((html.match(new RegExp(`href="${home}#${contactId}"`, 'g')) || []).length, 4, 'Header, mobile, hero and footer links target the form');
+  const footer = html.match(/<footer\b[^>]*>(.*?)<\/footer>/s)?.[1];
+  for (const id of locale === 'de' ? ['potenzial', 'ansatz', 'leistungen', 'ueber-mich', 'kontakt'] : ['potential', 'approach', 'services', 'about', 'contact']) {
+    assert.ok(html.includes(`id="${id}"`), `${locale}: section ${id} exists`);
+    assert.ok(footer?.includes(`href="${home}#${id}"`), `${locale}: footer links to ${id}`);
+  }
   for (const id of locale === 'de' ? ['ansatz', 'leistungen', 'ueber-mich'] : ['approach', 'services', 'about']) {
     assert.ok(html.includes(`id="${id}"`), 'Section ID is localized');
     assert.ok(html.includes(`href="${home}#${id}"`), 'Footer targets the localized section');
