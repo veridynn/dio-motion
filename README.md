@@ -16,6 +16,10 @@ Website for personal training by dio motion.
 
 German is the default language at `/`; English lives at `/en/`. Section anchors are localized, including `/#kontakt` and `/en/#contact`. The language switch maps the current anchor to the corresponding section in the selected language.
 
+## Typography
+
+The Manrope type scale lives in `src/styles/global.css` as `--fs-sm` through `--fs-xxxl`. It grows fluidly between 400px and 1280px, with a 16px/1.25 mobile base and a 19px/1.333 desktop base. Sizes remain capped outside that range. Use the shared tokens in component styles; keep weights, tracking, and unitless line heights appropriate to each role. Rem bounds respect browser font preferences without changing the root font size.
+
 ## Content still needed
 
 - Replace the portrait placeholder in `About.astro` with the final image.

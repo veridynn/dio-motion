@@ -53,7 +53,7 @@
   border-bottom-color:var(--leinen);
 }
 .wordmark{
-  font-size:1.0625rem; font-weight:500; letter-spacing:.01em;
+  font-size:var(--fs-base); font-weight:500; letter-spacing:.01em;
   color:var(--ivory); text-decoration:none;
   transition:color .5s ease;
 }

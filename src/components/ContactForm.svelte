@@ -115,14 +115,14 @@
 :global(.contact-label){
   display:block;
   font-weight:600; text-transform:uppercase; letter-spacing:.2em;
-  font-size:.6875rem; color:var(--asche);
+  font-size:var(--fs-sm); color:var(--asche);
   margin-bottom:var(--control-gap);
 }
 input, textarea{
   display:block;
   width:100%;
   min-height:var(--control-height);
-  font-family:var(--font); font-size:1rem; font-weight:400; line-height:1.6;
+  font-family:var(--font); font-size:var(--fs-base); font-weight:400; line-height:1.6;
   color:var(--ink); background:var(--bone);
   border:1px solid transparent;
   border-radius:var(--squircle-radius);
@@ -146,9 +146,9 @@ textarea{ field-sizing:content; resize:none; min-height:9rem; }
   color:var(--ivory);
 }
 :global(.contact-submit:hover) { background:var(--graphit); color:var(--ivory); }
-.form-help { margin-top: var(--control-padding-x-sm); font-size: .8125rem; line-height: 1.6; color: var(--asche); }
+.form-help { margin-top: var(--control-padding-x-sm); font-size: var(--fs-sm); line-height: 1.6; color: var(--asche); }
 fieldset{ border:0; padding:0; margin:0; min-width:0; }
 .captcha-notice a{ color:inherit; text-underline-offset:.2em; }
 :global(.contact-submit:disabled){ opacity:.6; cursor:not-allowed; }
-.field-error, .form-status{ margin-top:var(--control-gap); font-size:.875rem; line-height:1.6; color:var(--asche); }
+.field-error, .form-status{ margin-top:var(--control-gap); font-size:var(--fs-sm); line-height:1.6; color:var(--asche); }
 </style>
