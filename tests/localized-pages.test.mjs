@@ -3,8 +3,8 @@ import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 
 for (const [locale, heading, lead, submit] of [
-  ['de', 'Mittelmäßig war nie eine Option.', 'Schreib mir, worum es geht.', 'Nachricht senden'],
-  ['en', 'Mediocre was never an option.', 'Tell me what you have in mind.', 'Send message'],
+  ['de', 'Mittelmäßig war nie eine Option.', 'Schreib mir, worum es geht.', 'Anfrage senden'],
+  ['en', 'Mediocre was never an option.', 'Tell me what you have in mind.', 'Send enquiry'],
 ]) {
   const home = `/${locale}/`;
   const contactId = 'kontakt';
