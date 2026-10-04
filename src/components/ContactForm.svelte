@@ -37,7 +37,7 @@
   async function submit(event: SubmitEvent & { currentTarget: HTMLFormElement }) {
     event.preventDefault();
     const form = event.currentTarget;
-    if (busy || !configured) return;
+    if (busy) return;
     status = 'idle';
     errors = {};
     const fields = contactSchema({ name, email, message });
@@ -49,6 +49,10 @@
       };
       await tick();
       form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
+      return;
+    }
+    if (!configured) {
+      window.alert(t.formPreview);
       return;
     }
     busy = true;
@@ -89,7 +93,7 @@
       {#if errors.message}<p class="field-error" id="message-error">{t.messageError}</p>{/if}
     </div>
     {#if configured}<div class="h-captcha" data-captcha="true" data-lang={locale} data-size="invisible"></div>{/if}
-    <Button.Root class="btn contact-submit" type="submit" disabled={!configured || busy}>{busy ? t.sending : t.sendMessage}</Button.Root>
+    <Button.Root class="btn contact-submit" type="submit" disabled={busy}>{busy ? t.sending : t.sendMessage}</Button.Root>
   </fieldset>
 </form>
 {#if configured}
