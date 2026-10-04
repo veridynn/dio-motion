@@ -71,7 +71,10 @@ const t = copy[locale];
 .footer__bottom { opacity: 1; color: #aaa49b; }
 .footer__legal { flex-wrap: wrap; }
 @media (max-width: 860px) {
-  .footer { padding-bottom:calc(var(--space-xl) + 4rem + env(safe-area-inset-bottom)); }
+  .footer {
+    padding-top:var(--space-xl);
+    padding-bottom:calc(var(--space-xl) + env(safe-area-inset-bottom));
+  }
 }
 
 </style>
