@@ -10,20 +10,9 @@ const t = copy[locale];
     <h2 class="h-section" id="contact-heading">{t.ready}</h2>
     <p class="lead">{t.contactLead}</p>
     <ContactForm accessKey={import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY} locale={locale} client:load transition:persist="contact-form" />
-    <p class="alt">
-      {t.contactAlternative}<br>
-      <a href="mailto:silvo@diomotion.com">silvo@diomotion.com</a>
-    </p>
   </div>
 </section>
 <style>
 .contact .wrap{ max-width:34rem; }
 .contact .lead{ margin-top:1.5rem; }
-.alt{
-  margin-top:clamp(3.5rem,8vh,5rem);
-  padding-top:2rem; border-top:1px solid var(--leinen);
-  font-size:.875rem; line-height:1.7; color:var(--asche);
-}
-.alt a{ color:var(--asche); text-decoration:none; border-bottom:1px solid var(--leinen); }
-.alt a:hover{ color:var(--sandstein); }
 </style>

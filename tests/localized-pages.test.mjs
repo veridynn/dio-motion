@@ -37,7 +37,7 @@ for (const [locale, heading, lead, submit] of [
   for (const name of ['name', 'email', 'message']) {
     assert.ok(contact.includes(`name="${name}"`), `Contact form includes ${name}`);
   }
-  assert.equal((html.match(new RegExp(`href="${home}#${contactId}"`, 'g')) || []).length, 4, 'Header, mobile, hero and footer links target the form');
+  assert.equal((html.match(new RegExp(`href="${home}#${contactId}"`, 'g')) || []).length, 5, 'Header, mobile, hero and both footer links target the form');
   assert.ok(!/href="\/(?:kontakt\/?|de\/kontakt\/?|en\/contact\/?)"/.test(html), 'No old internal contact links');
   for (const [, href] of html.replace(/<noscript[^>]*>.*?<\/noscript>/gs, '').matchAll(/href="(\/(?!\/)[^"#?]*)/g)) {
     const target = href.replace(/\/$/, '');
