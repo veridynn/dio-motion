@@ -127,7 +127,7 @@ input, textarea{
   border:1px solid transparent;
   border-radius:var(--squircle-radius);
   corner-shape:squircle;
-  padding:var(--control-gap) var(--control-padding-x);
+  padding:.625em .5em;
   transition:border-color .3s ease, background-color .3s ease;
 }
 input:focus, textarea:focus{
