@@ -136,8 +136,14 @@ textarea{ field-sizing:content; resize:none; min-height:9rem; }
 
 
 :global(.contact-submit) {
+  display:flex;
+  width:fit-content;
   margin-top:2rem;
+  margin-inline-start:auto;
+  background:var(--ink);
+  color:var(--ivory);
 }
+:global(.contact-submit:hover) { background:var(--graphit); color:var(--ivory); }
 .form-help { margin-top: 1rem; font-size: .8125rem; line-height: 1.6; color: var(--asche); }
 fieldset{ border:0; padding:0; margin:0; min-width:0; }
 .captcha-notice a{ color:inherit; text-underline-offset:.2em; }
