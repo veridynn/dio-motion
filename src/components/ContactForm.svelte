@@ -89,7 +89,7 @@
     </div>
     <div class="field">
       <Label.Root class="contact-label" for="nachricht">{t.message}</Label.Root>
-      <textarea id="nachricht" name="message" rows="6" bind:value={message} maxlength="5000" required aria-invalid={errors.message || undefined} aria-describedby={errors.message ? 'message-error' : undefined}></textarea>
+      <textarea id="nachricht" name="message" rows="4" bind:value={message} maxlength="5000" required aria-invalid={errors.message || undefined} aria-describedby={errors.message ? 'message-error' : undefined}></textarea>
       {#if errors.message}<p class="field-error" id="message-error">{t.messageError}</p>{/if}
     </div>
     {#if configured}<div class="h-captcha" data-captcha="true" data-lang={locale} data-size="invisible"></div>{/if}
@@ -111,8 +111,7 @@
   {:else if status === 'captcha'}<p>{t.captchaError}</p>{/if}
 </div>
 <style>
-form{ margin-top:clamp(3rem,7vh,4.5rem); }
-.field + .field{ margin-top:2rem; }
+.field + .field{ margin-top:1.5rem; }
 :global(.contact-label){
   display:block;
   font-weight:600; text-transform:uppercase; letter-spacing:.2em;
@@ -122,18 +121,23 @@ form{ margin-top:clamp(3rem,7vh,4.5rem); }
 input, textarea{
   width:100%;
   font-family:var(--font); font-size:1rem; font-weight:400; line-height:1.6;
-  color:var(--ink); background:transparent;
-  border:0; border-bottom:1px solid var(--leinen);
-  padding:.625rem 0;
-  transition:border-color .3s ease;
+  color:var(--ink); background:var(--bone);
+  border:1px solid transparent;
+  border-radius:var(--squircle-radius);
+  corner-shape:squircle;
+  padding:.875rem 1.25rem;
+  transition:border-color .3s ease, background-color .3s ease;
 }
 input:focus, textarea:focus{
-  border-bottom-color:var(--sandstein);
+  border-color:var(--sandstein);
+  background:var(--bone-kuehl);
 }
-textarea{ resize:vertical; min-height:8rem; }
+textarea{ field-sizing:content; resize:none; min-height:9rem; }
 
 
-:global(.contact-submit) { margin-top: 3rem; }
+:global(.contact-submit) {
+  margin-top:2rem;
+}
 .form-help { margin-top: 1rem; font-size: .8125rem; line-height: 1.6; color: var(--asche); }
 fieldset{ border:0; padding:0; margin:0; min-width:0; }
 .captcha-notice a{ color:inherit; text-underline-offset:.2em; }

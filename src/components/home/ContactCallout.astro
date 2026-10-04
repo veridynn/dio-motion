@@ -6,13 +6,25 @@ const { locale } = Astro.props;
 const t = copy[locale];
 ---
 <section class="section section--light contact" id="kontakt" aria-labelledby="contact-heading">
-  <div class="wrap">
-    <h2 class="h-section" id="contact-heading">{t.ready}</h2>
-    <p class="lead">{t.contactLead}</p>
-    <ContactForm accessKey={import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY} locale={locale} client:load transition:persist="contact-form" />
+  <div class="wrap contact__layout">
+    <div class="contact__intro">
+      <h2 class="h-section" id="contact-heading">{t.ready}</h2>
+      <p class="lead">{t.contactLead}</p>
+    </div>
+    <div class="contact__form">
+      <ContactForm accessKey={import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY} locale={locale} client:load transition:persist="contact-form" />
+    </div>
   </div>
 </section>
 <style>
-.contact .wrap{ max-width:34rem; }
+.contact__layout{
+  display:grid; grid-template-columns:minmax(0,.86fr) minmax(0,1fr);
+  gap:clamp(2.5rem,7vw,6rem);
+  align-items:start;
+}
 .contact .lead{ margin-top:1.5rem; }
+.contact__form{ min-width:0; }
+@media (max-width: 860px) {
+  .contact__layout{ grid-template-columns:1fr; }
+}
 </style>
