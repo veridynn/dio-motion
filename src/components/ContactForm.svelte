@@ -111,21 +111,23 @@
   {:else if status === 'captcha'}<p>{t.captchaError}</p>{/if}
 </div>
 <style>
-.field + .field{ margin-top:1.5rem; }
+.field + .field{ margin-top:var(--control-padding-x); }
 :global(.contact-label){
   display:block;
   font-weight:600; text-transform:uppercase; letter-spacing:.2em;
   font-size:.6875rem; color:var(--asche);
-  margin-bottom:.75rem;
+  margin-bottom:var(--control-gap);
 }
 input, textarea{
+  display:block;
   width:100%;
+  min-height:var(--control-height);
   font-family:var(--font); font-size:1rem; font-weight:400; line-height:1.6;
   color:var(--ink); background:var(--bone);
   border:1px solid transparent;
   border-radius:var(--squircle-radius);
   corner-shape:squircle;
-  padding:.875rem 1.25rem;
+  padding:var(--control-gap) var(--control-padding-x);
   transition:border-color .3s ease, background-color .3s ease;
 }
 input:focus, textarea:focus{
@@ -138,15 +140,15 @@ textarea{ field-sizing:content; resize:none; min-height:9rem; }
 :global(.contact-submit) {
   display:flex;
   width:fit-content;
-  margin-top:2rem;
+  margin-top:calc(var(--control-gap) * 4);
   margin-inline-start:auto;
   background:var(--ink);
   color:var(--ivory);
 }
 :global(.contact-submit:hover) { background:var(--graphit); color:var(--ivory); }
-.form-help { margin-top: 1rem; font-size: .8125rem; line-height: 1.6; color: var(--asche); }
+.form-help { margin-top: var(--control-padding-x-sm); font-size: .8125rem; line-height: 1.6; color: var(--asche); }
 fieldset{ border:0; padding:0; margin:0; min-width:0; }
 .captcha-notice a{ color:inherit; text-underline-offset:.2em; }
 :global(.contact-submit:disabled){ opacity:.6; cursor:not-allowed; }
-.field-error, .form-status{ margin-top:.75rem; font-size:.875rem; line-height:1.6; color:var(--asche); }
+.field-error, .form-status{ margin-top:var(--control-gap); font-size:.875rem; line-height:1.6; color:var(--asche); }
 </style>
