@@ -20,6 +20,10 @@ German is the default language at `/`; English lives at `/en/`. Section anchors 
 
 The Manrope type scale lives in `src/styles/global.css` as `--fs-sm` through `--fs-xxxl`. It grows fluidly between 400px and 1280px, with a 16px/1.25 mobile base and a 19px/1.333 desktop base. Sizes remain capped outside that range. Use the shared tokens in component styles; keep weights, tracking, and unitless line heights appropriate to each role. Rem bounds respect browser font preferences without changing the root font size.
 
+## Spacing
+
+Fluid `--space-*` tokens in `src/styles/global.css` use the same 400–1280px range as typography. The `xs` through `3xl` steps cover component margins, padding, and gaps. `--space-section` grows from 56px to 144px, and `--space-gutter` from 20px to 96px. `--section-y` and `--gutter` remain the shared layout aliases. Spacing is capped beyond those widths; grid and visibility breakpoints remain independent.
+
 ## Content still needed
 
 - Replace the portrait placeholder in `About.astro` with the final image.

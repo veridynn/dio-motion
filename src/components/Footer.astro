@@ -32,43 +32,46 @@ const t = copy[locale];
 <style>
 .footer{
   background:var(--smoke); color:var(--ivory);
-  padding:clamp(4rem,9vh,6.5rem) var(--gutter) 2rem;
+  padding:var(--space-3xl) var(--gutter) var(--space-xl);
 }
 .footer__cols{
   max-width:var(--measure); margin:0 auto;
   display:flex; flex-wrap:wrap; align-items:flex-start;
-  gap:clamp(2rem,5vw,4rem);
+  gap:var(--space-xl);
 }
 .footer__brand{ flex:1 1 12rem; }
 .footer__navigation{ width:max-content; }
 .footer__brand .wordmark{ color:var(--ivory); font-size:var(--fs-base); font-weight:500; letter-spacing:.01em; text-decoration:none; }
 .footer__tagline{
-  margin-top:.875rem; font-weight:300; font-style:italic;
+  margin-top:var(--space-sm); font-weight:300; font-style:italic;
   font-size:var(--fs-sm); color:var(--ivory); opacity:.65;
 }
 .footer__label{
   font-weight:600; text-transform:uppercase; letter-spacing:.2em;
   font-size:var(--fs-sm); color:var(--ivory); opacity:.65;
 }
-.footer__list{ list-style:none; margin:1.5rem 0 0; padding:0; }
-.footer__list li + li{ margin-top:.75rem; }
+.footer__list{ list-style:none; margin:var(--space-xs) 0 0; padding:0; }
 .footer__list a{
+  display:flex; align-items:center; min-height:2rem;
+  line-height:1.5;
   font-size:var(--fs-sm); color:var(--ivory); opacity:.7;
   text-decoration:none; transition:color .3s ease, opacity .3s ease;
 }
 .footer__list a:hover{ color:var(--sandstein); opacity:1; }
 .footer__bottom{
-  max-width:var(--measure); margin:clamp(3rem,6vh,4.5rem) auto 0;
-  padding-top:1.75rem; border-top:1px solid var(--graphit);
-  display:flex; justify-content:space-between; gap:1.5rem; flex-wrap:wrap;
+  max-width:var(--measure); margin:var(--space-2xl) auto 0;
+  padding-top:var(--space-lg); border-top:1px solid var(--graphit);
+  display:flex; justify-content:space-between; gap:var(--space-lg); flex-wrap:wrap;
 }
 .footer__bottom, .footer__bottom a{
   font-size:var(--fs-sm); color:var(--ivory); opacity:.4; text-decoration:none;
 }
 .footer__bottom a:hover{ opacity:.8; }
-.footer__legal{ display:flex; gap:1.75rem; }
+.footer__legal{ display:flex; gap:var(--space-lg); }
 .footer__bottom { opacity: 1; color: #aaa49b; }
 .footer__legal { flex-wrap: wrap; }
-@media (max-width: 720px) { .footer { padding-bottom: calc(7rem + env(safe-area-inset-bottom)); } }
+@media (max-width: 860px) {
+  .footer { padding-bottom:calc(var(--space-xl) + 4rem + env(safe-area-inset-bottom)); }
+}
 
 </style>

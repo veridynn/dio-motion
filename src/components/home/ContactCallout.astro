@@ -5,7 +5,7 @@ interface Props { locale: Locale; }
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
-<section class="section section--light contact" id={sectionIds.contact[locale]} aria-labelledby="contact-heading">
+<section class="section section--light contact" id={sectionIds.contact[locale]} aria-labelledby="contact-heading" tabindex="-1">
   <div class="wrap contact__layout">
     <div class="contact__intro">
       <h2 class="h-section" id="contact-heading">{t.ready}</h2>
@@ -18,13 +18,13 @@ const t = copy[locale];
 </section>
 <style>
 .contact__layout{
-  display:grid; grid-template-columns:minmax(0,.86fr) minmax(0,1fr);
-  gap:clamp(2.5rem,7vw,6rem);
+  display:grid; grid-template-columns:minmax(0,1fr);
+  gap:var(--space-xl);
   align-items:start;
 }
-.contact .lead{ margin-top:1.5rem; }
+.contact .lead{ margin-top:var(--space-lg); }
 .contact__form{ min-width:0; }
-@media (max-width: 860px) {
-  .contact__layout{ grid-template-columns:1fr; }
+@media (min-width: 861px) {
+  .contact__layout{ grid-template-columns:minmax(0,.86fr) minmax(0,1fr); }
 }
 </style>

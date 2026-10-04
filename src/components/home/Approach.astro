@@ -16,11 +16,15 @@ const t = copy[locale];
 </section>
 <style>
 .pillars{
-  display:grid; grid-template-columns:repeat(3,1fr);
-  gap:clamp(2rem,5vw,4.5rem);
-  margin-top:clamp(4rem,9vh,7rem);
+  display:grid; grid-template-columns:minmax(0,1fr);
+  gap:var(--space-xl);
+  margin-top:var(--space-2xl);
 }
 .pillar h3{ font-weight:400; font-size:var(--fs-md); letter-spacing:-.005em; }
-.pillar p{ margin-top:1.125rem; }
-@media (max-width: 860px) { .pillars { grid-template-columns: 1fr; gap: 3rem; } }
+.pillar p{ margin-top:var(--space-md); }
+@media (min-width: 861px) {
+  .pillars {
+    grid-template-columns:repeat(3,minmax(0,1fr));
+  }
+}
 </style>

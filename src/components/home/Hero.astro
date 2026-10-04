@@ -15,7 +15,7 @@ const t = copy[locale];
 <style>
 .hero{
   position:relative; overflow:hidden;
-  min-height:100svh;
+  min-height:var(--usable-height);
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   background:var(--smoke);
   color:var(--ivory);
@@ -24,6 +24,6 @@ const t = copy[locale];
 }
 
 .hero__inner{ position:relative; max-width:64rem; }
-.hero .lead{ color:var(--ivory); opacity:.72; margin-top:1.75rem; }
-.hero .btn{ margin-top:3.5rem; }
+.hero .lead{ color:var(--ivory); opacity:.72; margin-top:var(--space-lg); }
+.hero .btn{ margin-top:var(--space-xl); }
 </style>

@@ -7,6 +7,7 @@ import Approach from "../home/Approach.astro";
 import Services from "../home/Services.astro";
 import About from "../home/About.astro";
 import ContactCallout from "../home/ContactCallout.astro";
+import ContactShortcut from "../ContactShortcut.svelte";
 import { copy, type Locale } from '../../lib/i18n';
 interface Props { locale: Locale; }
 const { locale } = Astro.props;
@@ -14,10 +15,19 @@ const t = copy[locale];
 ---
 <SiteLayout title={t.homeTitle} description={t.homeDescription} locale={locale} page="home">
   <ScrollReveals client:load />
-  <Hero locale={locale} />
-  <Bridge locale={locale} />
-  <Approach locale={locale} />
-  <Services locale={locale} />
-  <About locale={locale} />
+  <div class="home-intro">
+    <div class="home-sections">
+      <Hero locale={locale} />
+      <Bridge locale={locale} />
+      <Approach locale={locale} />
+      <Services locale={locale} />
+      <About locale={locale} />
+    </div>
+    <ContactShortcut locale={locale} client:load />
+  </div>
   <ContactCallout locale={locale} />
 </SiteLayout>
+<style>
+  .home-intro{ display:grid; }
+  .home-sections{ grid-area:1 / 1; min-width:0; }
+</style>

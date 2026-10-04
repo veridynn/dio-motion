@@ -26,18 +26,32 @@
   --fs-xxl: clamp(2.4414rem, 1.8469rem + 2.3781vw, 3.7493rem);
   --fs-xxxl: clamp(3.0518rem, 2.1672rem + 3.5384vw, 4.9979rem);
 
+  /* Fluid spacing: mobile minima at 400px, desktop maxima at 1280px. */
+  --space-xs: clamp(0.5000rem, 0.3864rem + 0.4545vw, 0.7500rem);
+  --space-sm: clamp(0.7500rem, 0.6364rem + 0.4545vw, 1.0000rem);
+  --space-md: clamp(1.0000rem, 0.7727rem + 0.9091vw, 1.5000rem);
+  --space-lg: clamp(1.5000rem, 1.2727rem + 0.9091vw, 2.0000rem);
+  --space-xl: clamp(2.0000rem, 1.3182rem + 2.7273vw, 3.5000rem);
+  --space-2xl: clamp(2.5000rem, 1.3636rem + 4.5455vw, 5.0000rem);
+  --space-3xl: clamp(3.5000rem, 1.9091rem + 6.3636vw, 7.0000rem);
+  --space-section: clamp(3.5000rem, 1.0000rem + 10.0000vw, 9.0000rem);
+  --space-gutter: clamp(1.2500rem, -0.9091rem + 8.6364vw, 6.0000rem);
+
   --squircle-radius: 1.25rem;
   --control-height: 3rem;
   --control-height-sm: 2.75rem;
   --control-font-size: var(--fs-sm);
   --control-line-height: 1.5;
-  --control-gap: .5rem;
-  --control-padding-x: 1.5rem;
-  --control-padding-x-sm: 1rem;
+  --control-gap: var(--space-xs);
+  --control-padding-x: var(--space-lg);
+  --control-padding-x-sm: var(--space-md);
+  /* Fixed navigation: 44px controls, vertical padding, and a 1px border. */
+  --header-height: calc(var(--control-height-sm) + 1.75rem + 1px);
+  --usable-height: calc(100dvh - var(--header-height));
 
   
-  --section-y: clamp(7rem, 16vh, 13rem);
-  --gutter:    clamp(1.5rem, 6vw, 7.5rem);
+  --section-y: var(--space-section);
+  --gutter:    var(--space-gutter);
   --measure:   62rem;
 }
 
@@ -101,7 +115,7 @@ picture{
 
 .section{
   padding:var(--section-y) var(--gutter);
-  min-height:100svh;
+  min-height:var(--usable-height);
   display:flex; flex-direction:column; justify-content:center;
 }
 .section--light{ background:var(--ivory); }
@@ -140,20 +154,26 @@ picture{
   color:var(--asche);
 }
 body { display: flex; flex-direction: column; min-height: 100svh; }
-main { flex: 1; }
+main { flex: 1; padding-block-start:var(--header-height); }
 :focus-visible { outline: 2px solid var(--sandstein); outline-offset: 5px; }
-section[id] { scroll-margin-top: 6rem; }
-@media (prefers-reduced-motion: no-preference) {
-  html:has(main > .hero) { scroll-snap-type: y proximity; }
-  main:has(> .hero) > :is(.hero, .section) {
+:is(.hero, section[id]) { scroll-margin-top:var(--header-height); }
+@media (min-width: 861px) {
+  :root {
+    --header-height: calc(var(--control-height-sm) + 3.5rem + 1px);
+  }
+}
+@media (min-width: 861px) and (prefers-reduced-motion: no-preference) {
+  html:has(main .hero) { scroll-snap-type: y proximity; }
+  main:has(.hero) :is(.hero, .section) {
     scroll-snap-align: start;
-    scroll-margin-top: 0;
   }
 }
 .skip-link { position: fixed; top: 1rem; left: 1rem; z-index: 100; padding: 1rem; background: var(--ivory); color: var(--ink); transform: translateY(-200%); }
 .skip-link:focus { transform: none; }
-.reveal.is-pending { opacity: 0; transform: translateY(30px); }
-.reveal.is-in { transition: opacity .8s ease-out, transform .8s ease-out; }
+@media (min-width: 861px) {
+  .reveal.is-pending { opacity: 0; transform: translateY(30px); }
+  .reveal.is-in { transition: opacity .8s ease-out, transform .8s ease-out; }
+}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition: none !important; }

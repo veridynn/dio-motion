@@ -19,22 +19,25 @@ const t = copy[locale];
 </section>
 <style>
 .about{
-  display:grid; grid-template-columns:minmax(0,.86fr) minmax(0,1fr);
-  gap:clamp(2.5rem,7vw,6rem);
+  display:grid; grid-template-columns:minmax(0,1fr);
+  gap:var(--space-xl);
   align-items:center;
 }
 .portrait{
-  aspect-ratio:4/5; background:var(--bone);
+  aspect-ratio:3/2; background:var(--bone);
   border-radius:var(--squircle-radius);
   corner-shape:squircle;
   display:flex; align-items:center; justify-content:center;
-  padding:2rem; text-align:center;
+  padding:var(--space-xl); text-align:center;
 }
 .portrait span{
   font-size:var(--fs-sm); line-height:1.7; letter-spacing:.03em;
   color:var(--asche);
 }
-.about__text > * + *{ margin-top:2rem; }
-.about__sig{ margin-top:2.75rem !important; }
-@media (max-width: 860px) { .about { grid-template-columns: 1fr; } }
+.about__text > * + *{ margin-top:var(--space-lg); }
+.about__sig{ margin-top:var(--space-xl) !important; }
+@media (min-width: 861px) {
+  .about{ grid-template-columns:minmax(0,.86fr) minmax(0,1fr); }
+  .portrait{ aspect-ratio:4/5; }
+}
 </style>
