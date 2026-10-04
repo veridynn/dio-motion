@@ -8,15 +8,31 @@ Website for personal training by dio motion.
 - `pnpm exec astro dev --background` — start the local server
 - `pnpm exec astro dev status` / `logs` / `stop` — manage the server
 - `pnpm build` — generate the static site in `dist/`
-- `pnpm test` — check contact email encoding
+- `pnpm test` — check form validation and delivery handling
 
 ## Structure
 
-`src/layouts/SiteLayout.astro` shares metadata, navigation, and the footer. Homepage sections live in `src/components/home/`; the contact form lives in `src/components/ContactForm.astro`. Shared design tokens and utilities live in `src/styles/global.css`, with component-specific styles scoped in Astro components.
+`src/layouts/SiteLayout.astro` shares metadata, navigation, and the footer. Homepage sections live in `src/components/home/`; the contact form lives in `src/components/ContactForm.svelte`. Shared design tokens and utilities live in `src/styles/global.css`, with component-specific styles scoped in Astro components.
+
+German is the default language at `/`; English lives at `/en/`. Section anchors are localized, including `/#kontakt` and `/en/#contact`. The language switch maps the current anchor to the corresponding section in the selected language.
 
 ## Content still needed
 
 - Replace the portrait placeholder in `About.astro` with the final image.
 - Supply the hero contour artwork if desired; a CSS glow currently preserves the prototype's background treatment.
 - Supply the imprint and privacy copy. Their footer labels are intentionally plain text until real pages exist.
-- The contact form prepares a draft in the visitor's email app, with native required-field and email validation. It does not send email automatically or claim delivery. To support direct web submissions, configure a delivery endpoint and update the form, including server-side validation, abuse protection, and explicit success/error states.
+
+## Contact delivery
+
+The homepage contains a persisted Svelte island with Bits UI labels and button. Email and message are required; name is optional. ArkType trims and validates the inputs, limits their lengths, and checks the provider response. Submission states are translated, duplicate clicks are disabled while sending, and failed requests preserve the draft.
+
+1. [Create a free Web3Forms form](https://app.web3forms.com/onboarding/create) for `silvo@diomotion.com` and verify the recipient inbox.
+2. Enable **hCaptcha** in that form’s spam protection settings. This makes verification mandatory at the service, including requests that bypass our client validation.
+3. Copy `.env.example` to `.env` and set `PUBLIC_WEB3FORMS_ACCESS_KEY` to the form’s key. Set the same variable in the hosting build environment and rebuild.
+4. Submit a real test message and confirm it arrives in the recipient inbox before publishing.
+
+The form key is public by design; do not put a private email API credential here. Delivery runs through Web3Forms’ HTTPS API, so the site needs no server adapter. The free plan currently includes 250 submissions per month. If the key is absent or invalid, the button remains active and valid submissions show a browser alert as a development placeholder without sending or clearing the draft.
+
+Invisible hCaptcha loads only when the key is configured. It has no checkbox and executes when the visitor submits valid form inputs, obtaining a fresh token before each send. A risk-based challenge may still appear on the free plan; invisible does not mean fully passive. CAPTCHA failures preserve the draft and allow another attempt. Client-side ArkType validation improves input quality; the provider’s mandatory CAPTCHA and service-side checks enforce the remote trust boundary. Live delivery and CAPTCHA enforcement require the verified form configuration above.
+
+Add Web3Forms and hCaptcha data processing details to the site’s privacy policy before publishing.
