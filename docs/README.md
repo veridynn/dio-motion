@@ -4,6 +4,7 @@ Current project context, rationale, and constraints. Setup and commands are in [
 
 | Topic | Record |
 | --- | --- |
+| Concise ticket descriptions and completion criteria | [Ticket writing](records/ticket-writing.md) |
 | Cloudflare Pages, CI, and release approvals | [Deployment and releases](deployment.md) |
 | Static rendering, locales, and navigation | [Architecture](records/architecture.md) |
 | Fonts and fluid type scale | [Typography](records/typography.md) |
