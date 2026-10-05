@@ -1,30 +1,53 @@
 ---
-import ContactForm from '../ContactForm.svelte';
-import { copy, sectionIds, type Locale } from '../../lib/i18n';
-interface Props { locale: Locale; }
+import { copy, type Locale, sectionIds } from "../../lib/i18n";
+import ContactForm from "../ContactForm.svelte";
+
+interface Props {
+	locale: Locale;
+}
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
-<section class="section section--light contact" id={sectionIds.contact[locale]} aria-labelledby="contact-heading" tabindex="-1">
-  <div class="wrap contact__layout">
-    <div class="contact__intro">
-      <h2 class="h-section" id="contact-heading">{t.ready}</h2>
-      <p class="lead">{t.contactLead}</p>
-    </div>
-    <div class="contact__form">
-      <ContactForm accessKey={import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY} locale={locale} client:load transition:persist="contact-form" />
-    </div>
-  </div>
+
+<section
+	class="section section--light contact"
+	id={sectionIds.contact[locale]}
+	aria-labelledby="contact-heading"
+	tabindex="-1"
+>
+	<div class="wrap contact__layout">
+		<div class="contact__intro">
+			<h2 class="h-section" id="contact-heading">{t.ready}</h2>
+			<p class="lead">{t.contactLead}</p>
+		</div>
+		<div class="contact__form">
+			<!-- biome-ignore-start lint/a11y/noAccessKey: accessKey is a Svelte component prop, not an HTML keyboard shortcut. -->
+			<ContactForm
+				accessKey={import.meta.env.PUBLIC_WEB3FORMS_ACCESS_KEY}
+				locale={locale}
+				client:load
+				transition:persist="contact-form"
+			/>
+			<!-- biome-ignore-end lint/a11y/noAccessKey: End component prop workaround. -->
+		</div>
+	</div>
 </section>
 <style>
-.contact__layout{
-  display:grid; grid-template-columns:minmax(0,1fr);
-  gap:var(--space-xl);
-  align-items:start;
-}
-.contact .lead{ margin-top:var(--space-lg); }
-.contact__form{ min-width:0; }
-@media (min-width: 861px) {
-  .contact__layout{ grid-template-columns:minmax(0,.86fr) minmax(0,1fr); }
-}
+	.contact__layout {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--space-xl);
+		align-items: start;
+	}
+	.contact .lead {
+		margin-top: var(--space-lg);
+	}
+	.contact__form {
+		min-width: 0;
+	}
+	@media (min-width: 861px) {
+		.contact__layout {
+			grid-template-columns: minmax(0, 0.86fr) minmax(0, 1fr);
+		}
+	}
 </style>

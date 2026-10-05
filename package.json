@@ -13,8 +13,10 @@
 		"preview": "astro preview",
 		"astro": "astro",
 		"test": "node --experimental-strip-types tests/contact-form.test.mjs",
-		"check": "astro check && svelte-check --tsconfig ./tsconfig.json",
-		"test:pages": "astro build && node tests/localized-pages.test.mjs"
+		"check": "biome check . && astro check && svelte-check --tsconfig ./tsconfig.json",
+		"test:pages": "astro build && node tests/localized-pages.test.mjs",
+		"format": "biome format --write .",
+		"lint": "biome lint --write ."
 	},
 	"dependencies": {
 		"@astrojs/svelte": "^9.0.1",
@@ -28,6 +30,7 @@
 	},
 	"devDependencies": {
 		"@astrojs/check": "^0.9.10",
+		"@biomejs/biome": "^2.5.15",
 		"svelte-check": "^4.7.6",
 		"typescript": "^6.0.3"
 	}
