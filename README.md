@@ -4,24 +4,26 @@ Personal trainer website for [Dio Motion](https://diomotion.com), built with Ast
 
 ## Requirements
 
-- Node.js 26.x (`^26.0.0`)
-- pnpm 12.x, starting at 12.9.1 (`^12.9.1`)
-
-These ranges allow minor and patch updates within each major version. Manage Node.js with pnpm’s Node version manager. `packageManager` in `package.json` pins pnpm to 12.9.1 for reproducible installs.
+- Node.js `^26`
+- pnpm `^12`
 
 ## Setup
 
 ```sh
 pnpm install
 cp .env.example .env
-pnpm exec astro dev --background
+pnpm dev
 ```
 
 Environment variable configuration is covered in the [contact delivery documentation](docs/development.md#contact-delivery).
 
 ## Development commands
 
-- `pnpm exec astro dev status` / `logs` / `stop` — manage the background server
+- `pnpm dev` — start the local development server
+- `pnpm dev --background` — optionally run the server in the background
+- `pnpm dev status` — check whether the development server is running
+- `pnpm dev logs` — view logs from the background development server
+- `pnpm dev stop` — stop the background development server
 - `pnpm check` — run Astro, Svelte, and TypeScript checks
 - `pnpm test` — check form validation and delivery handling
 - `pnpm test:pages` — build and check localized pages
