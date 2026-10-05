@@ -1,5 +1,6 @@
 <script module lang="ts">
 	import type { CaptchaClient } from "../lib/contact";
+
 	declare global {
 		interface Window {
 			hcaptcha?: CaptchaClient;
@@ -8,17 +9,17 @@
 </script>
 
 <script lang="ts">
-	import { onMount, tick } from "svelte";
-	import { Button, Label } from "bits-ui";
 	import { type } from "arktype";
-	import { copy, type Locale } from "../lib/i18n";
+	import { Button, Label } from "bits-ui";
+	import { onMount, tick } from "svelte";
 	import {
 		accessKeySchema,
+		type ContactInput,
 		contactSchema,
 		getCaptchaToken,
 		sendContact,
-		type ContactInput,
 	} from "../lib/contact";
+	import { copy, type Locale } from "../lib/i18n";
 
 	let { locale, accessKey = "" }: { locale: Locale; accessKey?: string } =
 		$props();
@@ -90,9 +91,10 @@
 	aria-busy={busy}
 	onsubmit={submit}
 >
-	<input type="hidden" name="access_key" value={accessKey} />
-	<input type="hidden" name="subject" value={t.emailSubject} />
-	<input type="hidden" name="from_name" value="dio motion." />
+	<!-- biome-ignore lint/a11y/noAccessKey: accessKey is the form service token, not an HTML keyboard shortcut. -->
+	<input type="hidden" name="access_key" value={accessKey}>
+	<input type="hidden" name="subject" value={t.emailSubject}>
+	<input type="hidden" name="from_name" value="dio motion.">
 	<fieldset disabled={busy}>
 		<div class="field">
 			<Label.Root class="contact-label" for="name">{t.name}</Label.Root>
@@ -105,10 +107,12 @@
 				maxlength="100"
 				aria-invalid={errors.name || undefined}
 				aria-describedby={errors.name ? "name-error" : undefined}
-			/>
-			{#if errors.name}<p class="field-error" id="name-error">
+			>
+			{#if errors.name}
+				<p class="field-error" id="name-error">
 					{t.nameError}
-				</p>{/if}
+				</p>
+			{/if}
 		</div>
 		<div class="field">
 			<Label.Root class="contact-label" for="email">{t.email}</Label.Root>
@@ -122,10 +126,12 @@
 				required
 				aria-invalid={errors.email || undefined}
 				aria-describedby={errors.email ? "email-error" : undefined}
-			/>
-			{#if errors.email}<p class="field-error" id="email-error">
+			>
+			{#if errors.email}
+				<p class="field-error" id="email-error">
 					{t.emailError}
-				</p>{/if}
+				</p>
+			{/if}
 		</div>
 		<div class="field">
 			<Label.Root class="contact-label" for="nachricht">{t.message}</Label.Root>
@@ -139,16 +145,20 @@
 				aria-invalid={errors.message || undefined}
 				aria-describedby={errors.message ? "message-error" : undefined}
 			></textarea>
-			{#if errors.message}<p class="field-error" id="message-error">
+			{#if errors.message}
+				<p class="field-error" id="message-error">
 					{t.messageError}
-				</p>{/if}
+				</p>
+			{/if}
 		</div>
-		{#if configured}<div
+		{#if configured}
+			<div
 				class="h-captcha"
 				data-captcha="true"
 				data-lang={locale}
 				data-size="invisible"
-			></div>{/if}
+			></div>
+		{/if}
 		<Button.Root class="btn contact-submit" type="submit" disabled={busy}
 			>{busy ? t.sending : t.sendMessage}</Button.Root
 		>
@@ -164,9 +174,13 @@
 	</p>
 {/if}
 <div class="form-status" role="status" aria-live="polite" aria-atomic="true">
-	{#if status === "success"}<p>{t.formSuccess}</p>
-	{:else if status === "error"}<p>{t.formError}</p>
-	{:else if status === "captcha"}<p>{t.captchaError}</p>{/if}
+	{#if status === "success"}
+		<p>{t.formSuccess}</p>
+	{:else if status === "error"}
+		<p>{t.formError}</p>
+	{:else if status === "captcha"}
+		<p>{t.captchaError}</p>
+	{/if}
 </div>
 
 <style>
@@ -212,7 +226,11 @@
 		field-sizing: content;
 		resize: none;
 		min-height: calc(
-			4lh + 2 * var(--field-padding-block) + 2 * var(--field-border-width)
+			4lh +
+			2 *
+			var(--field-padding-block) +
+			2 *
+			var(--field-border-width)
 		);
 	}
 
