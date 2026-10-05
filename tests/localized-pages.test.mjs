@@ -50,7 +50,7 @@ for (const [locale, heading, lead, submit] of [
   assert.ok(!/href="\/(?:kontakt\/?|de\/kontakt\/?|en\/contact\/?)"/.test(html), 'No old internal contact links');
   for (const [, href] of html.replace(/<noscript[^>]*>.*?<\/noscript>/gs, '').matchAll(/href="(\/(?!\/)[^"#?]*)/g)) {
     const target = href.replace(/\/$/, '');
-    if (/\.[a-z]+$/.test(target)) continue;
+    if (/\.[a-z0-9]+$/.test(target)) continue;
     assert.ok(locale === 'en' ? target.startsWith('/en') : !target.startsWith('/en') && !target.startsWith('/de'), `${locale}: ${href} stays in the same language`);
     assert.ok(readFileSync(`dist${target}/index.html`, 'utf8').length);
   }
