@@ -20,13 +20,13 @@ Set `PUBLIC_WEB3FORMS_ACCESS_KEY` separately in Pages Settings → Variables and
 
 ## Production gate — blocked
 
-On 2026-10-05, GitHub returned HTTP 403 for branch protection and rulesets: “Upgrade to GitHub Pro or make this repository public to enable this feature.” The repository is private and its current plan does not support these features. Prepared CODEOWNERS and CI files alone do not enforce approval or passing checks on this plan.
+On 2026-10-05, GitHub returned HTTP 403 for branch protection and rulesets: “Upgrade to GitHub Pro or make this repository public to enable this feature.” The repository is currently private, which blocks these features on its current plan. The intended final visibility is public; the user will change visibility personally. Prepared CODEOWNERS and CI files alone do not enforce approval or passing checks while protection is unavailable.
 
 The supplied handoff said Silvo's invitation had not been accepted. At setup time, the API instead returned `diomotion` with `write` permission and an empty pending-invitation list. Confirm Silvo controls that account and has accepted access before enabling promotion. Do not treat his review requirement as effective until both access and active protection have been verified.
 
 Keep production deployments disabled and `prod` absent until all of these steps are complete:
 
-1. Upgrade the personal repository owner to GitHub Pro (or an eligible organization plan). Keep the repository private unless publishing its source is explicitly authorized.
+1. Wait for the user to make `veridynn/dio-motion` public personally. Do not change visibility on their behalf, upgrade, or purchase a plan. Verify public visibility and that GitHub now permits branch protection before proceeding.
 2. Merge the setup PR into `dev` after its `check`, `test`, and `test:pages` jobs pass. Verify its successful Pages preview.
 3. Confirm Silvo's acceptance and write access with `gh api repos/veridynn/dio-motion/collaborators/diomotion/permission`. The result must be `write`, `maintain`, or `admin`.
 4. With Pages production still disabled, bootstrap `prod` from the agreed baseline containing `.github/CODEOWNERS` (`* @diomotion`) and the CI workflow. CODEOWNERS must exist on the PR's **base** branch to require Silvo's review. This initialization is not authorization to launch the site.
@@ -42,7 +42,7 @@ Keep production deployments disabled and `prod` absent until all of these steps 
    Confirm required checks `check`, `test`, `test:pages`; strict up-to-date checks; one approval; required code-owner review; dismissal of stale approvals; enforcement for administrators; and disabled force pushes/deletions. Check CODEOWNERS has no errors. Do not proceed if GitHub rejects or ignores any required setting.
 6. Only after that verification, enable automatic production deployments in Pages Settings → Builds & deployments for `prod`. Keep previews set to All branches. Do not trigger the first production build until the release is approved. The `pages.dev` production hostname is separate from the live-domain launch.
 
-Changing the plan or adding CODEOWNERS does not automatically apply `docs/prod-protection.json`. Owners can still edit protection settings; `enforce_admins` prevents normal merge/push bypass while the rule is active.
+Making the repository public or adding CODEOWNERS does not automatically apply `docs/prod-protection.json`. Owners can still edit protection settings; `enforce_admins` prevents normal merge/push bypass while the rule is active.
 
 ## Release: dev → prod
 
