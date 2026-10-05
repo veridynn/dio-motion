@@ -1,0 +1,74 @@
+[
+	{
+		"label": "pnpm check",
+		"command": "pnpm",
+		"args": ["check"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm format",
+		"command": "pnpm",
+		"args": ["format"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm lint",
+		"command": "pnpm",
+		"args": ["lint"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm test",
+		"command": "pnpm",
+		"args": ["test"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm test:pages",
+		"command": "pnpm",
+		"args": ["test:pages"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm build",
+		"command": "pnpm",
+		"args": ["build"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm preview",
+		"command": "pnpm",
+		"args": ["preview"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm dev",
+		"command": "pnpm",
+		"args": ["dev"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm dev --background",
+		"command": "pnpm",
+		"args": ["dev", "--background"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm dev status",
+		"command": "pnpm",
+		"args": ["dev", "status"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm dev logs",
+		"command": "pnpm",
+		"args": ["dev", "logs"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	},
+	{
+		"label": "pnpm dev stop",
+		"command": "pnpm",
+		"args": ["dev", "stop"],
+		"cwd": "$ZED_WORKTREE_ROOT"
+	}
+]
