@@ -40,6 +40,8 @@ Manage the background server with `astro dev stop`, `astro dev status`, and `ast
 
 ## Documentation
 
+Project records are indexed in [docs/README.md](docs/README.md); read only the relevant topics. Setup and commands are in `README.md`. Bogdan is the sole developer; Dio Motion supplies occasional product, branding, and business input. Keep pending work and proposals in GitHub tickets, then record relevant outcomes when completing the work. Records contain only current, necessary context and constraints; remove temporary notes, outdated information, and duplication.
+
 Full documentation: https://docs.astro.build
 
 Consult these guides before working on related tasks:

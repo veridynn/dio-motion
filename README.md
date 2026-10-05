@@ -1,6 +1,6 @@
 # dio motion.
 
-Personal trainer website for [Dio Motion](https://diomotion.com), built with Astro and Svelte. The site is statically generated, with German at `/` and English at `/en/`.
+Personal trainer website for [Dio Motion](https://diomotion.com), built with Astro and Svelte.
 
 ## Requirements
 
@@ -15,7 +15,7 @@ cp .env.example .env
 pnpm dev
 ```
 
-Environment variable configuration is covered in the [contact delivery documentation](docs/development.md#contact-delivery).
+Contact environment configuration is covered in the [contact delivery record](docs/records/contact-delivery.md).
 
 ## Development commands
 
@@ -24,7 +24,9 @@ Environment variable configuration is covered in the [contact delivery documenta
 - `pnpm dev status` — check whether the development server is running
 - `pnpm dev logs` — view logs from the background development server
 - `pnpm dev stop` — stop the background development server
-- `pnpm check` — run Astro, Svelte, and TypeScript checks
+- `pnpm check` — run Biome formatting, lint, and import checks plus Astro, Svelte, and TypeScript diagnostics
+- `pnpm format` — format supported project files with Biome
+- `pnpm lint` — lint supported project files and apply safe Biome fixes
 - `pnpm test` — check form validation and delivery handling
 - `pnpm test:pages` — build and check localized pages
 - `pnpm build` — generate the static site in `dist/`
@@ -33,6 +35,5 @@ Environment variable configuration is covered in the [contact delivery documenta
 ## Documentation
 
 - [Deployment and releases](docs/deployment.md) — Cloudflare Pages, CI, production protection, and Silvo’s review
-
-- [Development documentation](docs/development.md) — project structure, typography, spacing, and contact delivery
-- [GitHub kanban board](https://github.com/users/veridynn/projects/4) — remaining content and launch tasks
+- [Project records](docs/README.md) — index of current design and technical context, rationale, and constraints
+- [GitHub kanban board](https://github.com/users/veridynn/projects/4) — work tracking

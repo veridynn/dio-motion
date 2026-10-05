@@ -1,24 +1,21 @@
-# Project documentation
+# Project records
 
-Current design and technical decisions. Setup and commands: [development guide](development.md).
+Current project context, rationale, and constraints. Setup and commands are in [README.md](../README.md).
 
-| Area | Decision record |
+| Topic | Record |
 | --- | --- |
-| Site composition, static rendering, locales, and anchors | [Architecture and localization](decisions/architecture.md) |
-| Font, fluid type scale, and text roles | [Typography](decisions/typography.md) |
-| Fluid spacing, gutters, section padding, and header offsets | [Spacing](decisions/spacing.md) |
-| Palette, shared controls, corner shape, and scoped styling | [CSS tokens](decisions/css-tokens.md) |
-| Reveals, snapping, shortcut fade, and reduced motion | [Motion](decisions/motion.md) |
-| Validation, delivery provider, CAPTCHA, and failure behavior | [Contact delivery](decisions/contact-delivery.md) |
-| Biome scope, framework limitations, and lint exceptions | [Formatting and linting](decisions/formatting-linting.md) |
-| Zed language servers, formatting, and project tasks | [Editor integration](decisions/editor.md) |
+| Cloudflare Pages, CI, and release approvals | [Deployment and releases](deployment.md) |
+| Static rendering, locales, and navigation | [Architecture](records/architecture.md) |
+| Fonts and fluid type scale | [Typography](records/typography.md) |
+| Spacing, gutters, and header offsets | [Spacing](records/spacing.md) |
+| Palette, controls, and scoped styles | [CSS tokens](records/css-tokens.md) |
+| Reveals, snapping, and reduced motion | [Motion](records/motion.md) |
+| Form validation and delivery boundaries | [Contact delivery](records/contact-delivery.md) |
+| Tool scope and necessary exceptions | [Formatting and linting](records/formatting-linting.md) |
+| Zed integration | [Editor](records/editor.md) |
 
-The source remains the authority for current values.
+## Maintaining records
 
-## Ownership and work tracking
-
-Bogdan (`@veridynn`) maintains technical decisions. Dio Motion / Silvo supplies product, branding, and business input; implemented visual choices still require PO confirmation in [#14](https://github.com/veridynn/dio-motion/issues/14).
-
-Keep records concise: current behavior, necessary rationale, constraints, and source locations. Omit implementation history, repeated facts, and explanations implied by the chosen approach.
-
-Track outstanding work in [GitHub issues](https://github.com/veridynn/dio-motion/issues) and the [project board](https://github.com/users/veridynn/projects/4). Link tickets instead of copying checklists. Business context: [#15](https://github.com/veridynn/dio-motion/issues/15); visual documentation: [#13](https://github.com/veridynn/dio-motion/issues/13).
+- Keep only current, necessary context, rationale, constraints, and source references. Exact implementation values belong in source.
+- Record a relevant outcome when completing its GitHub ticket. Pending work, proposals, temporary behavior, and task status stay in the ticket.
+- Replace outdated content and remove duplication. Preserve license obligations, security boundaries, accessibility requirements, and non-obvious limitations.
