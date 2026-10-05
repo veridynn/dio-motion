@@ -13,7 +13,7 @@ pnpm dev
 ```
 
 > [!NOTE]
-> Fill in `PUBLIC_WEB3FORMS_ACCESS_KEY` in `.env` to enable contact delivery.
+> Fill in `PUBLIC_WEB3FORMS_ACCESS_KEY` in `.env` to enable contact form submissions.
 
 ## Commands
 
