@@ -1,26 +1,51 @@
 ---
-import { copy, sectionIds, type Locale } from '../../lib/i18n';
-interface Props { locale: Locale; }
+import { copy, type Locale, sectionIds } from "../../lib/i18n";
+
+interface Props {
+	locale: Locale;
+}
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
-<section class="section section--light bridge" id={sectionIds.potential[locale]}>
-  <div class="bridge__period" aria-hidden="true"></div>
-  <div class="bridge__inner center">
-    <h2 class="h-section reveal">{t.bridge}</h2>
-    <p class="lead reveal">{t.bridgeLead}</p>
-  </div>
+
+<section
+	class="section section--light bridge"
+	id={sectionIds.potential[locale]}
+>
+	<div class="bridge__period" aria-hidden="true"></div>
+	<div class="bridge__inner center">
+		<h2 class="h-section reveal">{t.bridge}</h2>
+		<p class="lead reveal">{t.bridgeLead}</p>
+	</div>
 </section>
 <style>
-.bridge{ position:relative; overflow:hidden; }
+	.bridge {
+		position: relative;
+		overflow: hidden;
+	}
 
-.bridge__period{
-  position:absolute; top:50%; left:50%;
-  transform:translate(-50%,-50%);
-  width:40rem; height:40rem;
-  pointer-events:none;
-}
-.bridge__inner{ position:relative; max-width:44rem; margin:0 auto; }
-.bridge .lead{ margin-top:var(--space-lg); }
-.bridge__period { background: radial-gradient(circle closest-side, rgba(25,23,20,.06) 45%, transparent); }
+	.bridge__period {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 40rem;
+		height: 40rem;
+		pointer-events: none;
+	}
+	.bridge__inner {
+		position: relative;
+		max-width: 44rem;
+		margin: 0 auto;
+	}
+	.bridge .lead {
+		margin-top: var(--space-lg);
+	}
+	.bridge__period {
+		background: radial-gradient(
+			circle closest-side,
+			rgba(25, 23, 20, 0.06) 45%,
+			transparent
+		);
+	}
 </style>
