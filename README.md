@@ -32,5 +32,7 @@ Environment variable configuration is covered in the [contact delivery documenta
 
 ## Documentation
 
+- [Deployment and releases](docs/deployment.md) — Cloudflare Pages, CI, production protection, and Silvo’s review
+
 - [Development documentation](docs/development.md) — project structure, typography, spacing, and contact delivery
 - [General todos](docs/todos.md) — remaining content and launch tasks
