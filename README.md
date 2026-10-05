@@ -2,12 +2,9 @@
 
 Personal trainer website for [Dio Motion](https://diomotion.com), built with Astro and Svelte.
 
-## Requirements
+## Development
 
-- Node.js `^26`
-- pnpm `^12`
-
-## Setup
+Requires Node.js 26 and pnpm 12.9.1.
 
 ```sh
 pnpm install
@@ -15,25 +12,19 @@ cp .env.example .env
 pnpm dev
 ```
 
-Contact environment configuration is covered in the [contact delivery record](docs/records/contact-delivery.md).
+> [!NOTE]
+> Fill in `PUBLIC_WEB3FORMS_ACCESS_KEY` in `.env` to enable contact delivery.
 
-## Development commands
+## Commands
 
-- `pnpm dev` — start the local development server
-- `pnpm dev --background` — optionally run the server in the background
-- `pnpm dev status` — check whether the development server is running
-- `pnpm dev logs` — view logs from the background development server
-- `pnpm dev stop` — stop the background development server
-- `pnpm check` — run Biome formatting, lint, and import checks plus Astro, Svelte, and TypeScript diagnostics
-- `pnpm format` — format supported project files with Biome
-- `pnpm lint` — lint supported project files and apply safe Biome fixes
-- `pnpm test` — check form validation and delivery handling
-- `pnpm test:pages` — build and check localized pages
-- `pnpm build` — generate the static site in `dist/`
-- `pnpm preview` — preview the production build locally
+- `pnpm check` — formatting, linting, and type checks
+- `pnpm test` — contact form tests
+- `pnpm test:pages` — build and localized page tests
+- `pnpm format` — format code
+- `pnpm build` — production build
+- `pnpm preview` — preview the build locally
 
-## Documentation
+## Links
 
-- [Deployment and releases](docs/deployment.md) — Cloudflare Pages, CI, production protection, and Silvo’s review
-- [Project records](docs/README.md) — index of current design and technical context, rationale, and constraints
-- [GitHub kanban board](https://github.com/users/veridynn/projects/4) — work tracking
+- [Documentation](docs/README.md)
+- [Work board](https://github.com/users/veridynn/projects/4)
