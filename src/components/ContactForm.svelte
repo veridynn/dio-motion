@@ -209,7 +209,7 @@
 		line-height: 1.6;
 		color: var(--ink);
 		background: var(--bone);
-		border: var(--field-border-width) solid transparent;
+		border: var(--field-border-width) solid var(--sandstein);
 		border-radius: var(--squircle-radius);
 		corner-shape: squircle;
 		padding: var(--field-padding-block) 0.5em;
