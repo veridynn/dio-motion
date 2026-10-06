@@ -16,7 +16,7 @@ No custom domain is attached. Do not attach `diomotion.com`, change its DNS, or 
 
 ## Contact delivery
 
-Set `PUBLIC_WEB3FORMS_ACCESS_KEY` separately in Pages Settings → Variables and Secrets for Preview and Production, then rebuild. Use a verified preview-specific form/key and test recipient for Preview when available; the production key belongs to the production recipient. No key was supplied or configured during setup. Without a key, live delivery is unavailable. See [contact delivery](records/contact-delivery.md) for Web3Forms and CAPTCHA requirements. Do not copy the production key into previews by default.
+Set `PUBLIC_WEB3FORMS_ACCESS_KEY` in Pages Settings → Variables and Secrets for Preview and Production, then rebuild. Use a separate form key and test recipient for Preview; the production key belongs to the production recipient. The key is a public form identifier; private credentials must not use `PUBLIC_` variables. Enable provider-side CAPTCHA enforcement.
 
 ## Production gate — blocked
 
