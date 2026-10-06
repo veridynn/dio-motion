@@ -12,7 +12,6 @@ Current project context, rationale, and constraints. Quick setup is in [README.m
 | Spacing, gutters, and header offsets | [Spacing](records/spacing.md) |
 | Palette, controls, and scoped styles | [CSS tokens](records/css-tokens.md) |
 | Reveals, snapping, and reduced motion | [Motion](records/motion.md) |
-| Form validation and delivery boundaries | [Contact delivery](records/contact-delivery.md) |
 | Tool scope and necessary exceptions | [Formatting and linting](records/formatting-linting.md) |
 | Zed integration | [Editor](records/editor.md) |
 
