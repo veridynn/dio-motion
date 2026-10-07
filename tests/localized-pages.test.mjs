@@ -20,6 +20,33 @@ for (const [locale, heading, lead, submit] of [
 	const contactId = locale === "de" ? "kontakt" : "contact";
 	const html = readFileSync(`dist${home}index.html`, "utf8");
 	assert.match(html, new RegExp(`<html[^>]*lang="${locale}"`));
+	const languageTrigger = html.match(
+		/<button\b[^>]*id="language-trigger"[^>]*>/,
+	)?.[0];
+	assert.ok(
+		languageTrigger?.includes('aria-haspopup="listbox"'),
+		"Language control opens a selection list",
+	);
+	assert.ok(
+		languageTrigger.includes('role="combobox"'),
+		"Language selection exposes a combobox role",
+	);
+	assert.ok(
+		languageTrigger.includes(
+			`aria-label="${locale === "de" ? "Deutsch — Sprachauswahl" : "English — Language selection"}"`,
+		),
+		"Language control name includes the visible language",
+	);
+	assert.ok(
+		languageTrigger.includes('aria-describedby="language-selection-status"'),
+		"Language control describes the current selection",
+	);
+	assert.match(
+		html,
+		new RegExp(
+			`id="language-selection-status"[^>]*>${locale === "de" ? "Deutsch ausgewählt" : "English selected"}</span>`,
+		),
+	);
 	assert.ok(html.includes(heading), `${locale} has a translated heading`);
 	assert.ok(
 		html.includes(`rel="canonical" href="https://diomotion.com${home}"`),
