@@ -163,6 +163,62 @@ for (const [locale, heading, lead, submit] of [
 		assert.ok(readFileSync(`dist${target}/index.html`, "utf8").length);
 	}
 }
+for (const [de, en, deHeading, enHeading] of [
+	["/impressum/", "/en/legal-notice/", "Impressum", "Legal notice"],
+	[
+		"/datenschutz/",
+		"/en/privacy-policy/",
+		"Datenschutzerklärung",
+		"Privacy policy",
+	],
+]) {
+	for (const [locale, path, heading, alternate] of [
+		["de", de, deHeading, en],
+		["en", en, enHeading, de],
+	]) {
+		const html = readFileSync(`dist${path}index.html`, "utf8");
+		const home = readFileSync(
+			`dist${locale === "de" ? "/" : "/en/"}index.html`,
+			"utf8",
+		);
+		assert.match(html, new RegExp(`<html[^>]*lang="${locale}"`));
+		assert.match(html, new RegExp(`<h1[^>]*>${heading}</h1>`));
+		assert.ok(
+			html.includes(`rel="canonical" href="https://diomotion.com${path}"`),
+		);
+		assert.ok(html.includes(`hreflang="de" href="https://diomotion.com${de}"`));
+		assert.ok(html.includes(`hreflang="en" href="https://diomotion.com${en}"`));
+		assert.ok(
+			html
+				.match(/<noscript[^>]*>.*?<\/noscript>/s)?.[0]
+				.includes(`href="${alternate}"`),
+			"Legal language fallback stays on the corresponding page",
+		);
+		for (const page of [html, home]) {
+			assert.ok(
+				page
+					.match(/<footer\b[^>]*>(.*?)<\/footer>/s)?.[1]
+					.includes(`href="${path}"`),
+				"Footer links to the localized legal page",
+			);
+		}
+		assert.match(
+			html,
+			/<nav\b[^>]*class="[^"]*\bis-scrolled\b[^"]*"/,
+			"Legal navigation renders with the light surface before hydration",
+		);
+		assert.ok(
+			!html.includes("<form"),
+			"Empty legal pages contain no contact form",
+		);
+		assert.ok(
+			!html
+				.match(/<nav\b[^>]*>(.*?)<\/nav>/s)?.[1]
+				.includes(`#${locale === "de" ? "kontakt" : "contact"}`),
+			"Legal page headers omit the enquiry button",
+		);
+	}
+}
 assert.match(readFileSync("dist/de/index.html", "utf8"), /url=\//);
 for (const [path, target] of [
 	["kontakt", "/#kontakt"],
@@ -175,5 +231,5 @@ for (const [path, target] of [
 	);
 }
 console.log(
-	"Localized homepages, contact forms, anchor links, metadata and redirects passed",
+	"Localized homepages, legal pages, contact forms, anchor links, metadata and redirects passed",
 );
