@@ -84,6 +84,22 @@ for (const [locale, heading, lead, submit] of [
 	assert.ok(contact, "Contact is the last homepage section");
 	assert.ok(contact.includes(lead), "Contact introduction is translated");
 	assert.ok(contact.includes(submit), "Form button is translated");
+	assert.ok(
+		contact.includes(
+			locale === "de"
+				? "Was möchtest du erreichen, und wie trainierst du aktuell?"
+				: "What would you like to achieve, and how do you train currently?",
+		),
+		"Message placeholder is localized",
+	);
+	for (const field of ["name", "email", "message"]) {
+		assert.ok(
+			new RegExp(`<p[^>]*id="${field}-error"[^>]*aria-live="polite"`).test(
+				contact,
+			),
+			"Each field keeps a live error slot before validation",
+		);
+	}
 	if (contact.includes('data-captcha="true"')) {
 		assert.ok(
 			contact.includes('data-size="invisible"'),
