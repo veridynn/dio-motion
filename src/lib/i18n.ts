@@ -93,6 +93,8 @@ export const copy = {
 		name: "Name",
 		email: "E-Mail",
 		message: "Nachricht",
+		messagePlaceholder:
+			"Was möchtest du erreichen, und wie trainierst du aktuell?",
 		sendMessage: "Anfrage senden",
 		sending: "Wird gesendet …",
 		formPreview:
@@ -106,10 +108,8 @@ export const copy = {
 		captchaNotice: "Geschützt durch hCaptcha. Es gelten die",
 		captchaAnd: " und die ",
 		captchaTerms: "Nutzungsbedingungen",
-		nameError: "Bitte verwende höchstens 100 Zeichen.",
-		emailError:
-			"Bitte gib eine gültige E-Mail-Adresse mit höchstens 254 Zeichen ein.",
-		messageError: "Bitte schreibe eine Nachricht mit 1 bis 5000 Zeichen.",
+		emailError: "Bitte gib eine gültige E-Mail-Adresse ein",
+		messageError: "Bitte schreibe eine Nachricht",
 		emailSubject: "Erstes Gespräch",
 	},
 	en: {
@@ -180,6 +180,8 @@ export const copy = {
 		name: "Name",
 		email: "Email",
 		message: "Message",
+		messagePlaceholder:
+			"What would you like to achieve, and how do you train currently?",
 		sendMessage: "Send enquiry",
 		sending: "Sending …",
 		formPreview:
@@ -193,10 +195,8 @@ export const copy = {
 		captchaNotice: "Protected by hCaptcha. See its",
 		captchaAnd: " and ",
 		captchaTerms: "Terms of Service",
-		nameError: "Please use no more than 100 characters.",
-		emailError:
-			"Please enter a valid email address with no more than 254 characters.",
-		messageError: "Please write a message with 1 to 5000 characters.",
+		emailError: "Please enter a valid email address",
+		messageError: "Please write a message",
 		emailSubject: "First conversation",
 	},
 };

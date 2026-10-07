@@ -27,6 +27,21 @@ assert.ok(
 	"Empty message has a field-specific error",
 );
 assert.equal(emptyFields.byPath.name, undefined, "Name remains optional");
+for (const [field, value] of [
+	["email", "invalid"],
+	["message", "   "],
+]) {
+	const result = contactSchema({ ...valid, [field]: value });
+	assert.ok(
+		result instanceof type.errors && result.byPath[field],
+		`${field} supports field-specific blur validation`,
+	);
+	assert.equal(result.byPath.name, undefined, "Other valid fields stay valid");
+	assert.ok(
+		contactSchema.allows({ ...valid, [field]: valid[field] }),
+		"Corrected fields clear validation errors",
+	);
+}
 for (const bad of [
 	{ ...valid, email: "" },
 	{ ...valid, email: "not-an-email" },
