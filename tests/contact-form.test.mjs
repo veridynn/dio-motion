@@ -19,6 +19,14 @@ assert.deepEqual(valid, {
 	message: "Kraft? Ja!\n&subject=Andere Nachricht",
 });
 assert.ok(contactSchema.allows({ ...valid, name: "" }));
+const emptyFields = contactSchema({ name: "", email: "", message: "" });
+assert.ok(emptyFields instanceof type.errors);
+assert.ok(emptyFields.byPath.email, "Empty email has a field-specific error");
+assert.ok(
+	emptyFields.byPath.message,
+	"Empty message has a field-specific error",
+);
+assert.equal(emptyFields.byPath.name, undefined, "Name remains optional");
 for (const bad of [
 	{ ...valid, email: "" },
 	{ ...valid, email: "not-an-email" },
