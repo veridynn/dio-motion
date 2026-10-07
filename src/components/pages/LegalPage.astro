@@ -1,0 +1,24 @@
+---
+import SiteLayout from "../../layouts/SiteLayout.astro";
+import { copy, type Locale, type Page } from "../../lib/i18n";
+
+interface Props {
+	locale: Locale;
+	page: Exclude<Page, "home">;
+}
+const { locale, page } = Astro.props;
+const heading = copy[locale][page];
+---
+
+<SiteLayout
+	title={`${heading} — dio motion.`}
+	description={heading}
+	{locale}
+	{page}
+>
+	<section class="section section--light">
+		<div class="wrap">
+			<h1 class="h-section">{heading}</h1>
+		</div>
+	</section>
+</SiteLayout>
