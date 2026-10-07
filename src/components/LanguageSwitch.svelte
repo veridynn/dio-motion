@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { navigate } from "astro:transitions/client";
-	import { DropdownMenu } from "bits-ui";
+	import { Select } from "bits-ui";
 	import { onMount } from "svelte";
 	import {
 		copy,
@@ -11,12 +11,18 @@
 	} from "../lib/i18n";
 
 	let { locale, page }: { locale: Locale; page: Page } = $props();
+	const languages = [
+		{ value: "de", label: "Deutsch" },
+		{ value: "en", label: "English" },
+	];
 	let ready = $state(false);
+	let open = $state(false);
 	onMount(() => {
 		ready = true;
 	});
 
-	async function switchLanguage(next: Locale) {
+	async function switchLanguage(next: string) {
+		if (next !== "de" && next !== "en") return;
 		if (next === locale) return;
 		const { scrollX: left, scrollY: top } = window;
 		const restoreScroll = () =>
@@ -39,12 +45,22 @@
 	}
 </script>
 
-<DropdownMenu.Root>
-	<DropdownMenu.Trigger
+<Select.Root
+	type="single"
+	bind:open
+	value={locale}
+	items={languages}
+	disabled={!ready}
+	onValueChange={switchLanguage}
+>
+	<Select.Trigger
 		id="language-trigger"
+		role="combobox"
+		aria-expanded={open}
+		aria-controls={open ? "language-options" : undefined}
 		class={`btn btn--sm language-trigger${page === "home" ? " btn--light" : ""}`}
-		aria-label={copy[locale].language}
-		disabled={!ready}
+		aria-label={`${locale === "de" ? "Deutsch" : "English"} — ${copy[locale].language}`}
+		aria-describedby="language-selection-status"
 	>
 		<span class="language-label" lang="de" aria-hidden={locale !== "de"}
 			>Deutsch</span
@@ -52,29 +68,35 @@
 		<span class="language-label" lang="en" aria-hidden={locale !== "en"}
 			>English</span
 		>
-	</DropdownMenu.Trigger>
-	<DropdownMenu.Content
+	</Select.Trigger>
+	<!-- Keep content inside the persisted navigation island across Astro page swaps. -->
+	<Select.Content
+		id="language-options"
 		class="language-menu"
+		aria-label={copy[locale].language}
 		sideOffset={8}
 		align="end"
 		preventScroll={false}
 	>
-		<DropdownMenu.RadioGroup value={locale} aria-label={copy[locale].language}>
-			{#each ["de", "en"] as language}
-				{@const next = language as Locale}
-				<DropdownMenu.RadioItem
-					value={next}
-					class="language-option"
-					textValue={next === "de" ? "Deutsch" : "English"}
-					onSelect={() => switchLanguage(next)}
-				>
-					<span lang={next}>{next === "de" ? "Deutsch" : "English"}</span>
-					<span aria-hidden="true">{locale === next ? "✓" : ""}</span>
-				</DropdownMenu.RadioItem>
-			{/each}
-		</DropdownMenu.RadioGroup>
-	</DropdownMenu.Content>
-</DropdownMenu.Root>
+		{#each languages as language (language.value)}
+			<Select.Item
+				value={language.value}
+				label={language.label}
+				class="language-option"
+			>
+				{#snippet children({
+					selected,
+				})}
+					<span lang={language.value}>{language.label}</span>
+					<span aria-hidden="true">{selected ? "✓" : ""}</span>
+				{/snippet}
+			</Select.Item>
+		{/each}
+	</Select.Content>
+</Select.Root>
+<span id="language-selection-status" class="language-status"
+	>{copy[locale].languageSelected}</span
+>
 <noscript>
 	<a
 		href={routes[page][locale === "de" ? "en" : "de"]}
@@ -124,8 +146,19 @@
 		outline: 2px solid var(--asche);
 		outline-offset: -2px;
 	}
-	:global(.language-option[data-state="checked"]) {
+	:global(.language-option[data-selected]) {
 		font-weight: 600;
+	}
+	.language-status {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		padding: 0;
+		margin: -1px;
+		overflow: hidden;
+		clip-path: inset(50%);
+		white-space: nowrap;
+		border: 0;
 	}
 	noscript a {
 		color: inherit;
