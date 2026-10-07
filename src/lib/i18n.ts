@@ -95,7 +95,7 @@ export const copy = {
 		sending: "Wird gesendet …",
 		formPreview:
 			"Danke! Das ist ein Test – deine Anfrage wurde noch nicht versendet.",
-		formHelp: "E-Mail und Nachricht sind Pflichtfelder.",
+		optional: "(optional)",
 		formSuccess: "Danke! Deine Nachricht wurde gesendet.",
 		formError:
 			"Deine Nachricht konnte nicht bestätigt werden. Deine Eingaben bleiben erhalten. Bitte versuche es erneut.",
@@ -182,7 +182,7 @@ export const copy = {
 		sending: "Sending …",
 		formPreview:
 			"Thank you! This is a test — your enquiry has not been sent yet.",
-		formHelp: "Email and message are required.",
+		optional: "(optional)",
 		formSuccess: "Thank you! Your message has been sent.",
 		formError:
 			"We could not confirm your message was sent. Your entries are preserved. Please try again.",
