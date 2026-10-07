@@ -14,8 +14,8 @@ const t = copy[locale];
 			<a class="wordmark" href={routes.home[locale]}>dio motion.</a>
 			<p class="footer__tagline">{t.tagline}</p>
 		</div>
-		<div class="footer__navigation">
-			<p class="footer__label">Navigation</p>
+		<nav class="footer__navigation" aria-labelledby="footer-navigation-label">
+			<p class="footer__label" id="footer-navigation-label">Navigation</p>
 			<ul class="footer__list">
 				<li>
 					<a href={`${routes.home[locale]}#${sectionIds.potential[locale]}`}
@@ -39,7 +39,7 @@ const t = copy[locale];
 				</li>
 				<li><a href={routes.contact[locale]}>{t.contact}</a></li>
 			</ul>
-		</div>
+		</nav>
 	</div>
 	<div class="footer__bottom">
 		<div class="footer__credits">
