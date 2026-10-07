@@ -61,8 +61,8 @@ const t = copy[locale];
 			</span>
 		</div>
 		<span class="footer__legal">
-			<span>{t.legal}</span>
-			<span>{t.privacy}</span>
+			<a href={routes.legal[locale]}>{t.legal}</a>
+			<a href={routes.privacy[locale]}>{t.privacy}</a>
 		</span>
 	</div>
 </footer>
@@ -184,6 +184,11 @@ const t = copy[locale];
 	}
 	.footer__legal {
 		flex-wrap: wrap;
+	}
+	.footer__legal a:hover {
+		color: var(--ivory);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
 	}
 	@media (max-width: 860px) {
 		.footer {

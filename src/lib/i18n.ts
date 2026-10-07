@@ -1,5 +1,5 @@
 export type Locale = "de" | "en";
-export type Page = "home";
+export type Page = "home" | "legal" | "privacy";
 
 export const sectionIds = {
 	potential: { de: "potenzial", en: "potential" },
@@ -19,6 +19,8 @@ export function localizeHash(hash: string, locale: Locale) {
 export const routes = {
 	home: { de: "/", en: "/en/" },
 	contact: { de: "/#kontakt", en: "/en/#contact" },
+	legal: { de: "/impressum/", en: "/en/legal-notice/" },
+	privacy: { de: "/datenschutz/", en: "/en/privacy-policy/" },
 } as const;
 
 export const copy = {

@@ -11,10 +11,10 @@
 		let observer: IntersectionObserver | undefined;
 		function observeSections() {
 			observer?.disconnect();
-			scrolled = false;
 			const headerHeight = document.querySelector(".nav")?.clientHeight ?? 80;
 			const rootMargin = `-${headerHeight}px 0px 0px 0px`;
 			const hero = document.querySelector(".hero");
+			scrolled = !hero;
 			if (hero) {
 				observer = new IntersectionObserver(
 					([entry]) => {
@@ -34,10 +34,18 @@
 	});
 </script>
 
-<nav class="nav" class:is-scrolled={scrolled} aria-label={t.navigation}>
+<nav
+	class="nav"
+	class:is-scrolled={page !== "home" || scrolled}
+	aria-label={t.navigation}
+>
 	<a class="wordmark" href={routes.home[locale]}>dio motion.</a>
 	<div class="nav__actions">
-		<a class="btn btn--sm btn--light" href={routes.contact[locale]}>{t.cta}</a>
+		{#if page === "home"}
+			<a class="btn btn--sm btn--light" href={routes.contact[locale]}
+				>{t.cta}</a
+			>
+		{/if}
 		<LanguageSwitch {locale} {page} />
 	</div>
 </nav>
