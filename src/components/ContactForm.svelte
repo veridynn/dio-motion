@@ -90,7 +90,6 @@
 	novalidate={ready}
 	action="https://api.web3forms.com/submit"
 	method="post"
-	aria-describedby={configured ? "form-help" : undefined}
 	aria-busy={busy}
 	onsubmit={submit}
 >
@@ -100,7 +99,10 @@
 	<input type="hidden" name="from_name" value="dio motion.">
 	<fieldset disabled={busy}>
 		<div class="field">
-			<Label.Root class="contact-label" for="name">{t.name}</Label.Root>
+			<Label.Root class="contact-label" for="name">
+				<span>{t.name}</span>
+				<span class="optional">{t.optional}</span>
+			</Label.Root>
 			<input
 				id="name"
 				name="name"
@@ -168,7 +170,6 @@
 	</fieldset>
 </form>
 {#if configured}
-	<p id="form-help" class="form-help">{t.formHelp}</p>
 	<p class="form-help captcha-notice">
 		{t.captchaNotice}
 		<a href="https://www.hcaptcha.com/privacy">{t.privacy}</a>
@@ -191,13 +192,19 @@
 		margin-top: var(--space-lg);
 	}
 	:global(.contact-label) {
-		display: block;
+		display: flex;
+		justify-content: space-between;
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.2em;
 		font-size: var(--fs-sm);
 		color: var(--asche);
 		margin-bottom: var(--control-gap);
+	}
+	.optional {
+		font-weight: 400;
+		text-transform: none;
+		letter-spacing: normal;
 	}
 	input,
 	textarea {
