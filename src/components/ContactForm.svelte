@@ -25,6 +25,7 @@
 		$props();
 	const t = $derived(copy[locale]);
 	const configured = $derived(accessKeySchema.allows(accessKey));
+	let ready = $state(false);
 	let name = $state("");
 	let email = $state("");
 	let message = $state("");
@@ -33,6 +34,7 @@
 	let errors = $state<Partial<Record<keyof ContactInput, boolean>>>({});
 
 	onMount(() => {
+		ready = true;
 		if (!configured) return;
 		const script = document.createElement("script");
 		script.src = "https://web3forms.com/client/script.js";
@@ -85,6 +87,7 @@
 </script>
 
 <form
+	novalidate={ready}
 	action="https://api.web3forms.com/submit"
 	method="post"
 	aria-describedby={configured ? "form-help" : undefined}
