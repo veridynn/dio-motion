@@ -1,33 +1,61 @@
 ---
-import '../styles/global.css';
-import { ClientRouter } from 'astro:transitions';
-import Navigation from '../components/Navigation.svelte';
-import Footer from '../components/Footer.astro';
-import { copy, routes, type Locale, type Page } from '../lib/i18n';
-interface Props { title: string; description: string; locale: Locale; page: Page; }
+import "../styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import Footer from "../components/Footer.astro";
+import Navigation from "../components/Navigation.svelte";
+import { copy, type Locale, type Page, routes } from "../lib/i18n";
+
+interface Props {
+	title: string;
+	description: string;
+	locale: Locale;
+	page: Page;
+}
 const { title, description, locale, page } = Astro.props;
 ---
+
 <!doctype html>
 <html lang={locale} transition:animate="none">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
-    <link rel="canonical" href={new URL(routes[page][locale], Astro.site)} />
-    <link rel="alternate" hreflang="de" href={new URL(routes[page].de, Astro.site)} />
-    <link rel="alternate" hreflang="en" href={new URL(routes[page].en, Astro.site)} />
-    <link rel="alternate" hreflang="x-default" href={new URL(routes[page].de, Astro.site)} />
-    <ClientRouter />
-    <title>{title}</title>
-  </head>
-  <body>
-    <a class="skip-link" href="#main">{copy[locale].skip}</a>
-    <Navigation locale={locale} page={page} client:load transition:persist="navigation" />
-    <main id="main" tabindex="-1"><slot /></main>
-    <Footer locale={locale} />
-  </body>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="description" content={description}>
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+		<link
+			rel="preload"
+			href="/fonts/manrope/manrope-latin-variable.woff2"
+			as="font"
+			type="font/woff2"
+			crossorigin
+		>
+		<link rel="canonical" href={new URL(routes[page][locale], Astro.site)}>
+		<link
+			rel="alternate"
+			hreflang="de"
+			href={new URL(routes[page].de, Astro.site)}
+		>
+		<link
+			rel="alternate"
+			hreflang="en"
+			href={new URL(routes[page].en, Astro.site)}
+		>
+		<link
+			rel="alternate"
+			hreflang="x-default"
+			href={new URL(routes[page].de, Astro.site)}
+		>
+		<ClientRouter />
+		<title>{title}</title>
+	</head>
+	<body>
+		<a class="skip-link" href="#main">{copy[locale].skip}</a>
+		<Navigation
+			locale={locale}
+			page={page}
+			client:load
+			transition:persist="navigation"
+		/>
+		<main id="main" tabindex="-1"><slot /></main>
+		<Footer locale={locale} />
+	</body>
 </html>

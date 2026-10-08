@@ -1,13 +1,10 @@
 # dio motion.
 
-Personal trainer website for [Dio Motion](https://diomotion.com), built with Astro and Svelte. The site is statically generated, with German at `/` and English at `/en/`.
+Personal trainer website for [Dio Motion](https://diomotion.com), built with Astro and Svelte.
 
-## Requirements
+## Development
 
-- Node.js `^26`
-- pnpm `^12`
-
-## Setup
+Requires Node.js 26 and pnpm 12.9.1.
 
 ```sh
 pnpm install
@@ -15,24 +12,19 @@ cp .env.example .env
 pnpm dev
 ```
 
-Environment variable configuration is covered in the [contact delivery documentation](docs/development.md#contact-delivery).
+> [!NOTE]
+> Fill in `PUBLIC_WEB3FORMS_ACCESS_KEY` in `.env` to enable contact form submissions.
 
-## Development commands
+## Commands
 
-- `pnpm dev` — start the local development server
-- `pnpm dev --background` — optionally run the server in the background
-- `pnpm dev status` — check whether the development server is running
-- `pnpm dev logs` — view logs from the background development server
-- `pnpm dev stop` — stop the background development server
-- `pnpm check` — run Astro, Svelte, and TypeScript checks
-- `pnpm test` — check form validation and delivery handling
-- `pnpm test:pages` — build and check localized pages
-- `pnpm build` — generate the static site in `dist/`
-- `pnpm preview` — preview the production build locally
+- `pnpm check` — formatting, linting, and type checks
+- `pnpm test` — contact form tests
+- `pnpm test:pages` — build and localized page tests
+- `pnpm format` — format code
+- `pnpm build` — production build
+- `pnpm preview` — preview the build locally
 
-## Documentation
+## Links
 
-- [Deployment and releases](docs/deployment.md) — Cloudflare Pages, CI, production protection, and Silvo’s review
-
-- [Development documentation](docs/development.md) — project structure, typography, spacing, and contact delivery
-- [General todos](docs/todos.md) — remaining content and launch tasks
+- [Documentation](docs/README.md)
+- [Work board](https://github.com/users/veridynn/projects/4)

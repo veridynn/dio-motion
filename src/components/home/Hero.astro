@@ -1,29 +1,45 @@
 ---
-import { copy, routes, type Locale } from '../../lib/i18n';
-interface Props { locale: Locale; }
+import { copy, type Locale, routes } from "../../lib/i18n";
+
+interface Props {
+	locale: Locale;
+}
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
-<header class="hero" id="top">
-  <div class="hero__inner">
-    <h1 class="h-display reveal">{t.hero}</h1>
-    <p class="lead reveal">{t.tagline}.</p>
-    <a class="btn btn--light reveal" href={routes.contact[locale]}>{t.cta}</a>
-  </div>
 
+<header class="hero" id="top">
+	<div class="hero__inner">
+		<h1 class="h-display reveal">{t.hero}</h1>
+		<p class="lead reveal">{t.tagline}.</p>
+		<a class="btn btn--light reveal" href={routes.contact[locale]}>{t.cta}</a>
+	</div>
 </header>
 <style>
-.hero{
-  position:relative; overflow:hidden;
-  min-height:var(--usable-height);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  background:var(--smoke);
-  color:var(--ivory);
-  padding:var(--section-y) var(--gutter);
-  text-align:center;
-}
+	.hero {
+		position: relative;
+		overflow: hidden;
+		min-height: var(--usable-height);
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		background: var(--smoke);
+		color: var(--ivory);
+		padding: var(--section-y) var(--gutter);
+		text-align: center;
+	}
 
-.hero__inner{ position:relative; max-width:64rem; }
-.hero .lead{ color:var(--ivory); opacity:.72; margin-top:var(--space-lg); }
-.hero .btn{ margin-top:var(--space-xl); }
+	.hero__inner {
+		position: relative;
+		max-width: 64rem;
+	}
+	.hero .lead {
+		color: var(--ivory);
+		opacity: 0.72;
+		margin-top: var(--space-lg);
+	}
+	.hero .btn {
+		margin-top: var(--space-xl);
+	}
 </style>

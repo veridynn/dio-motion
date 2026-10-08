@@ -1,40 +1,65 @@
 ---
-import { copy, sectionIds, type Locale } from '../../lib/i18n';
-interface Props { locale: Locale; }
+import { copy, type Locale, sectionIds } from "../../lib/i18n";
+
+interface Props {
+	locale: Locale;
+}
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
+
 <section class="section section--light" id={sectionIds.services[locale]}>
-  <div class="wrap">
-    <div class="assessment center">
-      <h2 class="h-section reveal">{t.assessment}</h2>
-      <p class="lead reveal">{t.assessmentLead}</p>
-    </div>
+	<div class="wrap">
+		<div class="assessment center">
+			<h2 class="h-section reveal">{t.assessment}</h2>
+			<p class="lead reveal">{t.assessmentLead}</p>
+		</div>
 
-    <hr class="rule reveal">
+		<hr class="rule reveal">
 
-    <div class="tiers">
-      {t.tiers.map(([title, body]) => (
-        <div class="tier reveal"><h3>{title}</h3><p class="body">{body}</p></div>
-      ))}
-    </div>
-  </div>
+		<div class="tiers">
+			{t.tiers.map(([title, body]) => (
+				<div class="tier reveal">
+					<h3>{title}</h3>
+					<p class="body">{body}</p>
+				</div>
+			))}
+		</div>
+	</div>
 </section>
 <style>
-.assessment{ max-width:40rem; margin:0 auto; text-align:left; }
-.assessment .lead{ margin-top:var(--space-lg); }
-.rule{
-  border:0; border-top:1px solid var(--leinen);
-  margin:var(--space-2xl) 0;
-}
-.tiers{
-  display:grid; grid-template-columns:minmax(0,1fr);
-  gap:var(--space-xl);
-}
-.tier h3{ font-weight:400; font-size:var(--fs-lg); letter-spacing:-.005em; }
-.tier p{ margin-top:var(--space-md); }
-@media (min-width: 861px) {
-  .assessment{ text-align:center; }
-  .tiers{ grid-template-columns:repeat(2,minmax(0,1fr)); }
-}
+	.assessment {
+		max-width: 40rem;
+		margin: 0 auto;
+		text-align: left;
+	}
+	.assessment .lead {
+		margin-top: var(--space-lg);
+	}
+	.rule {
+		border: 0;
+		border-top: 1px solid var(--leinen);
+		margin: var(--space-2xl) 0;
+	}
+	.tiers {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr);
+		gap: var(--space-xl);
+	}
+	.tier h3 {
+		font-weight: 400;
+		font-size: var(--fs-lg);
+		letter-spacing: -0.005em;
+	}
+	.tier p {
+		margin-top: var(--space-md);
+	}
+	@media (min-width: 861px) {
+		.assessment {
+			text-align: center;
+		}
+		.tiers {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+	}
 </style>

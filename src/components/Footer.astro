@@ -1,100 +1,209 @@
 ---
-import { copy, routes, sectionIds, type Locale } from '../lib/i18n';
-interface Props { locale: Locale; }
+import { copy, type Locale, routes, sectionIds } from "../lib/i18n";
+
+interface Props {
+	locale: Locale;
+}
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
+
 <footer class="footer">
-  <div class="footer__cols">
-    <div class="footer__brand">
-      <a class="wordmark" href={routes.home[locale]}>dio motion.</a>
-      <p class="footer__tagline">{t.tagline}</p>
-    </div>
-    <div class="footer__navigation">
-      <p class="footer__label">Navigation</p>
-      <ul class="footer__list">
-        <li><a href={`${routes.home[locale]}#${sectionIds.potential[locale]}`}>{t.potential}</a></li>
-        <li><a href={`${routes.home[locale]}#${sectionIds.approach[locale]}`}>{t.approach}</a></li>
-        <li><a href={`${routes.home[locale]}#${sectionIds.services[locale]}`}>{t.services}</a></li>
-        <li><a href={`${routes.home[locale]}#${sectionIds.about[locale]}`}>{t.about}</a></li>
-        <li><a href={routes.contact[locale]}>{t.contact}</a></li>
-      </ul>
-    </div>
-  </div>
-  <div class="footer__bottom">
-    <div class="footer__credits">
-      <span>© {new Date().getFullYear()} dio motion.</span>
-      <span class="footer__credit">
-        Website by{' '}<a href="https://github.com/veridynn">
-          <svg aria-hidden="true" width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
-            <path d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.09c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.56 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .94-.3 3.09 1.15A10.76 10.76 0 0 1 12 6.19c.96 0 1.92.13 2.82.38 2.15-1.46 3.09-1.15 3.09-1.15.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.32-2.63 5.27-5.14 5.55.4.35.76 1.03.76 2.08v3.08c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z" />
-          </svg>{' '}<span class="footer__credit-name">veridynn</span>
-        </a>
-      </span>
-    </div>
-    <span class="footer__legal">
-      <span>{t.legal}</span>
-      <span>{t.privacy}</span>
-    </span>
-  </div>
+	<div class="footer__cols">
+		<div class="footer__brand">
+			<a class="wordmark" href={routes.home[locale]}>dio motion.</a>
+			<p class="footer__tagline">{t.tagline}</p>
+		</div>
+		<nav class="footer__navigation" aria-labelledby="footer-navigation-label">
+			<p class="footer__label" id="footer-navigation-label">Navigation</p>
+			<ul class="footer__list">
+				<li>
+					<a href={`${routes.home[locale]}#${sectionIds.potential[locale]}`}
+						>{t.potential}</a
+					>
+				</li>
+				<li>
+					<a href={`${routes.home[locale]}#${sectionIds.approach[locale]}`}
+						>{t.approach}</a
+					>
+				</li>
+				<li>
+					<a href={`${routes.home[locale]}#${sectionIds.services[locale]}`}
+						>{t.services}</a
+					>
+				</li>
+				<li>
+					<a href={`${routes.home[locale]}#${sectionIds.about[locale]}`}
+						>{t.about}</a
+					>
+				</li>
+				<li><a href={routes.contact[locale]}>{t.contact}</a></li>
+			</ul>
+		</nav>
+	</div>
+	<div class="footer__bottom">
+		<div class="footer__credits">
+			<span>© {new Date().getFullYear()} dio motion.</span>
+			<span class="footer__credit">
+				Website by{" "}<a href="https://github.com/veridynn">
+					<svg
+						aria-hidden="true"
+						width="16"
+						height="16"
+						viewBox="0 0 24 24"
+						fill="currentColor"
+					>
+						<path
+							d="M12 .75a11.25 11.25 0 0 0-3.56 21.92c.56.1.77-.24.77-.54v-2.09c-3.13.68-3.79-1.33-3.79-1.33-.51-1.3-1.25-1.65-1.25-1.65-1.02-.7.08-.68.08-.68 1.13.08 1.72 1.16 1.72 1.16 1 1.72 2.63 1.22 3.27.94.1-.73.39-1.22.71-1.5-2.5-.28-5.13-1.25-5.13-5.56 0-1.23.44-2.23 1.16-3.02-.12-.28-.5-1.43.11-2.98 0 0 .94-.3 3.09 1.15A10.76 10.76 0 0 1 12 6.19c.96 0 1.92.13 2.82.38 2.15-1.46 3.09-1.15 3.09-1.15.61 1.55.23 2.7.11 2.98.72.79 1.16 1.79 1.16 3.02 0 4.32-2.63 5.27-5.14 5.55.4.35.76 1.03.76 2.08v3.08c0 .3.2.65.77.54A11.25 11.25 0 0 0 12 .75Z"
+						/>
+					</svg>{" "}<span class="footer__credit-name">veridynn</span>
+				</a>
+			</span>
+		</div>
+		<span class="footer__legal">
+			<a href={routes.legal[locale]}>{t.legal}</a>
+			<a href={routes.privacy[locale]}>{t.privacy}</a>
+		</span>
+	</div>
 </footer>
 <style>
-.footer{
-  background:var(--smoke); color:var(--ivory);
-  padding:var(--space-3xl) var(--gutter) var(--space-xl);
-}
-.footer__cols{
-  max-width:var(--measure); margin:0 auto;
-  display:flex; flex-wrap:wrap; align-items:flex-start;
-  gap:var(--space-xl);
-}
-.footer__brand{ flex:1 1 12rem; }
-.footer__navigation{ width:max-content; }
-.footer__brand .wordmark{ color:var(--ivory); font-size:var(--fs-base); font-weight:500; letter-spacing:.01em; text-decoration:none; }
-.footer__tagline{
-  margin-top:var(--space-sm); font-weight:300; font-style:italic;
-  font-size:var(--fs-sm); color:var(--ivory); opacity:.65;
-}
-.footer__label{
-  font-weight:600; text-transform:uppercase; letter-spacing:.2em;
-  font-size:var(--fs-sm); color:var(--ivory); opacity:.65;
-}
-.footer__list{ list-style:none; margin:var(--space-xs) 0 0; padding:0; }
-.footer__list a{
-  display:flex; align-items:center; min-height:2rem;
-  line-height:1.5;
-  font-size:var(--fs-sm); color:var(--ivory); opacity:.7;
-  text-decoration:none; transition:color .3s ease, opacity .3s ease;
-}
-.footer__list a:hover{ color:var(--sandstein); opacity:1; }
-.footer__bottom{
-  max-width:var(--measure); margin:var(--space-2xl) auto 0;
-  padding-top:var(--space-lg); border-top:1px solid var(--graphit);
-  display:flex; justify-content:space-between; gap:var(--space-lg); flex-wrap:wrap;
-}
-.footer__bottom, .footer__bottom a{
-  font-size:var(--fs-sm); color:#aaa49b; text-decoration:none;
-}
-.footer__credits{ display:flex; align-items:center; flex-wrap:wrap; gap:var(--space-sm) var(--space-lg); }
-.footer__credit{ white-space:nowrap; }
-.footer__credit a{ font-weight:600; color:inherit; text-decoration:none; }
-.footer__credit-name{ display:inline-block; text-decoration:underline; text-underline-offset:.2em; }
-.footer__credit a:hover{ color:var(--sandstein); text-decoration:none; }
-.footer__credit a:focus-visible{ outline:2px solid currentColor; outline-offset:4px; border-radius:2px; }
-.footer__credit svg{ display:inline-block; width:16px; height:16px; vertical-align:middle; }
-.footer__legal{ display:flex; gap:var(--space-lg); }
-.footer__legal { flex-wrap: wrap; }
-@media (max-width: 860px) {
-  .footer {
-    padding-top:var(--space-xl);
-    padding-bottom:calc(var(--space-xl) + env(safe-area-inset-bottom));
-  }
-  .footer__bottom {
-    margin-top:var(--space-lg);
-    padding-top:var(--space-lg);
-    row-gap:var(--space-sm);
-  }
-  .footer__legal { gap:var(--space-sm) var(--space-lg); }
-}
-
+	.footer {
+		background: var(--smoke);
+		color: var(--ivory);
+		padding: var(--space-3xl) var(--gutter) var(--space-xl);
+	}
+	.footer__cols {
+		max-width: var(--measure);
+		margin: 0 auto;
+		display: flex;
+		flex-wrap: wrap;
+		align-items: flex-start;
+		gap: var(--space-xl);
+	}
+	.footer__brand {
+		flex: 1 1 12rem;
+	}
+	.footer__navigation {
+		width: max-content;
+	}
+	.footer__brand .wordmark {
+		color: var(--ivory);
+		font-size: var(--fs-base);
+		font-weight: 500;
+		letter-spacing: 0.01em;
+		text-decoration: none;
+	}
+	.footer__tagline {
+		margin-top: var(--space-sm);
+		font-weight: 300;
+		font-style: italic;
+		font-size: var(--fs-sm);
+		color: var(--ivory);
+		opacity: 0.65;
+	}
+	.footer__label {
+		font-weight: 600;
+		text-transform: uppercase;
+		letter-spacing: 0.2em;
+		font-size: var(--fs-sm);
+		color: var(--ivory);
+		opacity: 0.65;
+	}
+	.footer__list {
+		list-style: none;
+		margin: var(--space-xs) 0 0;
+		padding: 0;
+	}
+	.footer__list a {
+		display: flex;
+		align-items: center;
+		min-height: 2rem;
+		line-height: 1.5;
+		font-size: var(--fs-sm);
+		color: color-mix(in srgb, var(--ivory) 70%, var(--smoke));
+		text-decoration: none;
+		transition: color 0.3s ease;
+	}
+	.footer__list a:hover,
+	.footer__list a:focus-visible {
+		color: var(--ivory);
+	}
+	.footer__bottom {
+		max-width: var(--measure);
+		margin: var(--space-2xl) auto 0;
+		padding-top: var(--space-lg);
+		border-top: 1px solid var(--graphit);
+		display: flex;
+		justify-content: space-between;
+		gap: var(--space-lg);
+		flex-wrap: wrap;
+	}
+	.footer__bottom,
+	.footer__bottom a {
+		font-size: var(--fs-sm);
+		color: #aaa49b;
+		text-decoration: none;
+	}
+	.footer__credits {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--space-sm) var(--space-lg);
+	}
+	.footer__credit {
+		white-space: nowrap;
+	}
+	.footer__credit a {
+		font-weight: 600;
+		color: inherit;
+		text-decoration: none;
+	}
+	.footer__credit-name {
+		display: inline-block;
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+	.footer__credit a:hover,
+	.footer__credit a:focus-visible {
+		color: var(--ivory);
+		text-decoration: none;
+	}
+	.footer__credit a:focus-visible {
+		outline: 2px solid currentColor;
+		outline-offset: 4px;
+		border-radius: 2px;
+	}
+	.footer__credit svg {
+		display: inline-block;
+		width: 16px;
+		height: 16px;
+		vertical-align: middle;
+	}
+	.footer__legal {
+		display: flex;
+		gap: var(--space-lg);
+	}
+	.footer__legal {
+		flex-wrap: wrap;
+	}
+	.footer__legal a:hover,
+	.footer__legal a:focus-visible {
+		color: var(--ivory);
+		text-decoration: underline;
+		text-underline-offset: 0.2em;
+	}
+	@media (max-width: 860px) {
+		.footer {
+			padding-top: var(--space-xl);
+			padding-bottom: calc(var(--space-xl) + env(safe-area-inset-bottom));
+		}
+		.footer__bottom {
+			margin-top: var(--space-lg);
+			padding-top: var(--space-lg);
+			row-gap: var(--space-sm);
+		}
+		.footer__legal {
+			gap: var(--space-sm) var(--space-lg);
+		}
+	}
 </style>
