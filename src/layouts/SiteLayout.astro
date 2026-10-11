@@ -4,6 +4,7 @@ import { ClientRouter } from "astro:transitions";
 import Footer from "../components/Footer.astro";
 import Navigation from "../components/Navigation.svelte";
 import { copy, type Locale, type Page, routes } from "../lib/i18n";
+import { commit, preview, version } from "../lib/version";
 
 interface Props {
 	title: string;
@@ -20,6 +21,12 @@ const { title, description, locale, page } = Astro.props;
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="description" content={description}>
+		<meta name="dio-motion-version" content={version}>
+		{commit && <meta name="dio-motion-commit" content={commit}>}
+		<meta
+			name="dio-motion-environment"
+			content={preview ? "preview" : "production"}
+		>
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg">
 		<link
 			rel="preload"
