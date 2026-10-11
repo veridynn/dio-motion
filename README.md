@@ -1,30 +1,25 @@
 # dio motion.
 
-Personal trainer website for [Dio Motion](https://diomotion.com), built with Astro and Svelte.
+Personal trainer website for [Dio Motion](https://diomotion.com), built with Astro
+and Svelte. German lives at `/`, English at `/en/`.
 
 ## Development
 
-Requires Node.js 26 and pnpm 12.9.1.
+Requires Node.js 26 and pnpm 12.9.1, as specified in [package.json](package.json).
+On a first checkout, create `.env` from the template; preserve an existing `.env`.
 
 ```sh
 pnpm install
-cp .env.example .env
-pnpm dev
+cp -n .env.example .env
+pnpm dev --background
 ```
 
-> [!NOTE]
-> Fill in `PUBLIC_WEB3FORMS_ACCESS_KEY` in `.env` to enable contact form submissions.
+Open the URL reported by Astro. Configure contact delivery using
+[environment guidance](docs/development.md#contact-configuration).
+See [server management and checks](docs/development.md) for the remaining commands.
 
-## Commands
+## Project guidance
 
-- `pnpm check` — formatting, linting, and type checks
-- `pnpm test` — contact form tests
-- `pnpm test:pages` — build and localized page tests
-- `pnpm format` — format code
-- `pnpm build` — production build
-- `pnpm preview` — preview the build locally
-
-## Links
-
-- [Documentation](docs/README.md)
-- [Work board](https://github.com/users/veridynn/projects/4)
+- [Documentation index](docs/README.md) — Read the topic matching your task.
+- [Agent guide](AGENTS.md) — Shared contracts and verification requirements.
+- [Work board](https://github.com/users/veridynn/projects/4) — Pending work and approvals.
