@@ -50,7 +50,8 @@ gh api 'repos/veridynn/dio-motion/codeowners/errors?ref=prod'
 
 ## Release: dev → prod
 
-1. Wait for CI and a successful Pages preview of the latest `dev` head.
+1. Merge the prepared version/changelog PR into `dev` before promotion. Review its
+   notes and wait for CI and a successful Pages preview of the latest `dev` head.
 2. Open a PR with base `prod`, head `dev`. Include the full head SHA and the matching
    preview's immutable URL and deployment ID.
 3. Have `@diomotion` review that preview and approve the PR. New commits require
@@ -58,6 +59,64 @@ gh api 'repos/veridynn/dio-motion/codeowners/errors?ref=prod'
 4. Merge after the approval gate passes. Prefer a merge commit for repeated
    promotions so branch history stays connected. With automatic production builds
    enabled, verify the resulting deployment's commit and both `/` and `/en/`.
+
+## Versioning and automation
+
+[package.json](../package.json) owns the site version. The initial `0.1.0`
+development baseline is recorded in [CHANGELOG.md](../CHANGELOG.md); it is not a
+claim that this source has reached production. The earlier scaffold value
+`0.0.1` had no tagged release.
+
+[Prepare release](../.github/workflows/prepare-release.yml) runs on `dev`, maintaining
+a Release Please PR that updates the package version, changelog, and
+[manifest](../.release-please-manifest.json). Merge that PR to record a development
+milestone. Its `dev-v…` tag and GitHub prerelease do not deploy production.
+Several development milestones may be promoted together.
+
+Use Conventional Commits: `fix:` bumps patch, `feat:` bumps minor, and `!` or a
+`BREAKING CHANGE:` footer bumps major (minor while below `1.0.0`). Project override
+to the Conventional Git skill: documentation, formatting, and tooling commits
+are also visible in the changelog and can prepare a patch release PR. They do not
+publish a new milestone until that PR is merged. Use `fix:` for visitor-visible copy or styling corrections;
+reserve `style:` for formatting. For an intentional version override, include a
+`Release-As: 1.0.0` footer in a commit. Review generated notes before promotion.
+The bootstrap SHA in [configuration](../release-please-config.json) excludes the
+history already summarized in the baseline; it is ignored after the first
+generated milestone is released.
+
+The shared footer renders the version at build time. Every non-`prod` build is
+labelled `Vorschau`/`Preview`; Cloudflare previews also include the short commit ID.
+HTML metadata records the version, full commit, and production/preview status.
+Cloudflare supplies `CF_PAGES_BRANCH` and `CF_PAGES_COMMIT_SHA`; do not override
+them. Local builds without these variables are labelled previews.
+
+[Publish production release](../.github/workflows/publish-release.yml) runs after
+successful push CI on `prod`. It waits for both `https://dio-motion.pages.dev/`
+and `/en/` to serve that exact production commit and version, then creates `v…`
+and its GitHub release. Notes include all changelog entries since the previous
+production release. Stale runs, mismatched pages, failed requests, and reused
+version numbers cannot publish. The workflow never promotes or merges code.
+Published tags are immutable; bump the version before another promotion.
+
+### One-time activation
+
+1. Merge the implementation into `dev`. In GitHub Actions settings, allow Actions
+   to create pull requests. The workflows use `GITHUB_TOKEN`; no new PAT or
+   Cloudflare API token is needed. Release PR CI is explicitly dispatched because
+   token-authored pushes do not trigger it automatically.
+2. Confirm the hosting and approval gate above. The production verifier uses the
+   `pages.dev` origin, not the custom domain. If that origin later redirects to the
+   custom domain, update the verifier's fixed URL and its tests before promotion.
+3. Verify a generated release PR's `check`, `test`, `test:pages`, and `test:release`
+   results and matching Pages preview. Then follow the existing approval process.
+4. Check the first production workflow's release tag, commit, notes, and both live
+   footers. Publication waits up to about 15 minutes including request timeouts.
+   On a hosting failure, fix hosting and rerun the successful `prod` push CI run;
+   it will trigger publication again. An already-published matching release is a
+   no-op. Do not change or delete a published tag to reuse a version.
+
+Neither this setup nor a generated development release authorizes attaching the
+live domain or bypassing production review.
 
 ## References
 

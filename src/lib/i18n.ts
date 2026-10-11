@@ -42,6 +42,7 @@ export const copy = {
 		contact: "Kontakt",
 		legal: "Impressum",
 		privacy: "Datenschutzerklärung",
+		preview: "Vorschau",
 		hero: "Mittelmäßig war nie eine Option.",
 		bridge: "Dein Körper ist zu mehr fähig, als du heute abrufst.",
 		bridgeLead:
@@ -130,6 +131,7 @@ export const copy = {
 		contact: "Contact",
 		legal: "Legal notice",
 		privacy: "Privacy policy",
+		preview: "Preview",
 		hero: "Mediocre was never an option.",
 		bridge: "Your body is capable of more than you ask of it today.",
 		bridgeLead: "The difference is not motivation – it is focus and structure.",

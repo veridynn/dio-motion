@@ -2,6 +2,35 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 
+const { version } = JSON.parse(readFileSync("package.json", "utf8"));
+const commit = process.env.CF_PAGES_COMMIT_SHA ?? process.env.GITHUB_SHA ?? "";
+const preview = process.env.CF_PAGES_BRANCH !== "prod";
+
+function checkVersion(html, locale) {
+	assert.ok(
+		html.includes(`<meta name="dio-motion-version" content="${version}">`),
+	);
+	if (commit)
+		assert.ok(
+			html.includes(`<meta name="dio-motion-commit" content="${commit}">`),
+		);
+	else assert.ok(!html.includes('name="dio-motion-commit"'));
+	assert.ok(
+		html.includes(
+			`<meta name="dio-motion-environment" content="${preview ? "preview" : "production"}">`,
+		),
+	);
+	const label = `Version ${version}${preview ? ` · ${locale === "de" ? "Vorschau" : "Preview"}${commit ? ` ${commit.slice(0, 7)}` : ""}` : ""}`;
+	const footer = html.match(/<footer\b[^>]*>(.*?)<\/footer>/s)?.[1];
+	assert.ok(footer?.includes(`data-site-version="${version}"`));
+	assert.ok(
+		footer.includes(label),
+		"Footer identifies this build in its language",
+	);
+	if (!preview)
+		assert.ok(!footer.includes("Vorschau") && !footer.includes("Preview"));
+}
+
 for (const [locale, heading, lead, submit] of [
 	[
 		"de",
@@ -19,6 +48,7 @@ for (const [locale, heading, lead, submit] of [
 	const home = locale === "de" ? "/" : "/en/";
 	const contactId = locale === "de" ? "kontakt" : "contact";
 	const html = readFileSync(`dist${home}index.html`, "utf8");
+	checkVersion(html, locale);
 	assert.match(html, new RegExp(`<html[^>]*lang="${locale}"`));
 	const languageTrigger = html.match(
 		/<button\b[^>]*id="language-trigger"[^>]*>/,
@@ -193,6 +223,7 @@ for (const [de, en, deHeading, enHeading] of [
 		["en", en, enHeading, de],
 	]) {
 		const html = readFileSync(`dist${path}index.html`, "utf8");
+		checkVersion(html, locale);
 		const home = readFileSync(
 			`dist${locale === "de" ? "/" : "/en/"}index.html`,
 			"utf8",

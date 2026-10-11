@@ -1,0 +1,51 @@
+name: Prepare release
+
+on:
+  push:
+    branches: [dev]
+  workflow_dispatch:
+
+concurrency:
+  group: prepare-release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  actions: write
+
+jobs:
+  prepare:
+    if: github.ref == 'refs/heads/dev'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@8b8fd2cc23b2e18957157a9d923d75aa0c6f6ad5 # v4
+        id: release
+        with:
+          target-branch: dev
+      - name: Mark development releases and run release PR checks
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          RELEASE_CREATED: ${{ steps.release.outputs.release_created }}
+          RELEASE_ID: ${{ steps.release.outputs.id }}
+          RELEASE_PR: ${{ steps.release.outputs.pr }}
+        with:
+          script: |
+            if (process.env.RELEASE_CREATED === 'true') {
+              await github.rest.repos.updateRelease({
+                ...context.repo,
+                release_id: Number(process.env.RELEASE_ID),
+                prerelease: true,
+                make_latest: 'false',
+              });
+            }
+            // GITHUB_TOKEN pushes do not start CI; workflow_dispatch does.
+            if (process.env.RELEASE_PR) {
+              const pr = JSON.parse(process.env.RELEASE_PR);
+              await github.rest.actions.createWorkflowDispatch({
+                ...context.repo,
+                workflow_id: 'ci.yml',
+                ref: pr.headBranchName,
+              });
+            }

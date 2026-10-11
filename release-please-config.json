@@ -1,0 +1,25 @@
+{
+	"bootstrap-sha": "e3821d0bc4a5fac64acbb3d2c13f633305b73f0c",
+	"packages": {
+		".": {
+			"release-type": "node",
+			"component": "dev",
+			"include-component-in-tag": true,
+			"prerelease": true,
+			"bump-minor-pre-major": true,
+			"changelog-sections": [
+				{ "type": "feat", "section": "Features" },
+				{ "type": "fix", "section": "Fixes" },
+				{ "type": "perf", "section": "Performance" },
+				{ "type": "revert", "section": "Reverts" },
+				{ "type": "docs", "section": "Documentation" },
+				{ "type": "style", "section": "Styling" },
+				{ "type": "refactor", "section": "Maintenance" },
+				{ "type": "test", "section": "Tests" },
+				{ "type": "build", "section": "Build" },
+				{ "type": "ci", "section": "Automation" },
+				{ "type": "chore", "section": "Maintenance" }
+			]
+		}
+	}
+}
