@@ -72,7 +72,7 @@ const t = copy[locale];
 			data-site-version={version}
 			title={preview ? t.preview : undefined}
 		>
-			v{version}{commit && `-${commit.slice(0, 7)}`}
+			v{version}{commit && `+${commit.slice(0, 7)}`}
 		</span>
 	</div>
 </footer>
@@ -213,6 +213,9 @@ const t = copy[locale];
 		}
 	}
 	@media (max-width: 540px) {
+		.footer__legal {
+			flex-direction: column;
+		}
 		.footer__bottom {
 			grid-template-columns: minmax(0, 1fr);
 		}
