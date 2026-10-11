@@ -1,22 +1,26 @@
-# Project records
+# Documentation
 
-Current project context, rationale, and constraints. Quick setup is in [README.md](../README.md).
+Start with [setup](../README.md) or the [agent guide](../AGENTS.md). This is a single
+site; the root agent guide applies throughout the application.
 
-| Topic | Record |
+| Before working on… | Read |
 | --- | --- |
-| Full command list and test scope | [Development commands](records/development-commands.md) |
-| Concise ticket descriptions and completion criteria | [Ticket writing](records/ticket-writing.md) |
-| Cloudflare Pages, CI, and release approvals | [Deployment and releases](deployment.md) |
-| Static rendering, locales, and navigation | [Architecture](records/architecture.md) |
-| Fonts and fluid type scale | [Typography](records/typography.md) |
-| Spacing, gutters, and header offsets | [Spacing](records/spacing.md) |
-| Palette, controls, and scoped styles | [CSS tokens](records/css-tokens.md) |
-| Reveals, snapping, and reduced motion | [Motion](records/motion.md) |
-| Tool scope and necessary exceptions | [Formatting and linting](records/formatting-linting.md) |
-| Zed integration | [Editor](records/editor.md) |
+| Pages, translations, navigation, or contact behavior | [Architecture](architecture.md) |
+| Typography, spacing, controls, or motion | [Design](design.md) |
+| Local servers, environment, checks, editors, or file ownership | [Development and verification](development.md) |
+| Hosting, previews, or a production release | [Deployment and approvals](deployment.md) |
 
-## Maintaining records
+## Maintaining documentation
 
-- Keep only current, necessary context, rationale, constraints, and source references. Exact implementation values belong in source.
-- Record a relevant outcome when completing its GitHub ticket. Pending work, proposals, temporary behavior, and task status stay in the ticket.
-- Replace outdated content and remove duplication. Preserve license obligations, security boundaries, accessibility requirements, and non-obvious limitations.
+Each rule or procedure has one home; link to it elsewhere with a reason to read it.
+Keep exact implementation values in source. Replace outdated instructions rather
+than accumulating notes. Label dated findings as observations, not current state.
+Preserve license obligations, security boundaries, accessibility requirements,
+and non-obvious limitations when consolidating.
+
+The maintainer is the sole developer; Dio Motion supplies occasional product, branding,
+and business input. Write GitHub tickets in English with a concrete change and
+verifiable completion criteria; for bugs, include reproduction and expected
+behavior. Keep status, priority, assignees, and dependencies in GitHub fields.
+Pending work and proposals belong on the [work board](https://github.com/users/veridynn/projects/4).
+Record only relevant decisions and outcomes here when completing work.
