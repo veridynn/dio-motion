@@ -4,6 +4,28 @@ Development milestones are prepared automatically from Conventional Commits.
 `dev-v…` tags identify development; `v…` tags identify verified production releases.
 The entries below describe source changes, not a claim that they are deployed.
 
+## [0.1.1](https://github.com/veridynn/dio-motion/compare/dev-v0.1.0...dev-v0.1.1) (2026-10-11)
+
+
+### Fixes
+
+* **footer:** align credit and version on a separate row ([839177d](https://github.com/veridynn/dio-motion/commit/839177d06818550655fc9efb760f0cce256f1c8a))
+* **footer:** compact build label and share responsive grid ([#36](https://github.com/veridynn/dio-motion/issues/36)) ([28cb784](https://github.com/veridynn/dio-motion/commit/28cb7849b6d479c80419e8876274ec045e7e0245))
+* **footer:** restore default text-link underlines ([#39](https://github.com/veridynn/dio-motion/issues/39)) ([7183f37](https://github.com/veridynn/dio-motion/commit/7183f376263608f16738c59ba3f643c5dc742703))
+* **footer:** share link styling with hover underlines ([eafc97b](https://github.com/veridynn/dio-motion/commit/eafc97b82fff06943205a2d1bcbae18eb151dec1))
+* **footer:** unify credit link wording and hover styles ([#38](https://github.com/veridynn/dio-motion/issues/38)) ([5737fde](https://github.com/veridynn/dio-motion/commit/5737fde9489cab00ee714d393353af26151c5172))
+* **footer:** use build metadata and stack legal links ([#37](https://github.com/veridynn/dio-motion/issues/37)) ([f837ae6](https://github.com/veridynn/dio-motion/commit/f837ae672669c1b518cb596919da015f423cfe74))
+
+
+### Maintenance
+
+* **release:** preserve baseline after flattening history ([f140097](https://github.com/veridynn/dio-motion/commit/f14009728a0be657fb09a072113fa4a71bdc7ca0))
+
+
+### Automation
+
+* **deployments:** report Cloudflare builds in GitHub ([#40](https://github.com/veridynn/dio-motion/issues/40)) ([b70007b](https://github.com/veridynn/dio-motion/commit/b70007b6e6a3b6705bae5325abe9d1c3349909ac))
+
 ## 0.1.0 (2026-10-11)
 
 Initial documented development baseline, covering work since 2026-09-28.
