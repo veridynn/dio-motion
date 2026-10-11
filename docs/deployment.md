@@ -84,8 +84,9 @@ The bootstrap SHA in [configuration](../release-please-config.json) excludes the
 history already summarized in the baseline; it is ignored after the first
 generated milestone is released.
 
-The shared footer renders the version at build time. Every non-`prod` build is
-labelled `Vorschau`/`Preview`; Cloudflare previews also include the short commit ID.
+The shared footer renders a compact build label, such as `v0.1.0-b4efbde`.
+It includes the short commit ID when available; local builds without one show
+only `v0.1.0`. Non-`prod` builds retain a `Vorschau`/`Preview` tooltip.
 HTML metadata records the version, full commit, and production/preview status.
 Cloudflare supplies `CF_PAGES_BRANCH` and `CF_PAGES_COMMIT_SHA`; do not override
 them. Local builds without these variables are labelled previews.

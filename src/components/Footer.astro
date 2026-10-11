@@ -48,8 +48,6 @@ const t = copy[locale];
 			<a href={routes.legal[locale]}>{t.legal}</a>
 			<a href={routes.privacy[locale]}>{t.privacy}</a>
 		</span>
-	</div>
-	<div class="footer__credits">
 		<span class="footer__credit">
 			Website by{" "}<a
 				href="https://github.com/veridynn"
@@ -69,9 +67,12 @@ const t = copy[locale];
 				</svg>{" "}<span class="footer__credit-name">veridynn</span>
 			</a>
 		</span>
-		<span class="footer__version" data-site-version={version}>
-			Version {version}{preview &&
-				` · ${t.preview}${commit ? ` ${commit.slice(0, 7)}` : ""}`}
+		<span
+			class="footer__version"
+			data-site-version={version}
+			title={preview ? t.preview : undefined}
+		>
+			v{version}{commit && `-${commit.slice(0, 7)}`}
 		</span>
 	</div>
 </footer>
@@ -142,29 +143,20 @@ const t = copy[locale];
 		margin: var(--space-2xl) auto 0;
 		padding-top: var(--space-lg);
 		border-top: 1px solid var(--graphit);
-		display: flex;
-		justify-content: space-between;
-		gap: var(--space-lg);
-		flex-wrap: wrap;
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		align-items: baseline;
+		gap: var(--space-sm) var(--space-lg);
 	}
 	.footer__bottom,
-	.footer__bottom a,
-	.footer__credits,
-	.footer__credits a {
+	.footer__bottom a {
 		font-size: var(--fs-sm);
 		color: #aaa49b;
 		text-decoration: none;
 	}
-	.footer__credits {
-		max-width: var(--measure);
-		margin: var(--space-sm) auto 0;
-		display: flex;
-		align-items: baseline;
-		justify-content: space-between;
-		gap: var(--space-lg);
-	}
+	.footer__legal,
 	.footer__version {
-		text-align: right;
+		justify-self: end;
 	}
 	.footer__credit {
 		white-space: nowrap;
@@ -197,11 +189,10 @@ const t = copy[locale];
 	}
 	.footer__legal {
 		display: flex;
+		flex-wrap: wrap;
 		gap: var(--space-lg);
 	}
-	.footer__legal {
-		flex-wrap: wrap;
-	}
+
 	.footer__legal a:hover,
 	.footer__legal a:focus-visible {
 		color: var(--ivory);
@@ -216,10 +207,18 @@ const t = copy[locale];
 		.footer__bottom {
 			margin-top: var(--space-lg);
 			padding-top: var(--space-lg);
-			row-gap: var(--space-sm);
 		}
 		.footer__legal {
 			gap: var(--space-sm) var(--space-lg);
+		}
+	}
+	@media (max-width: 540px) {
+		.footer__bottom {
+			grid-template-columns: minmax(0, 1fr);
+		}
+		.footer__legal,
+		.footer__version {
+			justify-self: start;
 		}
 	}
 </style>
