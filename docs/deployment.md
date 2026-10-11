@@ -92,9 +92,11 @@ are also visible in the changelog and can prepare a patch release PR. They do no
 publish a new milestone until that PR is merged. Use `fix:` for visitor-visible copy or styling corrections;
 reserve `style:` for formatting. For an intentional version override, include a
 `Release-As: 1.0.0` footer in a commit. Review generated notes before promotion.
-The bootstrap SHA in [configuration](../release-please-config.json) excludes the
-history already summarized in the baseline; it is ignored after the first
-generated milestone is released.
+The `last-release-sha` in [configuration](../release-please-config.json) marks the
+rewritten `0.1.0` baseline after flattening `dev` history. It prevents recounting
+baseline commits while the immutable `dev-v0.1.0` tag points to the original
+history. Once a newer development tag exists on `dev`, Release Please stops at
+that release before reaching this fallback cutoff.
 
 The shared footer renders a compact build label, such as `v0.1.0+b4efbde`.
 It includes the short commit ID when available; local builds without one show
