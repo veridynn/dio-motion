@@ -35,8 +35,8 @@ administrator enforcement, and force-push/deletion restrictions before promotion
 Committed configuration alone does not enforce them.
 
 [CODEOWNERS](../.github/CODEOWNERS) must exist on the PR's base branch, `prod`,
-without GitHub errors. Confirm Silvo controls `@diomotion` and has accepted write,
-maintain, or admin access. If any gate is absent or cannot be verified, stop promotion
+without GitHub errors. Confirm `@diomotion` has accepted write, maintain, or admin
+access. If any gate is absent or cannot be verified, stop promotion
 and keep automatic production deployment disabled until it is established.
 
 For an authorized protection repair, run from the root and verify the result:
