@@ -1,0 +1,45 @@
+name: Publish production release
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [prod]
+
+concurrency:
+  group: production-release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  publish:
+    if: >-
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.event == 'push' &&
+      github.event.workflow_run.head_repository.full_name == github.repository
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+          persist-credentials: false
+      - name: Verify deployed pages and publish their version
+        uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          RELEASE_SHA: ${{ github.event.workflow_run.head_sha }}
+        with:
+          script: |
+            const { readFileSync } = await import('node:fs');
+            const { publishProductionRelease } = await import(
+              `${process.env.GITHUB_WORKSPACE}/scripts/publish-release.mjs`
+            );
+            await publishProductionRelease({
+              github,
+              repo: context.repo,
+              sha: process.env.RELEASE_SHA,
+              version: JSON.parse(readFileSync('package.json', 'utf8')).version,
+              changelog: readFileSync('CHANGELOG.md', 'utf8'),
+            });

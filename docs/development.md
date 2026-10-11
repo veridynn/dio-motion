@@ -10,6 +10,7 @@ Run from the repository root. Reuse an existing background server for this check
 | `pnpm dev logs` | Read its output |
 | `pnpm dev stop` | Stop it |
 | `pnpm build` | Generate production output |
+| `pnpm test:release` | Verify release notes and production publication safeguards with mocks |
 | `pnpm preview` | Serve that output; build first |
 | `pnpm format` | Write formatting changes |
 | `pnpm lint` | Apply safe lint fixes |
