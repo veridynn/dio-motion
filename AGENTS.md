@@ -1,35 +1,31 @@
-# Agents
+# AGENTS.md
 
-Personal trainer website for [Dio Motion](https://diomotion.com). Astro builds
-static German and English pages; Svelte islands handle navigation and contact.
-Contact delivery uses Web3Forms directly, with no application server or database.
+Dio Motion's German/English personal-training site uses static Astro pages,
+Svelte islands, and direct Web3Forms delivery; there is no application server.
+Use pnpm package scripts. [README](README.md) covers setup.
 
-## Before changing the site
+When changing public copy, routes, or anchors, update German and English together.
+Installed `.agents/skills/` files stay upstream originals; preserve their required
+checks and record project overrides in the relevant guide.
 
-- Read the relevant topic in the [documentation index](docs/README.md).
-- Before changing routes, translations, or island persistence, read
-  [architecture](docs/architecture.md).
-- Before changing layout, controls, or motion, read [design](docs/design.md).
-- Before starting a server or changing tooling, configuration, or installed skills,
-  read [development](docs/development.md). Use its background-server workflow.
-- Before changing hosting or promoting a release, read
-  [deployment and approvals](docs/deployment.md).
+## Before changing a boundary
 
-## Shared contracts
-
-- Keep public content in Astro and interactive UI in Svelte; reuse Bits UI controls.
-- Keep copy, public URL mappings, and localized section IDs in `src/lib/i18n.ts`.
-  Update both languages together.
-- Reuse the shared tokens and controls in `src/styles/global.css`; keep
-  component-specific styles scoped.
-- Keep contact validation and delivery in `src/lib/contact.ts`. Preserve draft
-  input on delivery failure and across homepage language changes.
-- Preserve keyboard access, visible focus, and reduced-motion behavior when
-  changing interactions.
+- Routes, translations, or persisted islands: read [architecture](docs/architecture.md).
+- Contact configuration or submission: read [contact](docs/contact.md).
+- Layout, controls, or motion: read [design constraints](docs/design.md).
+- Local servers, tooling, or generated files: read [development](docs/development.md).
+- Hosting or releases: read [deployment](docs/deployment.md).
 
 ## Verification
 
-Run the checks required by the affected behavior in
-[verification guidance](docs/development.md#verification), including browser
-checks for visual or interaction changes.
-Report what changed, checks performed, and remaining gaps.
+| Changed behavior | Required verification |
+| --- | --- |
+| Astro, Svelte, or TypeScript | `pnpm check` |
+| Contact validation or delivery | Also `pnpm test` |
+| Routes, translations, anchors, or rendered content | Also `pnpm test:pages` (build included) |
+| Other built-site changes | `pnpm build` unless covered above |
+| Visuals or interactions | Affected desktop/mobile views; keyboard, focus, and reduced motion for changed controls |
+| Documentation only | Links, anchors, paths, commands, and Markdown; no site build |
+
+Run applicable checks once after the final edit; repeat for changes or failures.
+For coverage gaps and browser checks, read [testing](docs/testing.md).
