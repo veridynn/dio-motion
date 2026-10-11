@@ -16,8 +16,9 @@ HTTP redirects. Contact mocks do not prove provider enforcement, actual receipt,
 or timeout expiry. The CAPTCHA script loads during hydration; no-JavaScript
 delivery is unverified.
 
-Page checks also verify build metadata and the translated footer version on every
-content route. To exercise Cloudflare's production and preview branches locally,
+Page checks also verify build metadata, the compact footer version, and the
+translated preview tooltip on every content route. To exercise Cloudflare's
+production and preview branches locally,
 run `pnpm test:pages` with `CF_PAGES_BRANCH=prod` or `CF_PAGES_BRANCH=dev` and
 `CF_PAGES_COMMIT_SHA` set to a full commit SHA. Release mocks do not prove the live
 GitHub/Cloudflare integration; verify the first development milestone and approved

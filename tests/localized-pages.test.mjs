@@ -20,15 +20,19 @@ function checkVersion(html, locale) {
 			`<meta name="dio-motion-environment" content="${preview ? "preview" : "production"}">`,
 		),
 	);
-	const label = `Version ${version}${preview ? ` · ${locale === "de" ? "Vorschau" : "Preview"}${commit ? ` ${commit.slice(0, 7)}` : ""}` : ""}`;
+	const label = `v${version}${commit ? `-${commit.slice(0, 7)}` : ""}`;
 	const footer = html.match(/<footer\b[^>]*>(.*?)<\/footer>/s)?.[1];
 	assert.ok(footer?.includes(`data-site-version="${version}"`));
 	assert.ok(
 		footer.includes(label),
-		"Footer identifies this build in its language",
+		"Footer identifies this build with a compact version and commit",
 	);
-	if (!preview)
-		assert.ok(!footer.includes("Vorschau") && !footer.includes("Preview"));
+	if (preview)
+		assert.ok(
+			footer.includes(`title="${locale === "de" ? "Vorschau" : "Preview"}"`),
+			"Preview status stays available in the localized tooltip",
+		);
+	else assert.ok(!footer.includes("Vorschau") && !footer.includes("Preview"));
 }
 
 for (const [locale, heading, lead, submit] of [
