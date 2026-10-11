@@ -1,62 +1,101 @@
-# Deployment and releases
+# Deployment and approvals
 
 ## Cloudflare Pages
 
-Project: `dio-motion` in the the maintainer account (`f0565d00ccf0c68e6cbc4d479a91d3f2`), connected to `veridynn/dio-motion` through native Git integration.
+The recorded hosting target is project `dio-motion` in the maintainer's Cloudflare account,
+connected to `veridynn/dio-motion` through native Git integration. Before changing
+hosting or releasing, verify the dashboard settings below; they are the intended
+configuration, not proof that production is enabled or a domain is attached.
 
-- Build: `pnpm build`; output: `dist`; root: `/`.
-- Build image v3, `NODE_VERSION=26`, `PNPM_VERSION=12.9.1` in both environments.
-- Production branch: `prod`; production deployments are **disabled** pending the review gate below. No `prod` branch has been created.
-- Preview branches: all; pull request comments enabled. `dev` and feature branches deploy automatically on pushes. Fork pull requests do not receive native Pages previews.
-- Reserved production address: https://dio-motion.pages.dev (not published yet).
-- Development alias: https://dev.dio-motion.pages.dev (available after a successful `dev` deployment).
-- Each successful preview has an immutable URL, `https://<deployment-hash>.dio-motion.pages.dev`. The hash is assigned by Pages, not the Git commit SHA. Branch aliases move on subsequent pushes.
+- Build with `pnpm build`, output `dist`, repository root `/`.
+- Match build runtimes to [package.json](../package.json); the setup used build
+  image v3 with `NODE_VERSION=26` and `PNPM_VERSION=12.9.1` in both environments.
+- Production branch: `prod`. Enable automatic production deployments only after
+  verifying the [approval gate](#production-approval-gate).
+- Preview branches: all, with pull request comments enabled. Fork PRs do not
+  receive native Pages previews.
+- Production hostname: `https://dio-motion.pages.dev`; development alias:
+  `https://dev.dio-motion.pages.dev`. Verify successful deployment before sharing.
 
-No custom domain is attached. Do not attach `diomotion.com`, change its DNS, or launch the live domain without explicit authorization.
+Set `PUBLIC_WEB3FORMS_ACCESS_KEY` separately in Pages Settings → Variables and
+Secrets for Preview and Production, then rebuild. Follow
+[contact configuration](development.md#contact-configuration) for recipients and
+provider-side CAPTCHA enforcement.
 
-## Contact delivery
+Each successful preview has an immutable
+`https://<deployment-hash>.dio-motion.pages.dev` URL. Pages assigns this hash; it is
+not the Git commit SHA. Branch aliases move on subsequent pushes. Preserve the
+preview selected for review.
 
-Set `PUBLIC_WEB3FORMS_ACCESS_KEY` in Pages Settings → Variables and Secrets for Preview and Production, then rebuild. Use a separate form key and test recipient for Preview; the production key belongs to the production recipient. The key is a public form identifier; private credentials must not use `PUBLIC_` variables. Enable provider-side CAPTCHA enforcement.
+Attaching `diomotion.com`, changing its DNS, or launching the live domain requires
+separate explicit authorization. A release to `pages.dev` does not grant it.
 
-## Production gate — blocked
+## Production approval gate
 
-On 2026-10-05, GitHub returned HTTP 403 for branch protection and rulesets: “Upgrade to GitHub Pro or make this repository public to enable this feature.” The repository is currently private, which blocks these features on its current plan. The intended final visibility is public; the user will change visibility personally. Prepared CODEOWNERS and CI files alone do not enforce approval or passing checks while protection is unavailable.
+[CI](../.github/workflows/ci.yml), [CODEOWNERS](../.github/CODEOWNERS), and
+[prod-protection.json](prod-protection.json) define the intended release gate.
+Committed files alone do not prove that GitHub enforces it.
 
-The supplied handoff said Silvo's invitation had not been accepted. At setup time, the API instead returned `diomotion` with `write` permission and an empty pending-invitation list. Confirm Silvo controls that account and has accepted access before enabling promotion. Do not treat his review requirement as effective until both access and active protection have been verified.
+Before enabling production deployments or promoting a release:
 
-Keep production deployments disabled and `prod` absent until all of these steps are complete:
+1. Confirm Silvo controls `@diomotion` and has accepted repository access with
+   write, maintain, or admin permission. CODEOWNERS must name this account on the
+   PR's **base** branch, `prod`; check that GitHub reports no CODEOWNERS errors.
+2. Verify active protection on `prod`: strict, up-to-date required checks matching
+   the CI jobs; one approval with required code-owner review; stale approval
+   dismissal; enforcement for administrators; resolved conversations; and disabled
+   force pushes/deletions. Stop promotion if any required setting is absent.
+3. Verify the latest release head has passing CI and a successful Pages preview,
+   and obtain Silvo's approval of that exact revision using the release steps below.
 
-1. Wait for the user to make `veridynn/dio-motion` public personally. Do not change visibility on their behalf, upgrade, or purchase a plan. Verify public visibility and that GitHub now permits branch protection before proceeding.
-2. Merge the setup PR into `dev` after its `check`, `test`, and `test:pages` jobs pass. Verify its successful Pages preview.
-3. Confirm Silvo's acceptance and write access with `gh api repos/veridynn/dio-motion/collaborators/diomotion/permission`. The result must be `write`, `maintain`, or `admin`.
-4. With Pages production still disabled, bootstrap `prod` from the agreed baseline containing `.github/CODEOWNERS` (`* @diomotion`) and the CI workflow. CODEOWNERS must exist on the PR's **base** branch to require Silvo's review. This initialization is not authorization to launch the site.
-5. Apply the prepared protection from the repository root:
+For an authorized protection repair, apply the maintained payload from the root,
+then inspect the response and read it back with an account that can administer the
+repository:
 
-   ```sh
-   gh api --method PUT repos/veridynn/dio-motion/branches/prod/protection \
-     --input docs/prod-protection.json
-   gh api repos/veridynn/dio-motion/branches/prod/protection
-   gh api repos/veridynn/dio-motion/codeowners/errors?ref=prod
-   ```
+```sh
+gh api --method PUT repos/veridynn/dio-motion/branches/prod/protection \
+  --input docs/prod-protection.json
+gh api repos/veridynn/dio-motion/branches/prod/protection
+gh api 'repos/veridynn/dio-motion/codeowners/errors?ref=prod'
+```
 
-   Confirm required checks `check`, `test`, `test:pages`; strict up-to-date checks; one approval; required code-owner review; dismissal of stale approvals; enforcement for administrators; and disabled force pushes/deletions. Check CODEOWNERS has no errors. Do not proceed if GitHub rejects or ignores any required setting.
-6. Only after that verification, enable automatic production deployments in Pages Settings → Builds & deployments for `prod`. Keep previews set to All branches. Do not trigger the first production build until the release is approved. The `pages.dev` production hostname is separate from the live-domain launch.
-
-Making the repository public or adding CODEOWNERS does not automatically apply `docs/prod-protection.json`. Owners can still edit protection settings; `enforce_admins` prevents normal merge/push bypass while the rule is active.
+Applying the file does not enable Pages or authorize a release. Owners can edit
+protection settings; administrator enforcement blocks ordinary merge/push bypass
+while the rule is active. If GitHub rejects a setting or the caller cannot read it,
+verify with an authorized account rather than treating the gate as effective.
 
 ## Release: dev → prod
 
 1. Finish changes on `dev` and wait for CI plus its Pages preview build to succeed.
-2. Open a PR with **base `prod`, head `dev`**. Record the full release head SHA in the PR description.
-3. In Pages deployment details, select the successful **Preview** deployment with that exact commit SHA. Put its immutable hash URL and deployment ID in the release PR description for Silvo. Keep that deployment; do not delete it. Share this URL, rather than the moving `dev` alias.
-4. Have `@diomotion` review the exact preview and approve the GitHub PR. Any new changes require a new successful preview, updated SHA/link, and renewed approval. Check all three required CI jobs are green on the latest PR revision.
-5. Merge the approved PR. Native Git integration builds `prod` automatically and publishes to the reserved production hostname. Verify the deployment commit and both `/` and `/en/` afterward. Prefer a merge commit for repeated `dev` → `prod` releases so branch history stays connected.
-6. A later live-domain launch requires separate explicit authorization. Do not change DNS as part of this release workflow.
+2. Open a PR with **base `prod`, head `dev`**. Record the full release head SHA.
+3. Select the successful **Preview** deployment with that exact commit SHA in Pages.
+   Put its immutable hash URL and deployment ID in the PR for Silvo. Keep the
+   deployment; share this URL rather than the moving development alias.
+4. Have `@diomotion` review that preview and approve the PR. New changes require
+   passing checks, a new preview, updated SHA/link, and renewed approval.
+5. Merge only after the gate passes. Prefer a merge commit for repeated promotions
+   so branch history stays connected. With automatic deployments enabled, native
+   Git integration builds `prod` and publishes the production hostname. Verify the
+   deployed commit and both `/` and `/en/` afterward.
+
+## Dated observations
+
+The 2026-10-05 setup record reported private-repository plan restrictions preventing
+protection, no `prod` branch, and disabled production deployment. Those findings
+are historical and are not prerequisites to repeat.
+
+On 2026-10-11, GitHub metadata confirmed the repository is public and
+[`prod`](https://github.com/veridynn/dio-motion/tree/prod) exists, marked protected
+with required checks `check`, `test`, and `test:pages`. The connected GitHub app
+could not read the full protection settings (HTTP 403, resource inaccessible to
+integration). Review/admin enforcement, Silvo's access, Pages deployment settings,
+and domain attachment were not reverified. Check them before promotion; this
+observation does not establish release readiness.
 
 ## References
 
 - [Pages Git integration](https://developers.cloudflare.com/pages/configuration/git-integration/)
-- [Pages preview URLs and aliases](https://developers.cloudflare.com/pages/configuration/preview-deployments/)
-- [Pages build version overrides](https://developers.cloudflare.com/pages/configuration/build-image/)
-- [GitHub protected branches and plan requirements](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)
-- [CODEOWNERS permissions and base branch behavior](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
+- [Preview URLs and aliases](https://developers.cloudflare.com/pages/configuration/preview-deployments/)
+- [Build version overrides](https://developers.cloudflare.com/pages/configuration/build-image/)
+- [Protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)
+- [CODEOWNERS permissions and base-branch behavior](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
