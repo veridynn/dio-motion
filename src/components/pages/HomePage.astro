@@ -1,25 +1,34 @@
 ---
 import SiteLayout from "../../layouts/SiteLayout.astro";
-import ScrollReveals from '../ScrollReveals.svelte';
-import Hero from "../home/Hero.astro";
-import Bridge from "../home/Bridge.astro";
-import Approach from "../home/Approach.astro";
-import Services from "../home/Services.astro";
-import About from "../home/About.astro";
-import ContactCallout from "../home/ContactCallout.astro";
+import { copy, type Locale } from "../../lib/i18n";
 import ContactShortcut from "../ContactShortcut.svelte";
-import { copy, type Locale } from '../../lib/i18n';
-interface Props { locale: Locale; }
+import About from "../home/About.astro";
+import Approach from "../home/Approach.astro";
+import Bridge from "../home/Bridge.astro";
+import ContactCallout from "../home/ContactCallout.astro";
+import Hero from "../home/Hero.astro";
+import Services from "../home/Services.astro";
+import ScrollReveals from "../ScrollReveals.svelte";
+
+interface Props {
+	locale: Locale;
+}
 const { locale } = Astro.props;
 const t = copy[locale];
 ---
-<SiteLayout title={t.homeTitle} description={t.homeDescription} locale={locale} page="home">
-  <ScrollReveals client:load />
-  <Hero locale={locale} />
-  <Bridge locale={locale} />
-  <Approach locale={locale} />
-  <Services locale={locale} />
-  <About locale={locale} />
-  <ContactShortcut locale={locale} client:load />
-  <ContactCallout locale={locale} />
+
+<SiteLayout
+	title={t.homeTitle}
+	description={t.homeDescription}
+	locale={locale}
+	page="home"
+>
+	<ScrollReveals client:load />
+	<Hero locale={locale} />
+	<Bridge locale={locale} />
+	<Approach locale={locale} />
+	<Services locale={locale} />
+	<About locale={locale} />
+	<ContactShortcut locale={locale} client:load />
+	<ContactCallout locale={locale} />
 </SiteLayout>

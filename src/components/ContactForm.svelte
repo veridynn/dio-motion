@@ -1,5 +1,6 @@
 <script module lang="ts">
 	import type { CaptchaClient } from "../lib/contact";
+
 	declare global {
 		interface Window {
 			hcaptcha?: CaptchaClient;
@@ -8,22 +9,23 @@
 </script>
 
 <script lang="ts">
-	import { onMount, tick } from "svelte";
-	import { Button, Label } from "bits-ui";
 	import { type } from "arktype";
-	import { copy, type Locale } from "../lib/i18n";
+	import { Button, Label } from "bits-ui";
+	import { onMount, tick } from "svelte";
 	import {
 		accessKeySchema,
+		type ContactInput,
 		contactSchema,
 		getCaptchaToken,
 		sendContact,
-		type ContactInput,
 	} from "../lib/contact";
+	import { copy, type Locale } from "../lib/i18n";
 
 	let { locale, accessKey = "" }: { locale: Locale; accessKey?: string } =
 		$props();
 	const t = $derived(copy[locale]);
 	const configured = $derived(accessKeySchema.allows(accessKey));
+	let ready = $state(false);
 	let name = $state("");
 	let email = $state("");
 	let message = $state("");
@@ -32,6 +34,7 @@
 	let errors = $state<Partial<Record<keyof ContactInput, boolean>>>({});
 
 	onMount(() => {
+		ready = true;
 		if (!configured) return;
 		const script = document.createElement("script");
 		script.src = "https://web3forms.com/client/script.js";
@@ -42,6 +45,62 @@
 		document.body.append(script);
 		return () => script.remove();
 	});
+
+	function shake(element: HTMLElement) {
+		if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+		for (const animation of element.getAnimations()) {
+			if (animation.id === "contact-error") animation.cancel();
+		}
+		element.animate(
+			[0, -5, 5, -3, 3, 0].map((x) => ({ transform: `translateX(${x}px)` })),
+			{ duration: 280, easing: "ease-out", id: "contact-error" },
+		);
+	}
+
+	function checkLimit(
+		event: Event & { currentTarget: HTMLInputElement | HTMLTextAreaElement },
+	) {
+		const input = event.currentTarget;
+		if (!(event instanceof InputEvent)) return;
+		const action = event;
+		if (action.isComposing || !action.inputType.startsWith("insert")) return;
+		const selected = (input.selectionEnd ?? 0) - (input.selectionStart ?? 0);
+		const inserted =
+			action.data?.length ??
+			action.dataTransfer?.getData("text/plain").length ??
+			1;
+		if (
+			event.type === "input"
+				? input.value.length >= input.maxLength
+				: input.value.length - selected + inserted > input.maxLength
+		) {
+			shake(input);
+		}
+	}
+
+	function validateField(
+		field: keyof ContactInput,
+		input: HTMLInputElement | HTMLTextAreaElement,
+		clearOnly = false,
+	) {
+		if (clearOnly && !errors[field]) return;
+		const result = contactSchema({
+			name,
+			email,
+			message,
+			[field]: input.value,
+		});
+		errors[field] = result instanceof type.errors && !!result.byPath[field];
+		if (errors[field] && !clearOnly) shake(input);
+	}
+
+	function handleInput(
+		field: keyof ContactInput,
+		event: Event & { currentTarget: HTMLInputElement | HTMLTextAreaElement },
+	) {
+		validateField(field, event.currentTarget, true);
+		checkLimit(event);
+	}
 
 	async function submit(
 		event: SubmitEvent & { currentTarget: HTMLFormElement },
@@ -59,6 +118,10 @@
 				message: !!fields.byPath.message,
 			};
 			await tick();
+			for (const input of form.querySelectorAll<HTMLElement>(
+				'[aria-invalid="true"]',
+			))
+				shake(input);
 			form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus();
 			return;
 		}
@@ -84,18 +147,22 @@
 </script>
 
 <form
+	novalidate={ready}
 	action="https://api.web3forms.com/submit"
 	method="post"
-	aria-describedby={configured ? "form-help" : undefined}
 	aria-busy={busy}
 	onsubmit={submit}
 >
-	<input type="hidden" name="access_key" value={accessKey} />
-	<input type="hidden" name="subject" value={t.emailSubject} />
-	<input type="hidden" name="from_name" value="dio motion." />
+	<!-- biome-ignore lint/a11y/noAccessKey: accessKey is the form service token, not an HTML keyboard shortcut. -->
+	<input type="hidden" name="access_key" value={accessKey}>
+	<input type="hidden" name="subject" value={t.emailSubject}>
+	<input type="hidden" name="from_name" value="dio motion.">
 	<fieldset disabled={busy}>
 		<div class="field">
-			<Label.Root class="contact-label" for="name">{t.name}</Label.Root>
+			<Label.Root class="contact-label" for="name">
+				<span>{t.name}</span>
+				<span class="optional">{t.optional}</span>
+			</Label.Root>
 			<input
 				id="name"
 				name="name"
@@ -103,12 +170,12 @@
 				bind:value={name}
 				autocomplete="name"
 				maxlength="100"
+				onblur={(event) => validateField("name", event.currentTarget)}
+				oninput={(event) => handleInput("name", event)}
+				onbeforeinput={checkLimit}
 				aria-invalid={errors.name || undefined}
-				aria-describedby={errors.name ? "name-error" : undefined}
-			/>
-			{#if errors.name}<p class="field-error" id="name-error">
-					{t.nameError}
-				</p>{/if}
+			>
+			<p class="field-error" id="name-error" aria-live="polite"></p>
 		</div>
 		<div class="field">
 			<Label.Root class="contact-label" for="email">{t.email}</Label.Root>
@@ -119,13 +186,17 @@
 				bind:value={email}
 				autocomplete="email"
 				maxlength="254"
+				onblur={(event) => validateField("email", event.currentTarget)}
+				oninput={(event) => handleInput("email", event)}
+				onbeforeinput={checkLimit}
 				required
 				aria-invalid={errors.email || undefined}
 				aria-describedby={errors.email ? "email-error" : undefined}
-			/>
-			{#if errors.email}<p class="field-error" id="email-error">
-					{t.emailError}
-				</p>{/if}
+			>
+			<p class="field-error" id="email-error" aria-live="polite">
+				<span class="error-space" aria-hidden="true">{t.emailError}</span>
+				<span>{errors.email ? t.emailError : ""}</span>
+			</p>
 		</div>
 		<div class="field">
 			<Label.Root class="contact-label" for="nachricht">{t.message}</Label.Root>
@@ -135,27 +206,33 @@
 				rows="4"
 				bind:value={message}
 				maxlength="5000"
+				placeholder={t.messagePlaceholder}
+				onblur={(event) => validateField("message", event.currentTarget)}
+				oninput={(event) => handleInput("message", event)}
+				onbeforeinput={checkLimit}
 				required
 				aria-invalid={errors.message || undefined}
 				aria-describedby={errors.message ? "message-error" : undefined}
 			></textarea>
-			{#if errors.message}<p class="field-error" id="message-error">
-					{t.messageError}
-				</p>{/if}
+			<p class="field-error" id="message-error" aria-live="polite">
+				<span class="error-space" aria-hidden="true">{t.messageError}</span>
+				<span>{errors.message ? t.messageError : ""}</span>
+			</p>
 		</div>
-		{#if configured}<div
+		{#if configured}
+			<div
 				class="h-captcha"
 				data-captcha="true"
 				data-lang={locale}
 				data-size="invisible"
-			></div>{/if}
+			></div>
+		{/if}
 		<Button.Root class="btn contact-submit" type="submit" disabled={busy}
 			>{busy ? t.sending : t.sendMessage}</Button.Root
 		>
 	</fieldset>
 </form>
 {#if configured}
-	<p id="form-help" class="form-help">{t.formHelp}</p>
 	<p class="form-help captcha-notice">
 		{t.captchaNotice}
 		<a href="https://www.hcaptcha.com/privacy">{t.privacy}</a>
@@ -164,17 +241,25 @@
 	</p>
 {/if}
 <div class="form-status" role="status" aria-live="polite" aria-atomic="true">
-	{#if status === "success"}<p>{t.formSuccess}</p>
-	{:else if status === "error"}<p>{t.formError}</p>
-	{:else if status === "captcha"}<p>{t.captchaError}</p>{/if}
+	{#if status === "success"}
+		<p>{t.formSuccess}</p>
+	{:else if status === "error"}
+		<p>{t.formError}</p>
+	{:else if status === "captcha"}
+		<p>{t.captchaError}</p>
+	{/if}
 </div>
 
 <style>
+	form {
+		--control-gap: 0.25rem;
+	}
 	.field + .field {
-		margin-top: var(--space-lg);
+		margin-top: var(--space-xs);
 	}
 	:global(.contact-label) {
-		display: block;
+		display: flex;
+		justify-content: space-between;
 		font-weight: 600;
 		text-transform: uppercase;
 		letter-spacing: 0.2em;
@@ -182,20 +267,25 @@
 		color: var(--asche);
 		margin-bottom: var(--control-gap);
 	}
+	.optional {
+		font-weight: 400;
+		text-transform: none;
+		letter-spacing: normal;
+	}
 	input,
 	textarea {
-		--field-padding-block: 0.625em;
+		--field-padding-block: 0.375em;
 		--field-border-width: 1px;
 		display: block;
 		width: 100%;
-		min-height: var(--control-height);
+		min-height: var(--control-height-sm);
 		font-family: var(--font);
 		font-size: var(--fs-base);
 		font-weight: 400;
-		line-height: 1.6;
+		line-height: 1.5;
 		color: var(--ink);
 		background: var(--bone);
-		border: var(--field-border-width) solid transparent;
+		border: var(--field-border-width) solid var(--sandstein);
 		border-radius: var(--squircle-radius);
 		corner-shape: squircle;
 		padding: var(--field-padding-block) 0.5em;
@@ -208,18 +298,40 @@
 		border-color: var(--sandstein);
 		background: var(--bone-kuehl);
 	}
+	:is(input, textarea)[aria-invalid="true"] {
+		border-color: var(--error);
+		box-shadow: inset 0 0 0 1px var(--error);
+	}
+	textarea::placeholder {
+		color: var(--asche);
+		opacity: 1;
+	}
 	textarea {
 		field-sizing: content;
 		resize: none;
+		overflow-y: auto;
 		min-height: calc(
-			4lh + 2 * var(--field-padding-block) + 2 * var(--field-border-width)
+			4lh +
+			2 *
+			var(--field-padding-block) +
+			2 *
+			var(--field-border-width)
+		);
+		max-height: calc(
+			8lh +
+			2 *
+			var(--field-padding-block) +
+			2 *
+			var(--field-border-width)
 		);
 	}
 
 	:global(.contact-submit) {
 		display: flex;
 		width: 100%;
-		margin-top: var(--space-xl);
+		min-block-size: var(--control-height-sm);
+		padding-block: 0.5rem;
+		margin-top: var(--space-xs);
 		margin-inline-start: auto;
 		background: var(--ink);
 		color: var(--ivory);
@@ -259,5 +371,16 @@
 		font-size: var(--fs-sm);
 		line-height: 1.6;
 		color: var(--asche);
+	}
+	.field-error {
+		display: grid;
+		min-block-size: 1lh;
+		color: var(--error);
+	}
+	.field-error > span {
+		grid-area: 1 / 1;
+	}
+	.error-space {
+		visibility: hidden;
 	}
 </style>

@@ -1,0 +1,25 @@
+{
+	"last-release-sha": "165f6c96a2107bb335279fb7026b32d1077cf230",
+	"packages": {
+		".": {
+			"release-type": "node",
+			"component": "dev",
+			"include-component-in-tag": true,
+			"prerelease": true,
+			"bump-minor-pre-major": true,
+			"changelog-sections": [
+				{ "type": "feat", "section": "Features" },
+				{ "type": "fix", "section": "Fixes" },
+				{ "type": "perf", "section": "Performance" },
+				{ "type": "revert", "section": "Reverts" },
+				{ "type": "docs", "section": "Documentation" },
+				{ "type": "style", "section": "Styling" },
+				{ "type": "refactor", "section": "Maintenance" },
+				{ "type": "test", "section": "Tests" },
+				{ "type": "build", "section": "Build" },
+				{ "type": "ci", "section": "Automation" },
+				{ "type": "chore", "section": "Maintenance" }
+			]
+		}
+	}
+}
