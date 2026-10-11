@@ -16,7 +16,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        command: [check, test, 'test:pages', 'test:release']
+        command: [check, test, 'test:pages', 'test:release', 'test:deployments']
     steps:
       - uses: actions/checkout@v7
       - uses: actions/setup-node@v7

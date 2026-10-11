@@ -9,6 +9,7 @@
 | `pnpm check` | Biome formatting, lint, and imports; Astro/Svelte/TypeScript diagnostics. No browser execution. |
 | `pnpm test` | [Contact helpers](../tests/contact-form.test.mjs): validation, fresh CAPTCHA tokens, delivery payloads, and failure handling. Fetch and CAPTCHA are mocked; no email is sent. |
 | `pnpm test:pages` | Builds and [inspects localized HTML](../tests/localized-pages.test.mjs): routes, metadata, anchors, form markup, island directives, and redirect files. CAPTCHA markup checks run only with a configured key. |
+| `pnpm test:deployments` | [Deployment reporting](../tests/deployments.test.mjs): real build results, preview/production labels, failures, retries, reruns, and rejection of stale or untrusted checks. GitHub is mocked; no deployment is created. |
 | `pnpm test:release` | [Release safeguards](../tests/release.test.mjs): version/changelog agreement, cumulative notes, deployment retries, both languages, stale commits, immutable tags, and reruns. GitHub and HTTP are mocked; nothing is published. |
 
 HTML assertions do not prove hydration, language-switch persistence, or hosting
