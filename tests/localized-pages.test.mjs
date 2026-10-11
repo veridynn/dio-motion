@@ -20,7 +20,7 @@ function checkVersion(html, locale) {
 			`<meta name="dio-motion-environment" content="${preview ? "preview" : "production"}">`,
 		),
 	);
-	const label = `v${version}${commit ? `-${commit.slice(0, 7)}` : ""}`;
+	const label = `v${version}${commit ? `+${commit.slice(0, 7)}` : ""}`;
 	const footer = html.match(/<footer\b[^>]*>(.*?)<\/footer>/s)?.[1];
 	assert.ok(footer?.includes(`data-site-version="${version}"`));
 	assert.ok(
