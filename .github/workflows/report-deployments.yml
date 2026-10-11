@@ -1,0 +1,53 @@
+name: Record Cloudflare deployments
+
+on:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      branch:
+        description: Record the existing Cloudflare deployment for this branch
+        type: choice
+        options: [dev, prod]
+        default: dev
+
+concurrency:
+  group: deployment-report-${{ github.event.workflow_run.head_branch || inputs.branch }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+  checks: read
+  deployments: write
+
+jobs:
+  record:
+    if: >-
+      github.event_name == 'workflow_dispatch' ||
+      ((github.event.workflow_run.event == 'push' || github.event.workflow_run.event == 'workflow_dispatch') &&
+      github.event.workflow_run.head_repository.full_name == github.repository)
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: dev
+          persist-credentials: false
+      - uses: actions/github-script@ed597411d8f924073f98dfc5c65a23a2325f34cd # v8
+        env:
+          DEPLOYMENT_BRANCH: ${{ github.event.workflow_run.head_branch || inputs.branch }}
+          DEPLOYMENT_SHA: ${{ github.event.workflow_run.head_sha }}
+        with:
+          script: |
+            const { recordCloudflareDeployment } = await import(
+              `${process.env.GITHUB_WORKSPACE}/scripts/record-deployment.mjs`
+            );
+            const branch = process.env.DEPLOYMENT_BRANCH;
+            const { data: head } = await github.rest.repos.getBranch({ ...context.repo, branch });
+            await recordCloudflareDeployment({
+              github,
+              repo: context.repo,
+              branch,
+              sha: process.env.DEPLOYMENT_SHA || head.commit.sha,
+            });

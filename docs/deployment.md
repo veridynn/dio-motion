@@ -26,6 +26,18 @@ it is not the Git SHA. Keep the reviewed deployment available.
 Attaching `diomotion.com`, changing DNS, or launching the live domain needs separate
 explicit authorization; a `pages.dev` release does not grant it.
 
+## GitHub deployment sidebar
+
+[Record Cloudflare deployments](../.github/workflows/report-deployments.yml) waits
+for Cloudflare's check after CI and records its actual result in GitHub's
+Deployments sidebar. `prod` appears as `Production`; other branches appear as
+`Preview (branch)`, with immutable deployment links and Cloudflare logs. It only
+reports builds: it never builds, promotes, or merges code. Failed builds are
+recorded as failures; skipped and stale builds are not advertised as current.
+Run the workflow manually for `dev` or `prod` to record an existing build.
+A branch with no completed Cloudflare check cannot be reported as deployed.
+The workflow checks out trusted `dev` reporting code, never PR or fork code.
+
 ## Approval gate
 
 [prod-protection.json](prod-protection.json) is the maintained protection payload,
