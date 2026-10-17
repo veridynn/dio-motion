@@ -1,6 +1,8 @@
 # Design constraints
 
-[global.css](../src/styles/global.css) owns shared tokens and controls.
+[tokens.css](../src/styles/tokens.css) owns shared design tokens, including the
+responsive navigation height. [global.css](../src/styles/global.css) imports them
+and owns base styles and shared controls.
 
 Use [Icon.astro](../src/components/Icon.astro) for icons, with `name="github"`
 or `name="external-link"`. Add `inline` when an icon sits in text: the shared
