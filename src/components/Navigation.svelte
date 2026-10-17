@@ -61,8 +61,8 @@
 		justify-content: space-between;
 		padding: 0.875rem var(--gutter);
 		transition:
-			background-color 0.5s ease,
-			border-color 0.5s ease;
+			background-color var(--motion-duration-slow) var(--motion-ease),
+			border-color var(--motion-duration-slow) var(--motion-ease);
 		border-bottom: 1px solid transparent;
 	}
 	.nav.is-scrolled {
@@ -80,7 +80,7 @@
 		letter-spacing: 0.01em;
 		color: var(--ivory);
 		text-decoration: none;
-		transition: color 0.5s ease;
+		transition: color var(--motion-duration-slow) var(--motion-ease);
 	}
 	.nav.is-scrolled .wordmark {
 		color: var(--ink);

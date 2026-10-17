@@ -91,7 +91,7 @@
 		color: var(--ivory);
 		box-shadow: 0 2px 16px rgba(25, 23, 20, 0.14);
 		opacity: var(--shortcut-opacity, 1);
-		transition: background-color 0.2s ease;
+		transition: background-color var(--motion-duration-fast) var(--motion-ease);
 	}
 	.contact-shortcut.is-hidden {
 		pointer-events: none;

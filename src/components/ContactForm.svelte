@@ -51,9 +51,16 @@
 		for (const animation of element.getAnimations()) {
 			if (animation.id === "contact-error") animation.cancel();
 		}
+		const motion = getComputedStyle(element);
+		const duration = motion.getPropertyValue("--motion-duration-normal").trim();
 		element.animate(
 			[0, -5, 5, -3, 3, 0].map((x) => ({ transform: `translateX(${x}px)` })),
-			{ duration: 280, easing: "ease-out", id: "contact-error" },
+			{
+				duration:
+					Number.parseFloat(duration) * (duration.endsWith("ms") ? 1 : 1000),
+				easing: motion.getPropertyValue("--motion-ease-out").trim(),
+				id: "contact-error",
+			},
 		);
 	}
 
@@ -289,8 +296,8 @@
 		border-radius: var(--squircle-radius);
 		padding: var(--field-padding-block) 0.5em;
 		transition:
-			border-color 0.3s ease,
-			background-color 0.3s ease;
+			border-color var(--motion-duration-normal) var(--motion-ease),
+			background-color var(--motion-duration-normal) var(--motion-ease);
 	}
 	input:focus,
 	textarea:focus {

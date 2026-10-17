@@ -11,8 +11,12 @@ stays in [src/assets/icons](../src/assets/icons/).
 [Link.astro](../src/components/Link.astro) uses `text-decoration: underline`
 with a `0.2em` offset directly on the link.
 
-External-link icons fade and grow on desktop hover or keyboard focus; mobile
-and tablet keep them static. Reduced motion removes transitions and displacement.
+Adjust motion centrally with its `--motion-duration-*`, `--motion-ease*`, and
+`--motion-distance-*` and `--motion-scale-icon` tokens. Contact-error feedback
+converts the computed normal duration from seconds or milliseconds to the
+milliseconds required by the Web Animations API. External-link icons fade and grow from a slightly smaller size
+on desktop hover or keyboard focus; mobile and tablet keep them static. Reduced
+motion removes transitions and displacement.
 
 - Fixed-navigation height feeds page offsets, anchor margins, and usable viewport
   height. Keep its calculation and breakpoint aligned with
