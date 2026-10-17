@@ -124,7 +124,6 @@
 		background: var(--ivory);
 		color: var(--ink);
 		border-radius: var(--squircle-radius);
-		corner-shape: squircle;
 		box-shadow: 0 8px 24px rgba(25, 23, 20, 0.12);
 		font-family: var(--font);
 		font-size: var(--control-font-size);
@@ -139,7 +138,6 @@
 		padding: 0.625rem var(--control-padding-x-sm);
 		cursor: pointer;
 		border-radius: calc(var(--squircle-radius) - 0.375rem);
-		corner-shape: squircle;
 	}
 	:global(.language-option[data-highlighted]) {
 		background: var(--bone);

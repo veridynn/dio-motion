@@ -86,7 +86,6 @@
 		height: 3.75rem;
 		padding: 0;
 		border-radius: 50% 50% 0 50%;
-		corner-shape: round;
 		border-color: var(--leinen);
 		background: var(--ink);
 		color: var(--ivory);

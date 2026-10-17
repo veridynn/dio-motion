@@ -19,7 +19,10 @@ Run from the repository root. Reuse an existing background server for this check
 
 Biome's Astro/Svelte support is experimental; framework diagnostics remain
 necessary. Markdown and YAML are skipped by Biome. Existing lint suppressions
-have inline reasons; `corner-shape` may produce a Svelte CSS warning.
+have inline reasons. Keep `corner-shape` declarations in
+[global.css](../src/styles/global.css): Svelte's CSS validator does not yet
+recognize the property. Component styles keep their `border-radius` fallback;
+CSS diagnostics remain enabled.
 
 - Astro generates ignored `dist/` and `.astro/`; edit source and regenerate.
 - pnpm owns `pnpm-lock.yaml`; update it through pnpm. CI uses frozen installs.

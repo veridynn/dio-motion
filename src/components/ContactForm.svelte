@@ -287,7 +287,6 @@
 		background: var(--bone);
 		border: var(--field-border-width) solid var(--sandstein);
 		border-radius: var(--squircle-radius);
-		corner-shape: squircle;
 		padding: var(--field-padding-block) 0.5em;
 		transition:
 			border-color 0.3s ease,

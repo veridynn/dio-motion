@@ -158,6 +158,15 @@ picture {
 	corner-shape: squircle;
 }
 
+.contact :is(input, textarea),
+.language-menu,
+.language-option {
+	corner-shape: squircle;
+}
+.btn.contact-shortcut {
+	corner-shape: round;
+}
+
 .btn--sm {
 	min-block-size: var(--control-height-sm);
 	padding: 0.625rem var(--control-padding-x-sm);
