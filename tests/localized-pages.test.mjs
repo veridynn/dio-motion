@@ -23,6 +23,35 @@ function checkVersion(html, locale) {
 	const label = `v${version}${commit ? `+${commit.slice(0, 7)}` : ""}`;
 	const footer = html.match(/<footer\b[^>]*>(.*?)<\/footer>/s)?.[1];
 	assert.ok(footer?.includes(`data-site-version="${version}"`));
+	const links = [...footer.matchAll(/<a\b([^>]*)>(.*?)<\/a>/gs)].filter(
+		([, attributes]) => attributes.includes("text-link"),
+	);
+	assert.equal(links.length, 8, "All footer text links share link styling");
+	for (const [, attributes, content] of links) {
+		const href = attributes.match(/href="([^"]+)"/)[1];
+		assert.equal(
+			content.includes('data-icon="external-link"'),
+			href.startsWith("https://"),
+			`${href}: only external links have an inline icon`,
+		);
+		if (href.startsWith("https://"))
+			assert.match(
+				content,
+				/<svg[^>]*aria-hidden="true"[^>]*focusable="false"/,
+			);
+		assert.ok(!content.includes("lucide-arrow"));
+	}
+	const icons = [...footer.matchAll(/<svg\b[^>]*data-icon="[^"]+"[^>]*>/g)];
+	assert.equal(
+		icons.length,
+		2,
+		"Footer uses the shared component for both icons",
+	);
+	for (const [icon] of icons) {
+		assert.ok(icon.includes('class="icon icon--inline"'));
+		assert.ok(icon.includes('aria-hidden="true"'));
+		assert.ok(icon.includes('focusable="false"'));
+	}
 	assert.ok(
 		footer.includes(label),
 		"Footer identifies this build with a compact version and commit",

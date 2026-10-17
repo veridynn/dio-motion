@@ -1,24 +1,27 @@
 ---
 import type { HTMLAttributes } from "astro/types";
+import Icon from "./Icon.astro";
 
 interface Props extends HTMLAttributes<"a"> {
 	href: string;
 }
-const { href, ...attributes } = Astro.props;
+const { href, class: className, ...attributes } = Astro.props;
+const destination = new URL(href, Astro.url);
+const external = destination.origin !== Astro.url.origin;
 ---
 
-<!-- biome-ignore lint/a11y/useAnchorContent: Callers supply accessible link text through the slot. -->
-<a href={href} {...attributes}><slot /></a>
+<a href={href} {...attributes} class:list={["text-link", className]}>
+	<slot />
+	{external && <Icon name="external-link" inline />}
+</a>
 
 <style>
 	a {
 		color: inherit;
-		text-decoration: none;
-		transition: color 0.3s ease;
+		transition: color var(--motion-duration-normal) var(--motion-ease);
 	}
 	a:hover,
 	a:focus-visible {
 		color: var(--ivory);
-		text-decoration: underline;
 	}
 </style>

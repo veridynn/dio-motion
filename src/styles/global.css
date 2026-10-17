@@ -71,6 +71,11 @@
 	--control-gap: var(--space-xs);
 	--control-padding-x: var(--space-lg);
 	--control-padding-x-sm: var(--space-md);
+	--motion-duration-fast: 160ms;
+	--motion-duration-normal: 240ms;
+	--motion-ease: ease;
+	--motion-ease-out: cubic-bezier(0.2, 0.8, 0.2, 1);
+	--motion-scale-icon: 0.85;
 	/* Fixed navigation: 44px controls, vertical padding, and a 1px border. */
 	--header-height: calc(var(--control-height-sm) + 1.75rem + 1px);
 	--usable-height: calc(100dvh - var(--header-height));
@@ -165,6 +170,58 @@ picture {
 .btn--light:hover {
 	background: var(--ivory);
 	color: var(--ink);
+}
+
+.text-link,
+.captcha-notice a {
+	text-decoration: underline;
+	text-underline-offset: 0.2em;
+}
+.icon {
+	display: inline-block;
+	width: 1.25rem;
+	height: 1.25rem;
+	flex-shrink: 0;
+}
+.icon--inline,
+.captcha-notice a::after {
+	width: 1.1em;
+	height: 1.1em;
+	margin-inline: 0.25em;
+	vertical-align: middle;
+}
+.captcha-notice a::after {
+	content: "";
+	display: inline-block;
+	background: currentColor;
+	mask: url("../assets/icons/external-link.svg") center / contain no-repeat;
+}
+@media (min-width: 861px) and (hover: hover) and (pointer: fine) {
+	.text-link,
+	.captcha-notice a {
+		text-decoration: none;
+	}
+	.text-link [data-icon="external-link"],
+	.captcha-notice a::after {
+		opacity: 0;
+		transform: scale(var(--motion-scale-icon));
+		transition:
+			opacity var(--motion-duration-fast) var(--motion-ease-out),
+			transform var(--motion-duration-fast) var(--motion-ease-out);
+	}
+	.text-link:hover,
+	.text-link:focus-visible,
+	.captcha-notice a:hover,
+	.captcha-notice a:focus-visible {
+		text-decoration: underline;
+	}
+	.text-link:hover [data-icon="external-link"],
+	.text-link:focus-visible [data-icon="external-link"],
+	.captcha-notice a:hover::after,
+	.captcha-notice a:focus-visible::after {
+		opacity: 1;
+		transform: none;
+	}
 }
 
 .section {
@@ -287,6 +344,10 @@ main {
 	}
 	.reveal.is-pending {
 		opacity: 1;
+		transform: none;
+	}
+	.text-link [data-icon="external-link"],
+	.captcha-notice a::after {
 		transform: none;
 	}
 }

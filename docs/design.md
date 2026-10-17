@@ -2,6 +2,18 @@
 
 [global.css](../src/styles/global.css) owns shared tokens and controls.
 
+Use [Icon.astro](../src/components/Icon.astro) for icons, with `name="github"`
+or `name="external-link"`. Add `inline` when an icon sits in text: the shared
+`.icon--inline` style sets a `1.1em` size, `vertical-align: middle`, and a
+`0.25em` margin on both inline sides (a typical word-space width). SVG artwork
+stays in [src/assets/icons](../src/assets/icons/).
+
+[Link.astro](../src/components/Link.astro) uses `text-decoration: underline`
+with a `0.2em` offset directly on the link.
+
+External-link icons fade and grow on desktop hover or keyboard focus; mobile
+and tablet keep them static. Reduced motion removes transitions and displacement.
+
 - Fixed-navigation height feeds page offsets, anchor margins, and usable viewport
   height. Keep its calculation and breakpoint aligned with
   [Navigation.svelte](../src/components/Navigation.svelte), or anchors land behind it.
