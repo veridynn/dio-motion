@@ -14,6 +14,10 @@ checks and record project overrides in the relevant guide.
 - Contact configuration or submission: read [contact](docs/contact.md).
 - Layout, controls, or motion: read [design constraints](docs/design.md).
 - Local servers, tooling, or generated files: read [development](docs/development.md).
+- Create, split, update, or complete tickets: read [ticket conventions](RULES.md#tickets).
+- Create or name branches: read [branch conventions](RULES.md#branches).
+- Write commits or pull requests: read the relevant section in [Project rules](RULES.md).
+- Edit documentation: read [documentation conventions](RULES.md#documentation).
 - Hosting or releases: read [deployment](docs/deployment.md).
 
 ## Verification

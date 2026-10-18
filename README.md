@@ -3,6 +3,9 @@
 Personal trainer website for [Dio Motion](https://diomotion.com), built with Astro
 and Svelte. German lives at `/`, English at `/en/`.
 
+See [Project rules](RULES.md) for tickets, branches, commits, pull requests,
+and documentation conventions.
+
 ## Development
 
 Use the Node.js and pnpm versions specified in [package.json](package.json).

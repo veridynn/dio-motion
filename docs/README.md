@@ -6,5 +6,6 @@
 | Configure or change contact delivery | [Contact](contact.md) |
 | Change layout, controls, or motion | [Design](design.md) |
 | Manage local servers, tooling, or generated files | [Development](development.md) |
+| Write tickets, name branches, commits, or pull requests | [Project rules](../RULES.md) |
 | Choose checks or verify browser behavior | [Testing](testing.md) |
 | Change hosting or release `dev` to `prod` | [Deployment](deployment.md) |
