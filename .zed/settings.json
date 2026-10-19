@@ -1,0 +1,81 @@
+{
+	"languages": {
+		"Astro": {
+			"hard_tabs": true,
+			"language_servers": ["...", "biome"],
+			"formatter": {
+				"language_server": {
+					"name": "biome"
+				}
+			},
+			"format_on_save": "on"
+		},
+		"Svelte": {
+			"hard_tabs": true,
+			"language_servers": ["...", "biome"],
+			"formatter": {
+				"language_server": {
+					"name": "biome"
+				}
+			},
+			"format_on_save": "on"
+		},
+		"JavaScript": {
+			"hard_tabs": true,
+			"language_servers": ["...", "biome"],
+			"formatter": {
+				"language_server": {
+					"name": "biome"
+				}
+			},
+			"format_on_save": "on"
+		},
+		"TypeScript": {
+			"hard_tabs": true,
+			"language_servers": ["...", "biome"],
+			"formatter": {
+				"language_server": {
+					"name": "biome"
+				}
+			},
+			"format_on_save": "on"
+		},
+		"CSS": {
+			"hard_tabs": true,
+			"language_servers": ["...", "biome"],
+			"formatter": {
+				"language_server": {
+					"name": "biome"
+				}
+			},
+			"format_on_save": "on"
+		},
+		"JSON": {
+			"hard_tabs": true,
+			"language_servers": ["...", "biome"],
+			"formatter": {
+				"language_server": {
+					"name": "biome"
+				}
+			},
+			"format_on_save": "on"
+		},
+		"JSONC": {
+			"hard_tabs": true,
+			"language_servers": ["...", "biome"],
+			"formatter": {
+				"language_server": {
+					"name": "biome"
+				}
+			},
+			"format_on_save": "on"
+		}
+	},
+	"lsp": {
+		"biome": {
+			"settings": {
+				"require_config_file": true
+			}
+		}
+	}
+}

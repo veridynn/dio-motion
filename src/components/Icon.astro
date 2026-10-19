@@ -1,0 +1,20 @@
+---
+import ExternalLink from "../assets/icons/external-link.svg";
+import Github from "../assets/icons/github.svg";
+
+const icons = { "external-link": ExternalLink, github: Github };
+
+interface Props {
+	name: keyof typeof icons;
+	inline?: boolean;
+}
+const { name, inline = false } = Astro.props;
+const Graphic = icons[name];
+---
+
+<Graphic
+	class:list={["icon", { "icon--inline": inline }]}
+	data-icon={name}
+	aria-hidden="true"
+	focusable="false"
+/>

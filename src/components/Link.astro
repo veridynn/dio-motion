@@ -1,0 +1,27 @@
+---
+import type { HTMLAttributes } from "astro/types";
+import Icon from "./Icon.astro";
+
+interface Props extends HTMLAttributes<"a"> {
+	href: string;
+}
+const { href, class: className, ...attributes } = Astro.props;
+const destination = new URL(href, Astro.url);
+const external = destination.origin !== Astro.url.origin;
+---
+
+<a href={href} {...attributes} class:list={["text-link", className]}>
+	<slot />
+	{external && <Icon name="external-link" inline />}
+</a>
+
+<style>
+	a {
+		color: inherit;
+		transition: color var(--motion-duration-normal) var(--motion-ease);
+	}
+	a:hover,
+	a:focus-visible {
+		color: var(--ivory);
+	}
+</style>

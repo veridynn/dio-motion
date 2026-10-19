@@ -1,62 +1,142 @@
-# Deployment and releases
+# Deployment
 
-## Cloudflare Pages
+## Hosting
 
-Project: `dio-motion` in the the maintainer account (`f0565d00ccf0c68e6cbc4d479a91d3f2`), connected to `veridynn/dio-motion` through native Git integration.
+Verify these required settings in the live Pages dashboard before a hosting
+change or release; repository files do not prove they are applied.
 
-- Build: `pnpm build`; output: `dist`; root: `/`.
-- Build image v3, `NODE_VERSION=26`, `PNPM_VERSION=12.9.1` in both environments.
-- Production branch: `prod`; production deployments are **disabled** pending the review gate below. No `prod` branch has been created.
-- Preview branches: all; pull request comments enabled. `dev` and feature branches deploy automatically on pushes. Fork pull requests do not receive native Pages previews.
-- Reserved production address: https://dio-motion.pages.dev (not published yet).
-- Development alias: https://dev.dio-motion.pages.dev (available after a successful `dev` deployment).
-- Each successful preview has an immutable URL, `https://<deployment-hash>.dio-motion.pages.dev`. The hash is assigned by Pages, not the Git commit SHA. Branch aliases move on subsequent pushes.
+| Setting | Required value |
+| --- | --- |
+| Pages project | `dio-motion`, using native Git integration with `veridynn/dio-motion` |
+| Production branch | `prod` |
+| Preview branches | All branches; native previews exclude fork PRs |
+| Build | `pnpm build` from the repository root; output `dist` |
+| Runtimes | Match [package.json](../package.json), using `NODE_VERSION` and `PNPM_VERSION` overrides in Preview and Production |
+| Form delivery | Set `PUBLIC_WEB3FORMS_ACCESS_KEY` separately in Preview and Production Variables and Secrets; rebuild after changes |
 
-No custom domain is attached. Do not attach `diomotion.com`, change its DNS, or launch the live domain without explicit authorization.
+Before testing delivery, configure the recipient and CAPTCHA using
+[contact configuration](contact.md#configuration).
 
-## Contact delivery
+For project `dio-motion`, the production URL is `https://dio-motion.pages.dev`;
+the moving development alias is `https://dev.dio-motion.pages.dev`.
+Review a successful deployment's immutable
+`https://<deployment-hash>.dio-motion.pages.dev` URL. Pages assigns that hash;
+it is not the Git SHA. Keep the reviewed deployment available.
 
-Set `PUBLIC_WEB3FORMS_ACCESS_KEY` separately in Pages Settings → Variables and Secrets for Preview and Production, then rebuild. Use a verified preview-specific form/key and test recipient for Preview when available; the production key belongs to the production recipient. No key was supplied or configured during setup. Without a key, live delivery is unavailable. See [contact delivery](development.md#contact-delivery) for Web3Forms and CAPTCHA requirements. Do not copy the production key into previews by default.
+Attaching `diomotion.com`, changing DNS, or launching the live domain needs separate
+explicit authorization; a `pages.dev` release does not grant it.
 
-## Production gate — blocked
+## GitHub deployment sidebar
 
-On 2026-10-05, GitHub returned HTTP 403 for branch protection and rulesets: “Upgrade to GitHub Pro or make this repository public to enable this feature.” The repository is private and its current plan does not support these features. Prepared CODEOWNERS and CI files alone do not enforce approval or passing checks on this plan.
+[Record Cloudflare deployments](../.github/workflows/report-deployments.yml) waits
+for Cloudflare's check after CI and records its actual result in GitHub's
+Deployments sidebar. `prod` appears as `Production`; other branches appear as
+`Preview (branch)`, with immutable deployment links and Cloudflare logs. It only
+reports builds: it never builds, promotes, or merges code. Failed builds are
+recorded as failures; skipped and stale builds are not advertised as current.
+Run the workflow manually for `dev` or `prod` to record an existing build.
+A branch with no completed Cloudflare check cannot be reported as deployed.
+The workflow checks out trusted `dev` reporting code, never PR or fork code.
 
-The supplied handoff said Silvo's invitation had not been accepted. At setup time, the API instead returned `diomotion` with `write` permission and an empty pending-invitation list. Confirm Silvo controls that account and has accepted access before enabling promotion. Do not treat his review requirement as effective until both access and active protection have been verified.
+## Approval gate
 
-Keep production deployments disabled and `prod` absent until all of these steps are complete:
+[prod-protection.json](prod-protection.json) is the maintained protection payload,
+not generated output. Its checks must match [CI job names](../.github/workflows/ci.yml).
+Verify that live `prod` protection enforces the payload's checks, review rules,
+administrator enforcement, and force-push/deletion restrictions before promotion.
+Committed configuration alone does not enforce them.
 
-1. Upgrade the personal repository owner to GitHub Pro (or an eligible organization plan). Keep the repository private unless publishing its source is explicitly authorized.
-2. Merge the setup PR into `dev` after its `check`, `test`, and `test:pages` jobs pass. Verify its successful Pages preview.
-3. Confirm Silvo's acceptance and write access with `gh api repos/veridynn/dio-motion/collaborators/diomotion/permission`. The result must be `write`, `maintain`, or `admin`.
-4. With Pages production still disabled, bootstrap `prod` from the agreed baseline containing `.github/CODEOWNERS` (`* @diomotion`) and the CI workflow. CODEOWNERS must exist on the PR's **base** branch to require Silvo's review. This initialization is not authorization to launch the site.
-5. Apply the prepared protection from the repository root:
+[CODEOWNERS](../.github/CODEOWNERS) must exist on the PR's base branch, `prod`,
+without GitHub errors. Confirm `@diomotion` has accepted write, maintain, or admin
+access. If any gate is absent or cannot be verified, stop promotion
+and keep automatic production deployment disabled until it is established.
 
-   ```sh
-   gh api --method PUT repos/veridynn/dio-motion/branches/prod/protection \
-     --input docs/prod-protection.json
-   gh api repos/veridynn/dio-motion/branches/prod/protection
-   gh api repos/veridynn/dio-motion/codeowners/errors?ref=prod
-   ```
+For an authorized protection repair, run from the root and verify the result:
 
-   Confirm required checks `check`, `test`, `test:pages`; strict up-to-date checks; one approval; required code-owner review; dismissal of stale approvals; enforcement for administrators; and disabled force pushes/deletions. Check CODEOWNERS has no errors. Do not proceed if GitHub rejects or ignores any required setting.
-6. Only after that verification, enable automatic production deployments in Pages Settings → Builds & deployments for `prod`. Keep previews set to All branches. Do not trigger the first production build until the release is approved. The `pages.dev` production hostname is separate from the live-domain launch.
-
-Changing the plan or adding CODEOWNERS does not automatically apply `docs/prod-protection.json`. Owners can still edit protection settings; `enforce_admins` prevents normal merge/push bypass while the rule is active.
+```sh
+gh api --method PUT repos/veridynn/dio-motion/branches/prod/protection \
+  --input docs/prod-protection.json
+gh api repos/veridynn/dio-motion/branches/prod/protection
+gh api 'repos/veridynn/dio-motion/codeowners/errors?ref=prod'
+```
 
 ## Release: dev → prod
 
-1. Finish changes on `dev` and wait for CI plus its Pages preview build to succeed.
-2. Open a PR with **base `prod`, head `dev`**. Record the full release head SHA in the PR description.
-3. In Pages deployment details, select the successful **Preview** deployment with that exact commit SHA. Put its immutable hash URL and deployment ID in the release PR description for Silvo. Keep that deployment; do not delete it. Share this URL, rather than the moving `dev` alias.
-4. Have `@diomotion` review the exact preview and approve the GitHub PR. Any new changes require a new successful preview, updated SHA/link, and renewed approval. Check all three required CI jobs are green on the latest PR revision.
-5. Merge the approved PR. Native Git integration builds `prod` automatically and publishes to the reserved production hostname. Verify the deployment commit and both `/` and `/en/` afterward. Prefer a merge commit for repeated `dev` → `prod` releases so branch history stays connected.
-6. A later live-domain launch requires separate explicit authorization. Do not change DNS as part of this release workflow.
+1. Merge the prepared version/changelog PR into `dev` before promotion. Review its
+   notes and wait for CI and a successful Pages preview of the latest `dev` head.
+2. Open a PR with base `prod`, head `dev`. Include the full head SHA and the matching
+   preview's immutable URL and deployment ID.
+3. Have `@diomotion` review that preview and approve the PR. New commits require
+   green checks, a new preview, updated references, and renewed approval.
+4. Merge after the approval gate passes. Prefer a merge commit for repeated
+   promotions so branch history stays connected. With automatic production builds
+   enabled, verify the resulting deployment's commit and both `/` and `/en/`.
+
+## Versioning and automation
+
+[package.json](../package.json) owns the site version. The initial `0.1.0`
+development baseline is recorded in [CHANGELOG.md](../CHANGELOG.md); it is not a
+claim that this source has reached production. The earlier scaffold value
+`0.0.1` had no tagged release.
+
+[Prepare release](../.github/workflows/prepare-release.yml) runs on `dev`, maintaining
+a Release Please PR that updates the package version, changelog, and
+[manifest](../.release-please-manifest.json). Merge that PR to record a development
+milestone. Its `dev-v…` tag and GitHub prerelease do not deploy production.
+Several development milestones may be promoted together.
+
+Use Conventional Commits: `fix:` bumps patch, `feat:` bumps minor, and `!` or a
+`BREAKING CHANGE:` footer bumps major (minor while below `1.0.0`). Project override
+to the Conventional Git skill: documentation, formatting, and tooling commits
+are also visible in the changelog and can prepare a patch release PR. They do not
+publish a new milestone until that PR is merged. Use `fix:` for visitor-visible copy or styling corrections;
+reserve `style:` for formatting. For an intentional version override, include a
+`Release-As: 1.0.0` footer in a commit. Review generated notes before promotion.
+The `last-release-sha` in [configuration](../release-please-config.json) marks the
+rewritten `0.1.0` baseline after flattening `dev` history. It prevents recounting
+baseline commits while the immutable `dev-v0.1.0` tag points to the original
+history. Once a newer development tag exists on `dev`, Release Please stops at
+that release before reaching this fallback cutoff.
+
+The shared footer renders a compact build label, such as `v0.1.0+b4efbde`.
+It includes the short commit ID when available; local builds without one show
+only `v0.1.0`. Non-`prod` builds retain a `Vorschau`/`Preview` tooltip.
+HTML metadata records the version, full commit, and production/preview status.
+Cloudflare supplies `CF_PAGES_BRANCH` and `CF_PAGES_COMMIT_SHA`; do not override
+them. Local builds without these variables are labelled previews.
+
+[Publish production release](../.github/workflows/publish-release.yml) runs after
+successful push CI on `prod`. It waits for both `https://dio-motion.pages.dev/`
+and `/en/` to serve that exact production commit and version, then creates `v…`
+and its GitHub release. Notes include all changelog entries since the previous
+production release. Stale runs, mismatched pages, failed requests, and reused
+version numbers cannot publish. The workflow never promotes or merges code.
+Published tags are immutable; bump the version before another promotion.
+
+### One-time activation
+
+1. Merge the implementation into `dev`. In GitHub Actions settings, allow Actions
+   to create pull requests. The workflows use `GITHUB_TOKEN`; no new PAT or
+   Cloudflare API token is needed. Release PR CI is explicitly dispatched because
+   token-authored pushes do not trigger it automatically.
+2. Confirm the hosting and approval gate above. The production verifier uses the
+   `pages.dev` origin, not the custom domain. If that origin later redirects to the
+   custom domain, update the verifier's fixed URL and its tests before promotion.
+3. Verify a generated release PR's `check`, `test`, `test:pages`, and `test:release`
+   results and matching Pages preview. Then follow the existing approval process.
+4. Check the first production workflow's release tag, commit, notes, and both live
+   footers. Publication waits up to about 15 minutes including request timeouts.
+   On a hosting failure, fix hosting and rerun the successful `prod` push CI run;
+   it will trigger publication again. An already-published matching release is a
+   no-op. Do not change or delete a published tag to reuse a version.
+
+Neither this setup nor a generated development release authorizes attaching the
+live domain or bypassing production review.
 
 ## References
 
 - [Pages Git integration](https://developers.cloudflare.com/pages/configuration/git-integration/)
-- [Pages preview URLs and aliases](https://developers.cloudflare.com/pages/configuration/preview-deployments/)
-- [Pages build version overrides](https://developers.cloudflare.com/pages/configuration/build-image/)
-- [GitHub protected branches and plan requirements](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)
-- [CODEOWNERS permissions and base branch behavior](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
+- [Preview URLs and aliases](https://developers.cloudflare.com/pages/configuration/preview-deployments/)
+- [Build overrides](https://developers.cloudflare.com/pages/configuration/build-image/)
+- [Protected branches](https://docs.github.com/en/repositories/configuring-branches-and-merges-in-your-repository/managing-protected-branches/about-protected-branches)
+- [CODEOWNERS](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners)
